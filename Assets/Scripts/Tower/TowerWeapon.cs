@@ -4,12 +4,12 @@ public class TowerWeapon : MonoBehaviour
 {
     #region Constants
 
-    private const int HEALTH = 6;
-    private const int DEFENCE = 4;
-    private const float SHOOTİNGRATE = 0.75f;
     private const string TAG_CHARACTER = "Body";
     private const string TAG_BULLET = "bullet";
     private const string TAG_KNIFE = "knife";
+    private const float SHOOTİNGRATE = 0.75f;
+    private const int HEALTH = 6;
+    private const int DEFENCE = 4;
 
     #endregion
 
