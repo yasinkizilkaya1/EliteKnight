@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Character
+  - Enemy
+  - wall
+  - chest
+  - bullet
+  - knife
+  - body
+  - Target
+  - Body
+  - Slider
+  - ExplodedBullet
+  - TowerEnemyBullet
+  - TowerEnemy
+  - Toggle
+  - Barrel
+  - GameManager
+  - TowerEnemySlider
+  - Need_To_Reload_GUI
+  - Weapon
+  - LoadingSlider
+  - Stage
+  - PlayerItems_Panel
+  - Player_BulletBar
+  - Loding_Panel
+  - Pause
+  - GameManager2
+  - selectname
+  - Clip
+  - Armor
+  - Health
+  - gun
+  - Ak47
+  - Projectile
+  - Spawn
+  - TowerBullet
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - ground
+  - chest
+  - wall
+  - Character
+  - body
+  - Zombie
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: -1
+    uniqueID: 593141417
+    locked: 0
+  - name: 0
+    uniqueID: 55362805
+    locked: 0
+  - name: 1
+    uniqueID: 836468493
+    locked: 0
+  - name: 2
+    uniqueID: 4062867905
+    locked: 0
+  - name: 3
+    uniqueID: 1954649647
+    locked: 0
+  - name: 4
+    uniqueID: 1593063413
+    locked: 0
+  - name: 5
+    uniqueID: 3812817663
+    locked: 0
