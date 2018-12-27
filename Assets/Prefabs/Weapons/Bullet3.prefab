@@ -117,7 +117,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.00615529, y: 0.0005595394}
@@ -137,9 +137,9 @@ MonoBehaviour:
   AutoClipReloadToggle: {fileID: 0}
   AmmoPrefabObject: {fileID: 1278051057937664}
   clipObject: {fileID: 1442587598998342, guid: 3b35007423759fe44a7fb7c4f7de304c, type: 2}
+  SpareBulletCount: 0
+  ClipCapacity: 0
   Ammo: 10
-  MaxAmmo: 10
-  clipAmmount: 0
   isbarrel: 0
   isBulletPos: 1
   isWeaponReload: 0

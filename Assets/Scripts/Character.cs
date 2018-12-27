@@ -5,10 +5,10 @@ public class Character : MonoBehaviour
 {
     #region Constants
 
-    private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
     private const string CARD_DATA_BİLL = ".asset";
-    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
     private const string TAG_TOWERENEMYBULLET = "TowerEnemyBullet";
+    private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_TOWERBULLET = "TowerBullet";
     private const string TAG_HEALTH = "Health";
     private const string TAG_ARMOR = "Armor";
@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
     private const int DECELERATİON = 1;
     private const int BULLETLOSS = 1;
     private const int EXPLODEDBULLETLOSS = 8;
-    private const int CLIPAMOUNT = 20;
+    private const int CLIPAMOUNT = 30;
     private const float ENERGYRELOADTİME = 5f;
     private const float SHOOTİNGRATE = 1f;
 
@@ -107,7 +107,7 @@ public class Character : MonoBehaviour
         }
         else if (col.gameObject.CompareTag(TAG_CLİP))
         {
-            gameManager.spawn.listCharacterList[0].gun.tiroNew.clipAmmount += CLIPAMOUNT;
+            gameManager.spawn.listCharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
             Destroy(col.gameObject);
         }
         else if (col.gameObject.CompareTag(TAG_AK47) && Input.GetKey(KeyCode.E))

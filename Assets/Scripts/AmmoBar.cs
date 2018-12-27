@@ -35,7 +35,7 @@ public class AmmoBar : MonoBehaviour
     {
         if (spawn.listCharacterList[0].gun != null && spawn.listCharacterList[0].gun.tiroNew != null)
         {
-            ClipAmountText.text = spawn.listCharacterList[0].gun.tiroNew.clipAmmount.ToString();
+            ClipAmountText.text = spawn.listCharacterList[0].gun.tiroNew.SpareBulletCount.ToString() + "/" + spawn.listCharacterList[0].gun.tiroNew.Ammo.ToString();
             AmmoSlider.value = spawn.listCharacterList[0].gun.tiroNew.Ammo;
 
 
@@ -80,7 +80,7 @@ public class AmmoBar : MonoBehaviour
 
         if (spawn.listCharacterList[0].gun.tiroNew != null)
         {
-            AmmoSlider.maxValue = spawn.listCharacterList[0].gun.tiroNew.MaxAmmo;
+            AmmoSlider.maxValue = spawn.listCharacterList[0].gun.tiroNew.ClipCapacity;
         }
     }
 

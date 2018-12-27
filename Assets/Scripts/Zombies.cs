@@ -47,6 +47,8 @@ public class Zombies : MonoBehaviour
     private Zombie zombie;
     private bool isAttack;
 
+    private RaycastHit2D raycastHit2D;
+
     #endregion
 
     #region Property
@@ -92,7 +94,7 @@ public class Zombies : MonoBehaviour
         }
         else if (isZombie)
         {
-            RaycasLine();
+            //RaycasLine();
         }
         else
         {
@@ -111,7 +113,7 @@ public class Zombies : MonoBehaviour
         if (collision.gameObject.CompareTag(TAG_BULLET))
         {
             DisHealth();
-            Destroy(collision.gameObject,1f);
+            Destroy(collision.gameObject, 0.2f);
         }
         else if (collision.gameObject.CompareTag(TAG_KNİFE))
         {
@@ -133,7 +135,8 @@ public class Zombies : MonoBehaviour
 
     private void RaycasLine()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
+        raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
+
         if (raycastHit2D.collider != null)
         {
             if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLİDER) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
@@ -146,6 +149,10 @@ public class Zombies : MonoBehaviour
                 isAttack = true;
                 Following();
             }
+        }
+        else
+        {
+            raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
         }
     }
 

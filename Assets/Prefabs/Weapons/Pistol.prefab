@@ -115,9 +115,9 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  Ammo: 5
-  MaxAmmo: 5
-  clipAmmount: 0
+  SpareBulletCount: 55
+  ClipCapacity: 5
+  Ammo: 0
   isbarrel: 1
   isBulletPos: 0
   isWeaponReload: 0
@@ -139,9 +139,9 @@ MonoBehaviour:
   AutoClipReloadToggle: {fileID: 0}
   AmmoPrefabObject: {fileID: 0}
   clipObject: {fileID: 0}
+  SpareBulletCount: 0
+  ClipCapacity: 0
   Ammo: 5
-  MaxAmmo: 5
-  clipAmmount: 0
   isbarrel: 0
   isBulletPos: 1
   isWeaponReload: 0

@@ -6,9 +6,7 @@ public class TiroNew : MonoBehaviour
 {
     #region Constants
 
-    private const int MAX_AMMO = 5;
     private const float WEAPON_RELOAD_TİME = 3f;
-    private const int MAX_CLIP_AMOUNT = 20;
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
     private const string TAG_GAMEMANAGER = "GameManager";
@@ -24,9 +22,9 @@ public class TiroNew : MonoBehaviour
     public GameObject AmmoPrefabObject;
     public GameObject clipObject;
 
+    public int SpareBulletCount;
+    public int ClipCapacity;
     public int Ammo;
-    public int MaxAmmo;
-    public int clipAmmount;
 
     public bool isbarrel;
     public bool isBulletPos;
@@ -85,22 +83,22 @@ public class TiroNew : MonoBehaviour
 
     private void Init()
     {
-        clipAmmount = MAX_CLIP_AMOUNT;
         isWeaponReload = false;
         weaponReload = WEAPON_RELOAD_TİME;
         isShoot = true;
         AutoClipReloadToggle = GameObject.FindWithTag(TAG_TOGGLE).GetComponent<Toggle>();
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        Ammo = MaxAmmo;
-        FillingAmount = (weaponReload - 0.6f) / MaxAmmo;
+        Ammo = ClipCapacity;
     }
 
     private void ClipReloadEnum()
     {
-        if (Input.GetKeyDown(gameManager.ReloadEnum) && isWeaponReload == false && Ammo != MaxAmmo && gameManager.isPause == false && clipAmmount != 0)
+        if (Input.GetKeyDown(gameManager.ReloadEnum) && isWeaponReload == false && Ammo != ClipCapacity && gameManager.isPause == false && SpareBulletCount > 0)
         {
-            isWeaponReload = true;
             Instantiate(clipObject, transform.position, transform.rotation);
+            FillingAmount = (weaponReload - 0.4f) / ClipCapacity;
+            SpareBulletCount += Ammo;
+            isWeaponReload = true;
             WeaponReload();
         }
         else
@@ -111,10 +109,11 @@ public class TiroNew : MonoBehaviour
 
     private void AutoWeaponReloadEnum(bool isOn)
     {
-        if (isOn == true && Ammo == 0 && weaponReload == WEAPON_RELOAD_TİME && gameManager.isPause == false && clipAmmount != 0)
+        if (isOn == true && Ammo == 0 && weaponReload == WEAPON_RELOAD_TİME && gameManager.isPause == false && SpareBulletCount > 0)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
-
+            FillingAmount = (weaponReload - 0.4f) / ClipCapacity;
+            SpareBulletCount += Ammo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -128,9 +127,9 @@ public class TiroNew : MonoBehaviour
             Ammo = 0;
             isShoot = false;
 
-            if (weaponReload >= 0.2)
+            if (weaponReload >= 0.2 && SpareBulletCount >= Ammo)
             {
-                StartCoroutine(BulletReloadEnum(FillingAmount));
+                StartCoroutine(BulletReloadEnum());
             }
 
             if (weaponReload <= 0.2)
@@ -138,9 +137,19 @@ public class TiroNew : MonoBehaviour
                 StopAllCoroutines();
                 isShoot = true;
                 isWeaponReload = false;
-                Ammo = MaxAmmo;
+
+                if (SpareBulletCount >= ClipCapacity)
+                {
+                    Ammo = ClipCapacity;
+                    SpareBulletCount -= ClipCapacity;
+                }
+                else
+                {
+                    Ammo = SpareBulletCount;
+                    SpareBulletCount = 0;
+                }
+
                 weaponReload = WEAPON_RELOAD_TİME;
-                clipAmmount--;
             }
         }
     }
@@ -149,16 +158,13 @@ public class TiroNew : MonoBehaviour
 
     #region Enumerator Method
 
-    IEnumerator BulletReloadEnum(float fillingtime)
+    IEnumerator BulletReloadEnum()
     {
         while (true)
         {
-            FillingAmount = (weaponReload - 0.6f) / MaxAmmo;
-            yield return new WaitForSeconds(0.1f);
-
-            if (Ammo != MaxAmmo)
+            if (Ammo <= ClipCapacity)
             {
-                yield return new WaitForSeconds(fillingtime);
+                yield return new WaitForSeconds(FillingAmount);
                 Ammo++;
             }
             else

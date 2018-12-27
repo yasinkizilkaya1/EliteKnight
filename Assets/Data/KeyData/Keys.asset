@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 196aab812c7fce543826bac0df5b71e4, type: 3}
-  m_Name: DefaultKeys
+  m_Name: Keys
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 1
   Name: DefaultKeys
   Up: W
   Down: S
   Left: A
   Right: D
-  Run: Shift
+  Run: LeftShift
   Reload: R

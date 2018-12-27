@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4155739062527250}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: radar
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4977608088481798}
   - component: {fileID: 212353173892645446}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: RightFoot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4992920935210858}
   - component: {fileID: 212911253234976314}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: LeftShoulder
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4511286040880888}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Legs
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4727192394286730}
   - component: {fileID: 212376266679589404}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: LeftFoot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4667542952115894}
   - component: {fileID: 212466300830198126}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: LeftArm
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4151505392516342}
   - component: {fileID: 212513934976660694}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: RightShoulder
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 50988552154096126}
   - component: {fileID: 95026855835747692}
   - component: {fileID: 114798386799005476}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4259408728471740}
   - component: {fileID: 212284978169932862}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: RightArm
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4739703365721900}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: RightWeapon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4015951792864054}
   - component: {fileID: 212057278941818708}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: LeftHand
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4982269057560060}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: isZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4407319741265494}
   - component: {fileID: 212857741880613494}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4996731262197526}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: isWall
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4316106522533314}
   - component: {fileID: 212951189008238058}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: RightHand
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4741369886615630}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: LeftWeapon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -274,9 +274,9 @@ GameObject:
   - component: {fileID: 4809125903473560}
   - component: {fileID: 212568389115189382}
   - component: {fileID: 58684154345567052}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Head
-  m_TagString: wall
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,7 +377,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1689897180856074}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -327.00006, y: -48, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0.5000004, y: 0.50000024, z: 4}
   m_Children:
   - {fileID: 4235834101172074}
@@ -582,7 +582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8148578b7593a164aab6e62e57a7d409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isZombie: 0
   gameManager: {fileID: 0}
   spawn: {fileID: 0}
   Radar: {fileID: 4155739062527250}

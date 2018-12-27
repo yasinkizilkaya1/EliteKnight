@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     #region Constants
 
+    private const string Keys_Bill = ".asset";
+    private const string Keys_Path = "Assets/Data/KeyData/";
     private const string TAG_CHARACTER = "Body";
     private const string TAG_SUPPORT = "Support";
     private const string TAG_LOBBY = "Lobby";
@@ -119,7 +121,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        keys = (Keys)AssetDatabase.LoadAssetAtPath("Assets/Data/KeyData/" + Saving_Key_Name + ".asset", typeof(Keys));
+        keys = (Keys)AssetDatabase.LoadAssetAtPath(Keys_Path + Saving_Key_Name + Keys_Bill, typeof(Keys));
         keycapList = new List<string>() { keys.Up, keys.Down, keys.Left, keys.Right, keys.Reload, keys.Run };
         DefaultkeycapList = new List<string>() { "W", "S", "A", "D", "R", "LeftShift" };
 
