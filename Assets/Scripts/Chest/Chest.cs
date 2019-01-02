@@ -154,7 +154,6 @@ public class Chest : MonoBehaviour
 
         if (gameManager.SelectedCardNameString == TAG_SUPPORT)
         {
-            ItemList.Remove(ItemList[3]);
             ItemList.Remove(ItemList[2]);
         }
         else if (gameManager.SelectedCardNameString == TAG_SPEALİST)

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public CharacterID characterID;
     public Spawn spawn;
     public TowerEnemy towerEnemy;
+    public AmmoBar ammoBar;
     public Slider slider;
     private Keys keys;
 
@@ -80,8 +81,17 @@ public class GameManager : MonoBehaviour
 
             if (slider.value == 100 && isPlayerDead == false)
             {
+                if (SelectedCardNameString == TAG_SUPPORT)
+                {
+                    AutoReloadObject.SetActive(false);
+                    SliderObject.SetActive(false);
+                }
+                else
+                {
+                    SliderObject.SetActive(true);
+                    AutoReloadObject.SetActive(true);
+                }
                 LoadingPanelObject.SetActive(false);
-                SliderObject.SetActive(true);
                 StageObject.SetActive(true);
                 PlayerItemPanelObject.SetActive(true);
                 StopAllCoroutines();
@@ -134,11 +144,6 @@ public class GameManager : MonoBehaviour
         StartKeys();
         Time.timeScale = 1;
         slider.maxValue = MAXVALUE;
-
-        if (SelectedCardNameString == TAG_SUPPORT)
-        {
-           AutoReloadObject.SetActive(false);
-        }
     }
 
     private void KeysChange(int id)
@@ -192,7 +197,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Savingkeys == keycapList.Count-1)
+        if (Savingkeys == keycapList.Count - 1)
         {
             Key(keycapList[0], keycapList[1], keycapList[2], keycapList[3], keycapList[4], keycapList[5]);
         }
@@ -202,7 +207,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Key(string up,string down,string left ,string right,string reload,string run)
+    private void Key(string up, string down, string left, string right, string reload, string run)
     {
         UpEnum = (KeyCode)Enum.Parse(typeof(KeyCode), up);
         DownEnum = (KeyCode)Enum.Parse(typeof(KeyCode), down);

@@ -94,7 +94,7 @@ public class Zombies : MonoBehaviour
         }
         else if (isZombie)
         {
-            //RaycasLine();
+            RaycasLine();
         }
         else
         {
@@ -113,7 +113,7 @@ public class Zombies : MonoBehaviour
         if (collision.gameObject.CompareTag(TAG_BULLET))
         {
             DisHealth();
-            Destroy(collision.gameObject, 0.2f);
+            Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag(TAG_KNİFE))
         {

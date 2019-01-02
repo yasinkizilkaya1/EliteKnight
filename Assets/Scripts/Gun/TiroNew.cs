@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TiroNew : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class TiroNew : MonoBehaviour
 
     public GameObject AmmoPrefabObject;
     public GameObject clipObject;
+    public List<GameObject> Barrels;
 
     public int SpareBulletCount;
     public int ClipCapacity;
@@ -55,8 +57,22 @@ public class TiroNew : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1") && Ammo > 0 && isShoot && gameManager.isPause == false)
             {
-                Instantiate(AmmoPrefabObject, transform.position, transform.rotation);
-                Ammo--;
+                if (gameManager.spawn.listCharacterList[0].isShotgunUse)
+                {
+                    for (int i = Barrels.Count - 1; i >= 0; i--)
+                    {
+                        Ammo--;
+                        Instantiate(AmmoPrefabObject, Barrels[i].transform.position, Barrels[i].transform.rotation);
+                        //1sn
+                        gameManager.ammoBar.BarImageList[Ammo].color=Color.grey;
+                    }
+                }
+                else
+                {
+                    Ammo--;
+                    Instantiate(AmmoPrefabObject, transform.position, transform.rotation);
+                    gameManager.ammoBar.BarImageList[Ammo].color=Color.grey;
+                }
             }
         }
 
@@ -97,7 +113,7 @@ public class TiroNew : MonoBehaviour
         {
             Instantiate(clipObject, transform.position, transform.rotation);
             FillingAmount = (weaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount += Ammo;
+            SpareBulletCount -= ClipCapacity - Ammo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -113,7 +129,7 @@ public class TiroNew : MonoBehaviour
         {
             Instantiate(clipObject, transform.position, transform.rotation);
             FillingAmount = (weaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount += Ammo;
+            SpareBulletCount -= ClipCapacity - Ammo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -138,15 +154,14 @@ public class TiroNew : MonoBehaviour
                 isShoot = true;
                 isWeaponReload = false;
 
-                if (SpareBulletCount >= ClipCapacity)
-                {
-                    Ammo = ClipCapacity;
-                    SpareBulletCount -= ClipCapacity;
-                }
-                else
+                if (SpareBulletCount < ClipCapacity)
                 {
                     Ammo = SpareBulletCount;
                     SpareBulletCount = 0;
+                }
+                else
+                {
+                    Ammo = ClipCapacity;
                 }
 
                 weaponReload = WEAPON_RELOAD_TİME;
@@ -162,10 +177,15 @@ public class TiroNew : MonoBehaviour
     {
         while (true)
         {
-            if (Ammo <= ClipCapacity)
+            if (Ammo <= ClipCapacity && Ammo < SpareBulletCount)
             {
                 yield return new WaitForSeconds(FillingAmount);
                 Ammo++;
+
+                if (Ammo <= ClipCapacity)
+                {
+                    gameManager.ammoBar.BarImageList[Ammo - 1].color=Color.black;
+                }
             }
             else
                 break;
