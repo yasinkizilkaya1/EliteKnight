@@ -2182,14 +2182,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501f27472f586114a8d0c0fec2e300f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  spawn: {fileID: 0}
-  ReloadGUIObject: {fileID: 1312029304788592}
-  ClipReloadObject: {fileID: 1498639863573616}
-  ClipAmountText: {fileID: 114078159619834220}
-  BarImage: {fileID: 114628980544263730, guid: 28f47c9e98e6c714bb8bf6a061c8462a, type: 2}
   AmmoGridLayout: {fileID: 114159743733127990}
   BarImageList: []
+  BarImageListObject: []
+  gameManager: {fileID: 0}
+  spawn: {fileID: 0}
+  tiroNew: {fileID: 0}
+  BarImage: {fileID: 114628980544263730, guid: 28f47c9e98e6c714bb8bf6a061c8462a, type: 2}
+  ReloadGUIObject: {fileID: 1312029304788592}
+  ClipAmountText: {fileID: 114078159619834220}
 --- !u!114 &114451148424663522
 MonoBehaviour:
   m_ObjectHideFlags: 1
