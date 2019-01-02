@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
     public Transform TargetTransform;
 
     public bool isEffectTowerBullet;
+    public bool isBullet;
 
     public GameObject bulletObject;
     public GameObject LocationObject1;
@@ -47,6 +48,10 @@ public class Bullet : MonoBehaviour
             if (isEffectTowerBullet)
             {
                 Destroy(gameObject, 3);
+                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
+            }
+            else if (isBullet && spawn.listCharacterList[0].isDead == false)
+            {
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
             }
             else if (isEffectTowerBullet == false && spawn.listCharacterList[0].isDead == false)

@@ -5,6 +5,7 @@ public class WarriorEnemy : MonoBehaviour
     #region Contants 
 
     private const string TAG_BULLET = "bullet";
+    private const string TAG_KNIFE = "knife";
     private const string TAG_WALL = "wall";
     private const string TAG_ENEMY = "Enemy";
     private const string TAG_TOWER_ENEMY_SLİDER = "TowerEnemySlider";
@@ -94,6 +95,10 @@ public class WarriorEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag(TAG_BULLET))
         {
             Destroy(collision.gameObject);
+            DisHealth();
+        }
+        else if(collision.gameObject.CompareTag(TAG_KNIFE))
+        {
             DisHealth();
         }
     }
