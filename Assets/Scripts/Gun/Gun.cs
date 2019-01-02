@@ -45,6 +45,7 @@ public class Gun : MonoBehaviour
                 Destroy(RightWeaponObject);
                 RightWeaponObject = Instantiate(PistolObject, transform);
                 character.isAk47 = false;
+                character.isShotgun = false;
                 character.isShotgunUse = false;
                 character.isGun = true;
             }
@@ -55,6 +56,7 @@ public class Gun : MonoBehaviour
             Destroy(RightWeaponObject);
             RightWeaponObject = Instantiate(Ak47Object, transform);
             character.isAk47 = false;
+            character.isShotgun = false;
             character.isShotgunUse = false;
             character.isGun = false;
         }
@@ -63,6 +65,7 @@ public class Gun : MonoBehaviour
             Destroy(RightWeaponObject);
             RightWeaponObject = Instantiate(ShotgunObject, transform);
             character.isShotgun = false;
+            character.isAk47 = false;
             character.isGun = false;
         }
     }

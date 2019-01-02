@@ -16,6 +16,7 @@ public class AmmoBar : MonoBehaviour
 
     public GridLayoutGroup AmmoGridLayout;
     public List<Image> BarImageList;
+    public List<GameObject> BarImageListObject;
     public GameManager gameManager;
     public Spawn spawn;
     public TiroNew tiroNew;
@@ -89,17 +90,16 @@ public class AmmoBar : MonoBehaviour
         for (int i = 0; i < AmmoCount; i++)
         {
             Image Bar = Instantiate(BarImage, transform);
+            BarImageListObject.Add(Bar.gameObject);
             BarImageList.Add(Bar);
         }
     }
 
     private void AmmoBarDelete()
     {
-        for (int i = 0; i < AmmoCount - 1; i++)
-        {
-            BarImageList[i].color = Color.grey;
-        }
+        for (int i = 0; i <= AmmoCount - 1; i++)        {            Destroy(BarImageListObject[i]);        }
         BarImageList.Clear();
+        BarImageListObject.Clear();
     }
 
     private void AmmoBarsBackup()
@@ -121,8 +121,9 @@ public class AmmoBar : MonoBehaviour
         if (spawn.listCharacterList[0].gun.tiroNew != null)
         {
             AmmoBarDelete();
+            yield return new WaitForSeconds(0.2f);
             AmmoCount = spawn.listCharacterList[0].gun.tiroNew.ClipCapacity;
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.2f);
             AmmoBarsCreate();
         }
     }
