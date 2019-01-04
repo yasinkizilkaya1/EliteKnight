@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114424903013060950}
   m_Layer: 0
   m_Name: RightWeapon
-  m_TagString: bullet
+  m_TagString: TowerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,17 +97,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoPrefab: {fileID: 1587257830817430}
-  clip: {fileID: 0}
-  MaxAmmo: 0
+  AutoClipReloadToggle: {fileID: 0}
+  AmmoPrefabObject: {fileID: 1587257830817430}
+  clipObject: {fileID: 0}
+  Barrels: []
+  SpareBulletCount: 0
+  ClipCapacity: 0
   Ammo: 0
-  barrel: 0
-  BulletPos: 1
-  Bullet: 0
-  WeaponReloaded: 0
-  shoot: 0
+  isbarrel: 1
+  isBulletPos: 0
+  isWeaponReload: 0
+  isShoot: 0
   weaponReload: 0
-  m_Velocidade: 8
+  Velocidade: 0
+  FillingAmount: 0
 --- !u!212 &212411613999249916
 SpriteRenderer:
   m_ObjectHideFlags: 1

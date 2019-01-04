@@ -541,9 +541,9 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
+  SpareBulletCount: 0
+  ClipCapacity: 0
   Ammo: 5
-  MaxAmmo: 5
-  clipAmmount: 0
   isbarrel: 0
   isBulletPos: 1
   isWeaponReload: 0
@@ -591,6 +591,8 @@ MonoBehaviour:
   Power: 0
   CharacterWay: 0
   run: 0
+  Energy: 0
+  MaxDefance: 0
   isDead: 0
   isFindAk47: 0
   isTire: 0
@@ -614,9 +616,9 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  Ammo: 5
-  MaxAmmo: 5
-  clipAmmount: 0
+  SpareBulletCount: 75
+  ClipCapacity: 5
+  Ammo: 0
   isbarrel: 1
   isBulletPos: 0
   isWeaponReload: 0

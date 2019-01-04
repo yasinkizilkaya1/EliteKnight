@@ -1,6 +1,4 @@
-﻿public class MovableEntity:DamageableEntity
+﻿public class MoveableEntity : DamageableEntity
 {
-    public int Energy;
-    public int MaxEnergy;
     public int Speed;
 }

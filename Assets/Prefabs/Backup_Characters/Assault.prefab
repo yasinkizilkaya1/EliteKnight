@@ -370,13 +370,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233594230424754}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.026176924, w: 0.99965733}
   m_LocalPosition: {x: 10, y: 16.7, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4904590141894202}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3}
 --- !u!4 &4679177104473580
 Transform:
   m_ObjectHideFlags: 1
@@ -483,6 +483,7 @@ MonoBehaviour:
   PistolObject: {fileID: 0}
   WoodObject: {fileID: 0}
   Ak47Object: {fileID: 0}
+  ShotgunObject: {fileID: 0}
   RightWeaponObject: {fileID: 0}
   isPistolGun: 0
   isWoodGun: 0
@@ -507,14 +508,18 @@ MonoBehaviour:
   Power: 0
   CharacterWay: 0
   run: 0
+  Energy: 0
+  MaxDefance: 0
   isDead: 0
   isFindAk47: 0
+  isShotgun: 0
+  isShotgunUse: 0
   isTire: 0
   EnergyReload: 0
   shooting: 0
   characterObject: {fileID: 1397403166917626}
   BodyObject: {fileID: 1255463042874016}
-  RightEnumWeaponObject: {fileID: 1233594230424754}
+  RightWeaponObject: {fileID: 1233594230424754}
 --- !u!114 &114823779077417078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -532,6 +537,8 @@ MonoBehaviour:
     type: 2}
   WoodObject: {fileID: 1480528054486784, guid: b1ec6630710656848b79bf2263412ac3, type: 2}
   Ak47Object: {fileID: 1411510944606112, guid: 3597263db4c72c14983886924169448b, type: 2}
+  ShotgunObject: {fileID: 1160372663281466, guid: 10ef91f99ac71a34b92adccf1213c0bf,
+    type: 2}
   RightWeaponObject: {fileID: 1233594230424754}
   isPistolGun: 1
   isWoodGun: 0

@@ -6,11 +6,11 @@ public class CompleteCameraController : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager.spawn.listCharacterList.Count != 0)
+        if (gameManager.spawn.CharacterList.Count != 0)
         {
-            if (gameManager.spawn.listCharacterList[0] != null)
+            if (gameManager.spawn.CharacterList[0] != null)
             {
-                transform.position = new Vector3(gameManager.spawn.listCharacterList[0].transform.position.x, gameManager.spawn.listCharacterList[0].transform.position.y, 0);
+                transform.position = new Vector3(gameManager.spawn.CharacterList[0].transform.position.x, gameManager.spawn.CharacterList[0].transform.position.y, 0);
             }
         }
     }

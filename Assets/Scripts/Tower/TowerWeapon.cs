@@ -71,6 +71,7 @@ public class TowerWeapon : MonoBehaviour
         {
             towerEnemy.inside = false;
             Destroy(TowerObject);
+            spawn.CharacterList[0].DeadEnemyCount++;
         }
     }
 
@@ -100,7 +101,7 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerMoving()
     {
-        if (spawn.listCharacterList[0].isDead == false && towerEnemy.inside)
+        if (spawn.CharacterList[0].isDead == false && towerEnemy.inside)
         {
             Moving();
         }
@@ -108,10 +109,10 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerLinerender()
     {
-        if (spawn.listCharacterList[0].isDead == false && isLinerenderer == true && towerEnemy.inside)
+        if (spawn.CharacterList[0].isDead == false && isLinerenderer == true && towerEnemy.inside)
         {
             lineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-            lineRenderer.SetPosition(1, new Vector3(spawn.listCharacterList[0].transform.position.x, spawn.listCharacterList[0].transform.position.y, 1));
+            lineRenderer.SetPosition(1, new Vector3(spawn.CharacterList[0].transform.position.x, spawn.CharacterList[0].transform.position.y, 1));
         }
         else
         {
@@ -126,7 +127,7 @@ public class TowerWeapon : MonoBehaviour
     private void Moving()
     {
         Transform shootTransformObject = transform;
-        shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.listCharacterList[0].transform, shootTransformObject.transform);
+        shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
 
         if (transform.rotation.z != shootTransformObject.rotation.z)
         {
@@ -143,25 +144,25 @@ public class TowerWeapon : MonoBehaviour
         int remainingDamage = 0;
         if (Defence > 0)
         {
-            if (spawn.listCharacterList[0].Power > Defence)
+            if (spawn.CharacterList[0].Power > Defence)
             {
-                remainingDamage = spawn.listCharacterList[0].Power - Defence;
+                remainingDamage = spawn.CharacterList[0].Power - Defence;
                 Defence = 0;
             }
             else
             {
-                Defence -= spawn.listCharacterList[0].Power;
+                Defence -= spawn.CharacterList[0].Power;
             }
         }
         else if (Defence == 0 && Health > 0)
         {
-            if (spawn.listCharacterList[0].Power > Health)
+            if (spawn.CharacterList[0].Power > Health)
             {
                 Health = 0;
             }
             else
             {
-                Health -= spawn.listCharacterList[0].Power;
+                Health -= spawn.CharacterList[0].Power;
             }
 
             if (remainingDamage != 0)
@@ -182,7 +183,7 @@ public class TowerWeapon : MonoBehaviour
             shootCoolDown = SHOOTİNGRATE;
             var shootTransformObject = Instantiate(shotPrefabTransform) as Transform;
             shootTransformObject.position = transform.position;
-            shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.listCharacterList[0].transform, shootTransformObject.transform);
+            shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
         }
     }
 

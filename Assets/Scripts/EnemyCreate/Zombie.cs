@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenuAttribute(fileName = "New Zombie", menuName = "Data/Zombie")]
-public class Zombie:DamageableEntity
+public class Zombie: DetriMentalEntity
 {
-    public int Speed;
-    public int attackpower;
+   
 }

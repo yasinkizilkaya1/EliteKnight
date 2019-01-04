@@ -25,7 +25,7 @@ public class Spawn : MonoBehaviour
     public GameObject AssaultObject;
     public GameManager gameManager;
 
-    public List<Character> listCharacterList;
+    public List<Character> CharacterList;
 
     public Weapon weapons;
 
@@ -46,10 +46,10 @@ public class Spawn : MonoBehaviour
 
     private void Update()
     {
-        if (listCharacterList[0].isDead == false)
+        if (CharacterList[0].isDead == false)
         {
-            HealthBarSlider.value = listCharacterList[0].Health;
-            ArmorBarSlider.value = listCharacterList[0].Defence;
+            HealthBarSlider.value = CharacterList[0].Health;
+            ArmorBarSlider.value = CharacterList[0].Defence;
             StartCoroutine(SetActiveBars());
         }
         else
@@ -67,9 +67,9 @@ public class Spawn : MonoBehaviour
     {
         CharacterCreate();
         StartCoroutine(Bars());
-        listCharacterList.Add(GameObject.FindWithTag(TAG_CHARACTER).GetComponent<Character>());
+        CharacterList.Add(GameObject.FindWithTag(TAG_CHARACTER).GetComponent<Character>());
 
-        if (listCharacterList[0].name == TAG_CHARACTERNAME)
+        if (CharacterList[0].name == TAG_CHARACTERNAME)
         {
             weapons = GameObject.FindWithTag(TAG_WEAPON).GetComponent<Weapon>();
         }
@@ -101,17 +101,17 @@ public class Spawn : MonoBehaviour
     IEnumerator Bars()
     {
         yield return new WaitForSeconds(0.1f);
-        HealthBarSlider.maxValue = listCharacterList[0].MaxHealth;
-        HealthBarSlider.value = listCharacterList[0].characterData.Health;
-        ArmorBarSlider.maxValue = listCharacterList[0].characterData.Defence;
-        ArmorBarSlider.value = listCharacterList[0].characterData.Defence;
+        HealthBarSlider.maxValue = CharacterList[0].MaxHealth;
+        HealthBarSlider.value = CharacterList[0].characterData.Health;
+        ArmorBarSlider.maxValue = CharacterList[0].characterData.Defence;
+        ArmorBarSlider.value = CharacterList[0].characterData.Defence;
         StopAllCoroutines();
     }
 
     IEnumerator SetActiveBars()
     {
         yield return new WaitForSeconds(0.2f);
-        if (listCharacterList[0].Defence != listCharacterList[0].MaxDefance)
+        if (CharacterList[0].Defence != CharacterList[0].MaxDefance)
         {
             HealthgameObject.SetActive(true);
             ArmorgameObject.SetActive(true);

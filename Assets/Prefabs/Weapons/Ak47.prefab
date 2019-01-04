@@ -165,7 +165,7 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1278051057937664, guid: 496f9b10625e6cc469ae2ef7ed69b13d,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  SpareBulletCount: 75
+  SpareBulletCount: 125
   ClipCapacity: 10
   Ammo: 0
   isbarrel: 1
