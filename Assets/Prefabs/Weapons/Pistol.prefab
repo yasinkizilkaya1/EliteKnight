@@ -78,7 +78,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1177416201596478}
-  m_LocalRotation: {x: 0, y: 0, z: -0.01745245, w: 0.99984777}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
@@ -86,7 +86,7 @@ Transform:
   - {fileID: 4057367964072044}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4901536231180692
 Transform:
   m_ObjectHideFlags: 1
@@ -115,7 +115,8 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  SpareBulletCount: 55
+  Barrels: []
+  SpareBulletCount: 995
   ClipCapacity: 5
   Ammo: 0
   isbarrel: 1
@@ -139,6 +140,7 @@ MonoBehaviour:
   AutoClipReloadToggle: {fileID: 0}
   AmmoPrefabObject: {fileID: 0}
   clipObject: {fileID: 0}
+  Barrels: []
   SpareBulletCount: 0
   ClipCapacity: 0
   Ammo: 5

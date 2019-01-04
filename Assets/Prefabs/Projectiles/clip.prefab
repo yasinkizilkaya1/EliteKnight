@@ -92,9 +92,9 @@ MonoBehaviour:
   AutoClipReloadToggle: {fileID: 0}
   AmmoPrefabObject: {fileID: 0}
   clipObject: {fileID: 0}
-  Ammo: 5
-  MaxAmmo: 5
-  clipAmmount: 0
+  SpareBulletCount: 0
+  ClipCapacity: 0
+  Ammo: 0
   isbarrel: 0
   isBulletPos: 1
   isWeaponReload: 0

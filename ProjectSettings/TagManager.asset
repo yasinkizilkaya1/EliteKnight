@@ -39,6 +39,7 @@ TagManager:
   - Projectile
   - Spawn
   - TowerBullet
+  - Shotgun
   layers:
   - Default
   - TransparentFX

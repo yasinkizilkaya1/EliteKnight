@@ -58,7 +58,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: c67c0cab27a69ef48a16f93cf5c0feeb, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -71,7 +71,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1004785105208208}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d9e487427f045bb408404f0815ae27be, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -89,17 +89,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoPrefab: {fileID: 1004785105208208}
-  clip: {fileID: 0}
-  MaxAmmo: 0
+  AutoClipReloadToggle: {fileID: 0}
+  AmmoPrefabObject: {fileID: 0}
+  clipObject: {fileID: 0}
+  Barrels: []
+  SpareBulletCount: 0
+  ClipCapacity: 0
   Ammo: 0
-  barrel: 0
-  BulletPos: 1
-  Bullet: 0
-  WeaponReloaded: 0
-  shoot: 0
+  isbarrel: 0
+  isBulletPos: 0
+  isWeaponReload: 0
+  isShoot: 0
   weaponReload: 0
-  m_Velocidade: 7
+  Velocidade: 0
+  FillingAmount: 0
 --- !u!212 &212572340841824460
 SpriteRenderer:
   m_ObjectHideFlags: 1

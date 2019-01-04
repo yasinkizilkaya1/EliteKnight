@@ -45,10 +45,12 @@ MonoBehaviour:
   LoadingPanelObject: {fileID: 0}
   LoadingSliderObject: {fileID: 0}
   PanelSettingObject: {fileID: 0}
+  AutoReloadObject: {fileID: 0}
   LoadingText: {fileID: 0}
   characterID: {fileID: 0}
   spawn: {fileID: 0}
   towerEnemy: {fileID: 0}
+  ammoBar: {fileID: 0}
   slider: {fileID: 0}
   SelectedCardNameString: 
   isPause: 0
@@ -59,7 +61,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   TextList:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -72,6 +76,7 @@ MonoBehaviour:
   RightEnum: 0
   LeftEnum: 0
   ReloadEnum: 0
+  RunEnum: 0
 --- !u!224 &224482591944175084
 RectTransform:
   m_ObjectHideFlags: 1

@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
     public GameObject PistolObject;
     public GameObject WoodObject;
     public GameObject Ak47Object;
+    public GameObject ShotgunObject;
     public GameObject RightWeaponObject;
 
     public bool isPistolGun;
@@ -37,12 +38,35 @@ public class Gun : MonoBehaviour
         {
             tiroNew = GameObject.FindWithTag(TAG_WEAPON).GetComponent<TiroNew>();
         }
+        else
+        {
+            if (tiroNew.SpareBulletCount == 0)
+            {
+                Destroy(RightWeaponObject);
+                RightWeaponObject = Instantiate(PistolObject, transform);
+                character.isAk47 = false;
+                character.isShotgun = false;
+                character.isShotgunUse = false;
+                character.isGun = true;
+            }
+        }
 
-        if (character.isFindAk47 && character.name==TAG_CHARACTER)
+        if (character.isAk47 && character.name == TAG_CHARACTER)
         {
             Destroy(RightWeaponObject);
             RightWeaponObject = Instantiate(Ak47Object, transform);
-            character.isFindAk47 = false;
+            character.isAk47 = false;
+            character.isShotgun = false;
+            character.isShotgunUse = false;
+            character.isGun = false;
+        }
+        else if (character.isShotgun && character.name == TAG_CHARACTER)
+        {
+            Destroy(RightWeaponObject);
+            RightWeaponObject = Instantiate(ShotgunObject, transform);
+            character.isShotgun = false;
+            character.isAk47 = false;
+            character.isGun = false;
         }
     }
 
@@ -61,6 +85,6 @@ public class Gun : MonoBehaviour
             RightWeaponObject = Instantiate(WoodObject, transform);
         }
     }
-    
+
     #endregion
 }

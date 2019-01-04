@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     private const string TAG_ARMOR = "Armor";
     private const string TAG_CLİP = "Clip";
     private const string TAG_AK47 = "Ak47";
+    private const string TAG_SHOTGUN = "Shotgun";
     private const int RUNSPEED = 10;
     private const int DECELERATİON = 1;
     private const int BULLETLOSS = 1;
@@ -39,11 +40,16 @@ public class Character : MonoBehaviour
     public int run;
     public int Energy;
     public int MaxDefance;
+    public int DeadEnemyCount;
     private int mMaxEnergy;
     private int mDefaultSpeed;
+    
 
     public bool isDead;
-    public bool isFindAk47;
+    public bool isGun;
+    public bool isAk47;
+    public bool isShotgun;
+    public bool isShotgunUse;
     public bool isTire;
 
     public float EnergyReload;
@@ -107,12 +113,18 @@ public class Character : MonoBehaviour
         }
         else if (col.gameObject.CompareTag(TAG_CLİP))
         {
-            gameManager.spawn.listCharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
+            gameManager.spawn.CharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
             Destroy(col.gameObject);
         }
         else if (col.gameObject.CompareTag(TAG_AK47) && Input.GetKey(KeyCode.E))
         {
-            isFindAk47 = true;
+            isAk47 = true;
+            Destroy(col.gameObject);
+        }
+        else if (col.gameObject.CompareTag(TAG_SHOTGUN) && Input.GetKey(KeyCode.E))
+        {
+            isShotgun = true;
+            isShotgunUse = true;
             Destroy(col.gameObject);
         }
     }

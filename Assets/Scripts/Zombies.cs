@@ -77,6 +77,7 @@ public class Zombies : MonoBehaviour
         if (Health == 0)
         {
             Destroy(BodyObject);
+            spawn.CharacterList[0].DeadEnemyCount++;
         }
 
         if (shootcoolDown > 0f)
@@ -94,7 +95,7 @@ public class Zombies : MonoBehaviour
         }
         else if (isZombie)
         {
-            //RaycasLine();
+            RaycasLine();
         }
         else
         {
@@ -113,7 +114,7 @@ public class Zombies : MonoBehaviour
         if (collision.gameObject.CompareTag(TAG_BULLET))
         {
             DisHealth();
-            Destroy(collision.gameObject, 0.2f);
+            Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag(TAG_KNİFE))
         {
@@ -160,12 +161,12 @@ public class Zombies : MonoBehaviour
     {
         if (gameManager.isPlayerDead == false)
         {
-            if (Vector2.Distance(Radar.position, spawn.listCharacterList[0].transform.position) > AFFİNİTY)
+            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > AFFİNİTY)
             {
                 BodyObject.transform.Translate(Vector2.right * -SPEED * Time.deltaTime);
-                BodyObject.transform.rotation = ScriptHelper.LookAt2D(spawn.listCharacterList[0].transform, BodyObject.transform);
+                BodyObject.transform.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, BodyObject.transform);
             }
-            else if (Vector2.Distance(Radar.position, spawn.listCharacterList[0].transform.position) < AFFİNİTY_ATTACK)
+            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < AFFİNİTY_ATTACK)
             {
                 Attack();
             }
@@ -177,7 +178,7 @@ public class Zombies : MonoBehaviour
         if (attack)
         {
             shootcoolDown = SHOOTİNG_RATE;
-            spawn.listCharacterList[0].HealthDisCount(CHARACTER_POWER);
+            spawn.CharacterList[0].HealthDisCount(CHARACTER_POWER);
         }
     }
 
@@ -186,25 +187,25 @@ public class Zombies : MonoBehaviour
         int remainingDamage = 0;
         if (Defence > 0)
         {
-            if (spawn.listCharacterList[0].Power > Defence)
+            if (spawn.CharacterList[0].Power > Defence)
             {
-                remainingDamage = spawn.listCharacterList[0].Power - Defence;
+                remainingDamage = spawn.CharacterList[0].Power - Defence;
                 Defence = 0;
             }
             else
             {
-                Defence -= spawn.listCharacterList[0].Power;
+                Defence -= spawn.CharacterList[0].Power;
             }
         }
         else if (Defence == 0 && Health > 0)
         {
-            if (spawn.listCharacterList[0].Power > Health)
+            if (spawn.CharacterList[0].Power > Health)
             {
                 Health = 0;
             }
             else
             {
-                Health -= spawn.listCharacterList[0].Power;
+                Health -= spawn.CharacterList[0].Power;
             }
         }
 
