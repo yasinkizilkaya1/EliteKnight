@@ -70,9 +70,10 @@ public class WarriorEnemy : MonoBehaviour
         if (Health == 0)
         {
             Destroy(gameObject);
+            gameManager.spawn.CharacterList[0].DeadEnemyCount++;
         }
 
-        if (gameManager.spawn.listCharacterList[0] != null)
+        if (gameManager.spawn.CharacterList[0] != null)
         {
             TargetFind();
 
@@ -123,7 +124,7 @@ public class WarriorEnemy : MonoBehaviour
     private void Aim()
     {
         Transform shootTransform = transform;
-        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.spawn.listCharacterList[0].transform, transform);
+        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.spawn.CharacterList[0].transform, transform);
 
         if (transform.rotation.z != shootTransform.rotation.z)
         {
@@ -172,7 +173,7 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Following()
     {
-        if (Vector2.Distance(transform.position, gameManager.spawn.listCharacterList[0].transform.position) > Distance)
+        if (Vector2.Distance(transform.position, gameManager.spawn.CharacterList[0].transform.position) > Distance)
         {
             Aim();
             transform.Translate(Vector2.right * -Speed * Time.deltaTime);
@@ -190,20 +191,20 @@ public class WarriorEnemy : MonoBehaviour
 
         if (Defence > 0)
         {
-            if (gameManager.spawn.listCharacterList[0].Power > Defence)
+            if (gameManager.spawn.CharacterList[0].Power > Defence)
             {
-                remainingDamage = gameManager.spawn.listCharacterList[0].Power - Defence;
+                remainingDamage = gameManager.spawn.CharacterList[0].Power - Defence;
             }
             else
             {
-                Defence -= gameManager.spawn.listCharacterList[0].Power;
+                Defence -= gameManager.spawn.CharacterList[0].Power;
             }
         }
         else if (Health > 0)
         {
-            if (Health >= gameManager.spawn.listCharacterList[0].Power)
+            if (Health >= gameManager.spawn.CharacterList[0].Power)
             {
-                Health -= gameManager.spawn.listCharacterList[0].Power;
+                Health -= gameManager.spawn.CharacterList[0].Power;
             }
         }
 

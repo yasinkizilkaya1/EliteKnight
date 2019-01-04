@@ -66,7 +66,7 @@ public class TiroNew : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1") && Ammo > 0 && isShoot && gameManager.isPause == false)
             {
-                if (gameManager.spawn.listCharacterList[0].isShotgunUse)
+                if (gameManager.spawn.CharacterList[0].isShotgunUse)
                 {
                     for (int i = Barrels.Count - 1; i >= 0; i--)
                     {

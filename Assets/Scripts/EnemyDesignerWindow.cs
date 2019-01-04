@@ -141,7 +141,7 @@ public class EnemyDesignerWindow : EditorWindow
         {
             ID += 1;
             asset.Id = ID;
-            AssetDatabase.CreateAsset(asset, "Assets/CharacterData/Data/" + charData.Name + ".asset");
+            AssetDatabase.CreateAsset(asset, "Assets/Data/CharacterData/" + charData.Name + ".asset");
             AssetDatabase.SaveAssets();
             Selection.activeObject = asset;
             CloseWindow();

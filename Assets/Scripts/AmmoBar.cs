@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AmmoBar : MonoBehaviour
 {
@@ -42,9 +42,9 @@ public class AmmoBar : MonoBehaviour
 
     private void Update()
     {
-        if (spawn.listCharacterList[0].gun != null && spawn.listCharacterList[0].gun.tiroNew != null && tiroNew != null)
+        if (spawn.CharacterList[0].gun != null && spawn.CharacterList[0].gun.tiroNew != null && tiroNew != null)
         {
-            ClipAmountText.text = spawn.listCharacterList[0].gun.tiroNew.SpareBulletCount.ToString();
+            ClipAmountText.text = spawn.CharacterList[0].gun.tiroNew.SpareBulletCount.ToString();
 
             if (tiroNew.isShoot == false && tiroNew.AutoClipReloadToggle.isOn == false && tiroNew.isWeaponReload == false)
             {
@@ -55,15 +55,15 @@ public class AmmoBar : MonoBehaviour
                 ReloadGUIObject.SetActive(false);
             }
 
-            if (spawn.listCharacterList[0].isAk47 || spawn.listCharacterList[0].isShotgun || spawn.listCharacterList[0].isGun)
+            if (spawn.CharacterList[0].isAk47 || spawn.CharacterList[0].isShotgun || spawn.CharacterList[0].isGun)
             {
                 StartCoroutine(Ammobar());
-                spawn.listCharacterList[0].isGun = false;
+                spawn.CharacterList[0].isGun = false;
             }
         }
         else
         {
-            tiroNew = spawn.listCharacterList[0].gun.tiroNew;
+            tiroNew = spawn.CharacterList[0].gun.tiroNew;
         }
     }
 
@@ -97,7 +97,10 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarDelete()
     {
-        for (int i = 0; i <= AmmoCount - 1; i++)        {            Destroy(BarImageListObject[i]);        }
+        for (int i = 0; i <= AmmoCount - 1; i++)
+        {
+            Destroy(BarImageListObject[i]);
+        }
         BarImageList.Clear();
         BarImageListObject.Clear();
     }
@@ -118,11 +121,11 @@ public class AmmoBar : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (spawn.listCharacterList[0].gun.tiroNew != null)
+        if (spawn.CharacterList[0].gun.tiroNew != null)
         {
             AmmoBarDelete();
             yield return new WaitForSeconds(0.2f);
-            AmmoCount = spawn.listCharacterList[0].gun.tiroNew.ClipCapacity;
+            AmmoCount = spawn.CharacterList[0].gun.tiroNew.ClipCapacity;
             yield return new WaitForSeconds(0.2f);
             AmmoBarsCreate();
         }

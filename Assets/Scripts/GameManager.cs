@@ -96,9 +96,9 @@ public class GameManager : MonoBehaviour
                 PlayerItemPanelObject.SetActive(true);
                 StopAllCoroutines();
 
-                if (spawn.listCharacterList.Count != 0)
+                if (spawn.CharacterList.Count != 0)
                 {
-                    if (spawn.listCharacterList[0] == null)
+                    if (spawn.CharacterList[0] == null)
                     {
                         isPlayerDead = true;
                     }

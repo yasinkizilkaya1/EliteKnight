@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -43,18 +42,18 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (spawn.listCharacterList[0] != null)
+        if (spawn.CharacterList[0] != null)
         {
             if (isEffectTowerBullet)
             {
                 Destroy(gameObject, 3);
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
             }
-            else if (isBullet && spawn.listCharacterList[0].isDead == false)
+            else if (isBullet && spawn.CharacterList[0].isDead == false)
             {
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
             }
-            else if (isEffectTowerBullet == false && spawn.listCharacterList[0].isDead == false)
+            else if (isEffectTowerBullet == false && spawn.CharacterList[0].isDead == false)
             {
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
                 StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
@@ -97,7 +96,7 @@ public class Bullet : MonoBehaviour
     private void Initialize()
     {
         spawn = GameObject.FindWithTag(TAG_Spawn).GetComponent<Spawn>();
-        TargetTransform = spawn.listCharacterList[0].transform;
+        TargetTransform = spawn.CharacterList[0].transform;
     }
 
     #endregion

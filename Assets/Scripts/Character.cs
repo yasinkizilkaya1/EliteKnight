@@ -40,8 +40,10 @@ public class Character : MonoBehaviour
     public int run;
     public int Energy;
     public int MaxDefance;
+    public int DeadEnemyCount;
     private int mMaxEnergy;
     private int mDefaultSpeed;
+    
 
     public bool isDead;
     public bool isGun;
@@ -111,7 +113,7 @@ public class Character : MonoBehaviour
         }
         else if (col.gameObject.CompareTag(TAG_CLİP))
         {
-            gameManager.spawn.listCharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
+            gameManager.spawn.CharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
             Destroy(col.gameObject);
         }
         else if (col.gameObject.CompareTag(TAG_AK47) && Input.GetKey(KeyCode.E))

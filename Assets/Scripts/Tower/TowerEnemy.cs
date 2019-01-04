@@ -51,7 +51,7 @@ public class TowerEnemy : MonoBehaviour
     {
         while (true)
         {
-            if (spawn.listCharacterList[0].isDead == false)
+            if (spawn.CharacterList[0].isDead == false)
             {
                 towerWeapon.Attack(true);
                 yield return new WaitForSeconds(1f);
