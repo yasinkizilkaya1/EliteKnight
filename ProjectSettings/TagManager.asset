@@ -40,6 +40,8 @@ TagManager:
   - Spawn
   - TowerBullet
   - Shotgun
+  - Tilemap_Ground
+  - Map
   layers:
   - Default
   - TransparentFX

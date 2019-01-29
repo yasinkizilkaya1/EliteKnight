@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4833424091656316}
   - component: {fileID: 212411844612954026}
   m_Layer: 10
-  m_Name: Tower2
+  m_Name: TowerModerator
   m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

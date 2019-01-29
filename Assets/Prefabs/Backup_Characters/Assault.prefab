@@ -510,8 +510,10 @@ MonoBehaviour:
   run: 0
   Energy: 0
   MaxDefance: 0
+  DeadEnemyCount: 0
   isDead: 0
-  isFindAk47: 0
+  isGun: 0
+  isAk47: 0
   isShotgun: 0
   isShotgunUse: 0
   isTire: 0
@@ -844,8 +846,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -482149633
-  m_SortingLayer: 7
+  m_SortingLayerID: 1593063413
+  m_SortingLayer: 6
   m_SortingOrder: 410
   m_Sprite: {fileID: 21300002, guid: 2c804e07b8267e34f9e8165153bd148c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -979,8 +981,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -482149633
-  m_SortingLayer: 7
+  m_SortingLayerID: 1593063413
+  m_SortingLayer: 6
   m_SortingOrder: 406
   m_Sprite: {fileID: 21300004, guid: 2c804e07b8267e34f9e8165153bd148c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1024,8 +1026,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -482149633
-  m_SortingLayer: 7
+  m_SortingLayerID: 1593063413
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
