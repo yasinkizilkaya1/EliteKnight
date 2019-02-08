@@ -48,8 +48,8 @@ public class Spawn : MonoBehaviour
     {
         if (CharacterList[0].isDead == false)
         {
-            HealthBarSlider.value = CharacterList[0].Health;
-            ArmorBarSlider.value = CharacterList[0].Defence;
+            HealthBarSlider.value = CharacterList[0].CurrentHP;
+            ArmorBarSlider.value = CharacterList[0].CurrentDefence;
             StartCoroutine(SetActiveBars());
         }
         else
@@ -101,7 +101,7 @@ public class Spawn : MonoBehaviour
     IEnumerator Bars()
     {
         yield return new WaitForSeconds(0.1f);
-        HealthBarSlider.maxValue = CharacterList[0].MaxHealth;
+        HealthBarSlider.maxValue = CharacterList[0].MaxHP;
         HealthBarSlider.value = CharacterList[0].characterData.Health;
         ArmorBarSlider.maxValue = CharacterList[0].characterData.Defence;
         ArmorBarSlider.value = CharacterList[0].characterData.Defence;
@@ -111,7 +111,7 @@ public class Spawn : MonoBehaviour
     IEnumerator SetActiveBars()
     {
         yield return new WaitForSeconds(0.2f);
-        if (CharacterList[0].Defence != CharacterList[0].MaxDefance)
+        if (CharacterList[0].CurrentDefence != CharacterList[0].MaxDefance)
         {
             HealthgameObject.SetActive(true);
             ArmorgameObject.SetActive(true);

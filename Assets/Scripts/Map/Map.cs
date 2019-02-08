@@ -19,6 +19,7 @@ public class Map : MonoBehaviour
     #region Field
 
     public List<Vector2Int> PlacesSizeList;
+    public List<Vector2Int> DoorLocation;
     public List<Vector3Int> PlacesCoordinatesList;
     private List<Vector3Int> mBridgeLocation;
     private List<Vector3Int> mWallLocation;
@@ -86,7 +87,7 @@ public class Map : MonoBehaviour
 
             DoorPlacesFind(i);
             Place place = Instantiate(PlaceObject, PlacesCoordinatesList[i], Quaternion.identity).GetComponent<Place>();
-            place.GetComponent<Place>().MakeEqual(PlacesSizeList[i], PlacesCoordinatesList[i], PlacesCoordinatesList, upDoor, downDoor, rightDoor, leftDoor);
+            place.GetComponent<Place>().MakeEqual(PlacesSizeList[i], PlacesCoordinatesList[i], upDoor, downDoor, rightDoor, leftDoor);
 
             if (i != PlaceCount - 1)
             {
@@ -116,6 +117,9 @@ public class Map : MonoBehaviour
 
             Vector2Int FirstDoor = new Vector2Int(PlacesCoordinatesList[i].x + FirstDoorLocationX, PlacesCoordinatesList[i].y + PlacesSizeList[i].y + 1);
             Vector2Int SecondDoor = new Vector2Int(PlacesCoordinatesList[i + 1].x + SecondDoorLocationX, PlacesCoordinatesList[i + 1].y - 1);
+
+            DoorLocation.Add(FirstDoor);
+            DoorLocation.Add(SecondDoor);
 
             int distanceY = Mathf.Abs(SecondDoor.y - FirstDoor.y);
 
@@ -167,6 +171,9 @@ public class Map : MonoBehaviour
 
             Vector2Int FirstDoor = new Vector2Int(PlacesCoordinatesList[i].x + PlacesSizeList[i].x + 1, PlacesCoordinatesList[i].y + FirstDoorLocationY);
             Vector2Int SecondDoor = new Vector2Int(PlacesCoordinatesList[i + 1].x - 1, PlacesCoordinatesList[i + 1].y + SecondDoorLocationY);
+
+            DoorLocation.Add(FirstDoor);
+            DoorLocation.Add(SecondDoor);
 
             int distanceX = Mathf.Abs(PlacesCoordinatesList[i + 1].x - FirstDoor.x);
 

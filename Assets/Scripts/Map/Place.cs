@@ -6,6 +6,7 @@ public class Place : MonoBehaviour
 {
     #region Constants
 
+    private const string TAG_CHARACTER = "Player";
     private const string TAG_TILEMAP_WALL = "wall";
     private const string TAG_TILEMAP_GROUND = "Tilemap_Ground";
     private const int CHEST_WIDHT = 4;
@@ -19,20 +20,24 @@ public class Place : MonoBehaviour
     private TileBase[] tileGroundArray;
     public Tilemap tilemapGround;
     public Tilemap tilemapWall;
-    public Tile tileground;
-    public Tile tileground2;
-    public Tile tilewall;
+    public Tile tileGround;
+    public Tile tileGround2;
+    public Tile tileWall;
+
+    public List<GameObject> DoorList;
+
+    public BoxCollider2D boxCollider;
 
     public GameObject ChestObject;
+    public GameObject Door;
+    private GameObject mObje;
 
-    public Vector2Int size;
+    private Vector2Int size;
     private Vector3Int vector3;
     private Vector3Int[] positions;
 
-    public List<Vector3Int> DoorLocations;
-
-    public int ZombieCount;
     public int EnemyCount;
+    public int ZombieCount;
     public int TowerExplodCount;
     public int TowerModeratorCount;
     public int TowerStandartCount;
@@ -60,14 +65,18 @@ public class Place : MonoBehaviour
         Init();
     }
 
-    public void Update()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
+        if (collision.gameObject.CompareTag(TAG_CHARACTER))
+        {
+            if (EnemyCount > 0)
+            {
+                for (int i = 0; i < DoorList.Count; i++)
+                {
+                    DoorList[i].GetComponent<Door>().DoorClose();
+                }
+            }
+        }
     }
 
     #endregion
@@ -76,8 +85,9 @@ public class Place : MonoBehaviour
 
     private void Init()
     {
-        tilemapGround = GameObject.FindWithTag(TAG_TILEMAP_GROUND).GetComponent<Tilemap>();
         tilemapWall = GameObject.FindWithTag(TAG_TILEMAP_WALL).GetComponent<Tilemap>();
+        tilemapGround = GameObject.FindWithTag(TAG_TILEMAP_GROUND).GetComponent<Tilemap>();
+        EnemyCount = ZombieCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
         PlaceCreate();
     }
 
@@ -89,59 +99,71 @@ public class Place : MonoBehaviour
 
         vector3 = new Vector3Int((int)transform.position.x, (int)transform.position.y, 1);
 
+        boxCollider.size = new Vector2(size.x - 2, size.y - 2);
+        boxCollider.offset = new Vector2(size.x / 2, size.y / 2);
+
         for (int x = 0; x < size.y; x++)
         {
-            for (int i = 0; i < size.x; i++)
+            for (int y = 0; y < size.x; y++)
             {
-                positions[i] = new Vector3Int(vector3.x + i, vector3.y + x, 1);
-                int a = x % 2 == 0 ? 0 : 1;
-                tileGroundArray[i] = i % 2 == a ? tileground : tileground2;
+                Tile tile = x % 2 == 0 ? tileGround : tileGround2;
+                Vector3Int position = new Vector3Int(vector3.x + y, vector3.y + x, 1);
+                tilemapGround.SetTile(position, tile);
             }
-            tilemapGround.SetTiles(positions, tileGroundArray);
         }
-        // ObjectCreate(ChestObject,1,6,2);
-        BorderCreate();
+
+        CreateDoors();
+        CreateBorders();
     }
 
-    private void BorderCreate()
+    private void CreateBorders()
     {
-        LocationSetDoor(UpDoorCount, size.x, true, 0);
-        LocationSetDoor(DownDoorCount, size.x, true, -size.y - 1);
-        LocationSetDoor(RightDoorCount, size.y, false, 0);
-        LocationSetDoor(LeftDoorCount, size.y, false, -size.x - 1);
-
         WallCreate(0, UpDoorCount, size.x, DoorUpPlace, DoorUpDownPlace, size.y, true);
         WallCreate(UpDoorCount, DownDoorCount, size.x, DoorDownPlace, DoorUpDownPlace, -1, true);
         WallCreate(0, RightDoorCount, size.y, DoorRightPlace, DoorRightLeftPlace, size.x, false);
         WallCreate(RightDoorCount, LeftDoorCount, size.y, DoorLeftPlace, DoorRightLeftPlace, -1, false);
     }
 
-    private void LocationSetDoor(int count, int span, bool isLocationX, int number)
+    private void CreateDoors()
+    {
+        CreateDoor(UpDoorCount, size.x, true, 0);
+        CreateDoor(DownDoorCount, size.x, true, -size.y - 1);
+        CreateDoor(RightDoorCount, size.y, false, 0);
+        CreateDoor(LeftDoorCount, size.y, false, -size.x - 1);
+    }
+
+    private void CreateDoor(int count, int span, bool isHorizontal, int number)
     {
         if (count > 0)
         {
             int Department = span / count;
             int Location = Department / 2;
 
-            for (int i = 0; i < count; i++)
+            if (isHorizontal == false)
             {
-                if (isLocationX == false)
+                for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    for (int x = 0; x < DOOR_WIDHT; x++)
-                    {
-                        BorderDraw(i, vector3.x + size.x + number, vector3.y + Location + x - 1, tileGroundArray, tilemapGround, tileground);
-                        DoorRightLeftPlace.Add(Location + x);
-                    }
+                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, tileGroundArray, tilemapGround, tileGround);
+                    DoorRightLeftPlace.Add(Location + x);
                 }
-                else
-                {
-                    for (int x = 0; x < DOOR_WIDHT; x++)
-                    {
-                        BorderDraw(i, vector3.x + Location + x - 1, vector3.y + size.y + number, tileGroundArray, tilemapGround, tileground);
-                        DoorUpDownPlace.Add(Location + x);
-                    }
-                }
+
+                mObje = Instantiate(Door, new Vector3(vector3.x + size.x + number + 0.5f, vector3.y + Location + 0.5f, 2), Quaternion.identity);
+                mObje.transform.Rotate(0, 0, -90);
+                mObje.GetComponent<Door>().EqualDatas(false, EnemyCount);
             }
+            else
+            {
+                for (int x = 0; x < DOOR_WIDHT; x++)
+                {
+                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, tileGroundArray, tilemapGround, tileGround);
+                    DoorUpDownPlace.Add(Location + x);
+                }
+
+                mObje = Instantiate(Door, new Vector3(vector3.x + Location + 0.5f, vector3.y + size.y + number + 0.5f, 2), Quaternion.identity);
+                mObje.GetComponent<Door>().EqualDatas(true, EnemyCount);
+            }
+
+            DoorList.Add(mObje);
         }
     }
 
@@ -158,11 +180,11 @@ public class Place : MonoBehaviour
             {
                 if (isupdown == false)
                 {
-                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, tileWallArray, tilemapWall, tilewall);
+                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, tileWallArray, tilemapWall, tileWall);
                 }
                 else
                 {
-                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, tileWallArray, tilemapWall, tilewall);
+                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, tileWallArray, tilemapWall, tileWall);
                 }
             }
         }
@@ -204,14 +226,14 @@ public class Place : MonoBehaviour
 
     #region Public Methods
 
-    public void MakeEqual(Vector2Int _size, Vector3Int _vector3, List<Vector3Int> vector3list, int up, int down, int right, int left)
+    public void MakeEqual(Vector2Int _size, Vector3Int _vector3, int up, int down, int right, int left)
     {
+        size = _size;
+        vector3 = _vector3;
         UpDoorCount = up;
         DownDoorCount = down;
         RightDoorCount = right;
         LeftDoorCount = left;
-        size = _size;
-        vector3 = _vector3;
     }
 
     #endregion

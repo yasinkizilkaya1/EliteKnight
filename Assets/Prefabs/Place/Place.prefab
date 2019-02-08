@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4850452412513746}
   - component: {fileID: 114438869281864736}
+  - component: {fileID: 61661562099817698}
   m_Layer: 0
-  m_Name: Map1
+  m_Name: Place
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,12 +35,37 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1055143785155314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 90.82335, y: 22.100368, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61661562099817698
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1055143785155314}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &114438869281864736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,15 +79,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemapGround: {fileID: 0}
   tilemapWall: {fileID: 0}
-  tileground: {fileID: 11400000, guid: af3a8be0b8cfee54ca854c770b6b68e3, type: 2}
-  tileground2: {fileID: 11400000, guid: dcc8e8aa64c5df14d864f13e4c9c74c3, type: 2}
-  tilewall: {fileID: 11400000, guid: 57f90b1db8892364189356599d6ad0a6, type: 2}
+  tileGround: {fileID: 11400000, guid: 81e165f3ecf88434c880c129a0eae0a8, type: 2}
+  tileGround2: {fileID: 11400000, guid: 9546b1b34f704c443a8dd619b6d03f3e, type: 2}
+  tileWall: {fileID: 11400000, guid: 57f90b1db8892364189356599d6ad0a6, type: 2}
+  DoorList: []
+  boxCollider: {fileID: 61661562099817698}
   ChestObject: {fileID: 1348728623167316, guid: 3af1b8dd247924c4e92f22372afc21bc,
     type: 2}
-  size: {x: 0, y: 0}
-  ZombieCount: 0
+  Door: {fileID: 1553468236565130, guid: 536bb389314d37942bbc3eb55607f6cf, type: 2}
   EnemyCount: 0
-  TowerExplodCount: 0
+  ZombieCount: 1
+  TowerExplodCount: 11
   TowerModeratorCount: 0
   TowerStandartCount: 0
   ChestCount: 0

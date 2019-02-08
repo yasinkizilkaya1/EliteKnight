@@ -43,6 +43,7 @@ public class CardContent : MonoBehaviour
         {
             GameObject card = Instantiate(cardPrefabObject, transform);
             card.GetComponent<Card>().UpEnumdateData(CharacterList[i]);
+            card.GetComponent<Toggle>().group = GameObject.FindWithTag("Content").GetComponent<ToggleGroup>();
             ToggleList.Add(card.GetComponent<Toggle>());
         }
     }

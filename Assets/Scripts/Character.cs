@@ -12,12 +12,12 @@ public class Character : MonoBehaviour
     private const string TAG_TOWERBULLET = "TowerBullet";
     private const string TAG_HEALTH = "Health";
     private const string TAG_ARMOR = "Armor";
-    private const string TAG_CLİP = "Clip";
+    private const string TAG_CLIP = "Clip";
     private const string TAG_AK47 = "Ak47";
     private const string TAG_SHOTGUN = "Shotgun";
-    private const int RUNSPEED = 10;
+    private const int RUN_SPEED = 10;
     private const int DECELERATİON = 1;
-    private const int BULLETLOSS = 1;
+    private const int BULLET_LOSS = 1;
     private const int EXPLODEDBULLETLOSS = 8;
     private const int CLIPAMOUNT = 30;
     private const float ENERGYRELOADTİME = 5f;
@@ -31,9 +31,9 @@ public class Character : MonoBehaviour
     public Gun gun;
     public CharacterData characterData;
 
-    public int Health;
-    public int MaxHealth;
-    public int Defence;
+    public int CurrentHP;
+    public int MaxHP;
+    public int CurrentDefence;
     public int Speed;
     public int Power;
     public int CharacterWay;
@@ -43,7 +43,6 @@ public class Character : MonoBehaviour
     public int DeadEnemyCount;
     private int mMaxEnergy;
     private int mDefaultSpeed;
-    
 
     public bool isDead;
     public bool isGun;
@@ -76,56 +75,57 @@ public class Character : MonoBehaviour
         CharacterTurn(gameManager);
         SlowDown(gameManager.towerEnemy.inside);
 
-        if (Health == 0)
+        if (CurrentHP == 0)
         {
             Destroy(gameObject);
             isDead = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (col.gameObject.CompareTag(TAG_TOWERBULLET))
+        if (Input.GetKey(KeyCode.E))
         {
-            HealthDisCount(BULLETLOSS);
-            Destroy(col.gameObject);
+            if (collision.gameObject.CompareTag(TAG_AK47))
+            {
+                isAk47 = true;
+                Destroy(collision.gameObject);
+            }
+            else if (collision.gameObject.CompareTag(TAG_SHOTGUN))
+            {
+                isShotgun = true;
+                isShotgunUse = true;
+                Destroy(collision.gameObject);
+            }
         }
-        else if (col.gameObject.CompareTag(TAG_TOWERENEMYBULLET))
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag(TAG_TOWERBULLET))
+        {
+            HealthDisCount(BULLET_LOSS);
+            Destroy(collider.gameObject);
+        }
+        else if (collider.gameObject.CompareTag(TAG_TOWERENEMYBULLET))
         {
             HealthDisCount(EXPLODEDBULLETLOSS);
-            Destroy(col.gameObject);
+            Destroy(collider.gameObject);
         }
-        else if (col.gameObject.CompareTag(TAG_HEALTH))
+        else if (collider.gameObject.CompareTag(TAG_HEALTH))
         {
-            if (Health < MaxHealth)
-            {
-                Health++;
-                Destroy(col.gameObject);
-            }
+            CurrentHP++;// look at here
+            Destroy(collider.gameObject);
         }
-        else if (col.gameObject.CompareTag(TAG_ARMOR))
+        else if (collider.gameObject.CompareTag(TAG_ARMOR))
         {
-            if (Defence < MaxDefance)
-            {
-                Defence++;
-                Destroy(col.gameObject);
-            }
+            CurrentDefence++;
+            Destroy(collider.gameObject);
         }
-        else if (col.gameObject.CompareTag(TAG_CLİP))
+        else if (collider.gameObject.CompareTag(TAG_CLIP))
         {
             gameManager.spawn.CharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
-            Destroy(col.gameObject);
-        }
-        else if (col.gameObject.CompareTag(TAG_AK47) && Input.GetKey(KeyCode.E))
-        {
-            isAk47 = true;
-            Destroy(col.gameObject);
-        }
-        else if (col.gameObject.CompareTag(TAG_SHOTGUN) && Input.GetKey(KeyCode.E))
-        {
-            isShotgun = true;
-            isShotgunUse = true;
-            Destroy(col.gameObject);
+            Destroy(collider.gameObject);
         }
     }
 
@@ -139,11 +139,11 @@ public class Character : MonoBehaviour
         characterData = (WarriorData)AssetDatabase.LoadAssetAtPath(CARD_DATA_PATH + gameManager.SelectedCardNameString + CARD_DATA_BİLL, typeof(WarriorData));
 
         name = characterData.Name;
-        Health = characterData.Health;
-        MaxHealth = Health;
+        CurrentHP = characterData.Health;
+        MaxHP = CurrentHP;
         Energy = characterData.Energy;
         mMaxEnergy = Energy;
-        Defence = characterData.Defence;
+        CurrentDefence = characterData.Defence;
         Power = characterData.Power;
 
         mDefaultSpeed = characterData.Speed;
@@ -205,7 +205,7 @@ public class Character : MonoBehaviour
             {
                 if (Energy > 0)
                 {
-                    Speed = RUNSPEED;
+                    Speed = RUN_SPEED;
                     Energy -= DECELERATİON;
                     run = 1;
                 }
@@ -254,33 +254,33 @@ public class Character : MonoBehaviour
     {
         int remainingDamage = 0;
 
-        if (Defence > 0)
+        if (CurrentDefence > 0)
         {
-            if (value > Defence)
+            if (value > CurrentDefence)
             {
-                remainingDamage = value - Defence;
-                Defence = 0;
+                remainingDamage = value - CurrentDefence;
+                CurrentDefence = 0;
             }
             else
             {
-                Defence -= value;
+                CurrentDefence -= value;
             }
         }
-        else if (Health > 0)
+        else if (CurrentHP > 0)
         {
-            if (value > Health)
+            if (value > CurrentHP)
             {
                 Destroy(gameObject);
                 isDead = true;
             }
             else
             {
-                Health -= value;
+                CurrentHP -= value;
             }
 
             if (remainingDamage != 0)
             {
-                Health -= remainingDamage;
+                CurrentHP -= remainingDamage;
             }
         }
     }
@@ -297,7 +297,7 @@ public class Character : MonoBehaviour
 
                 if (shooting <= 0)
                 {
-                    HealthDisCount(BULLETLOSS);
+                    HealthDisCount(BULLET_LOSS);
                     shooting = SHOOTİNGRATE;
                 }
             }

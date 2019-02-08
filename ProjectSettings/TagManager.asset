@@ -34,7 +34,6 @@ TagManager:
   - Clip
   - Armor
   - Health
-  - gun
   - Ak47
   - Projectile
   - Spawn
@@ -42,6 +41,7 @@ TagManager:
   - Shotgun
   - Tilemap_Ground
   - Map
+  - Content
   layers:
   - Default
   - TransparentFX
