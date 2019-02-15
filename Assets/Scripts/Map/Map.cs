@@ -48,6 +48,7 @@ public class Map : MonoBehaviour
 
     public Tilemap BridgeTilemap;
     public Tilemap BridgeWallTilemap;
+
     public Tile BridgeTile;
     public Tile BridgeWallTile;
 

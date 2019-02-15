@@ -20,9 +20,8 @@ public class Room : MonoBehaviour
     private TileBase[] tileGroundArray;
     public Tilemap tilemapGround;
     public Tilemap tilemapWall;
-    public Tile tileGround;
-    public Tile tileGround2;
-    public Tile tileWall;
+
+    public room room;
 
     public List<GameObject> DoorList;
     public List<GameObject> EnemyList;
@@ -143,7 +142,7 @@ public class Room : MonoBehaviour
         {
             for (int y = 0; y < size.x; y++)
             {
-                Tile tile = x % 2 == 0 ? tileGround : tileGround2;
+                Tile tile = x % 2 == 0 ? room.tileGround : room.tileGround2;
                 Vector3Int position = new Vector3Int(vector3.x + y, vector3.y + x, 1);
                 tilemapGround.SetTile(position, tile);
             }
@@ -180,7 +179,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, tileGroundArray, tilemapGround, tileGround);
+                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, tileGroundArray, tilemapGround, room.tileGround);
                     DoorRightLeftPlace.Add(Location + x);
                 }
 
@@ -191,7 +190,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, tileGroundArray, tilemapGround, tileGround);
+                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, tileGroundArray, tilemapGround, room.tileGround);
                     DoorUpDownPlace.Add(Location + x);
                 }
 
@@ -215,11 +214,11 @@ public class Room : MonoBehaviour
             {
                 if (isupdown == false)
                 {
-                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, tileWallArray, tilemapWall, tileWall);
+                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, tileWallArray, tilemapWall, room.tileWall);
                 }
                 else
                 {
-                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, tileWallArray, tilemapWall, tileWall);
+                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, tileWallArray, tilemapWall, room.tileWall);
                 }
             }
         }
