@@ -4,7 +4,7 @@ public class Weapon : MonoBehaviour
 {
     #region Constants
 
-    private const float ATTTACK_TİME = 0.4f;
+    private const float ATTTACK_TIME = 0.4f;
     private const string TAG_CHARACTER = "Body";
 
     #endregion
@@ -56,7 +56,7 @@ public class Weapon : MonoBehaviour
             if (AttackTime <= 0.1)
             {
                 isAssault = false;
-                AttackTime = ATTTACK_TİME;
+                AttackTime = ATTTACK_TIME;
             }
         }
         else
@@ -72,7 +72,7 @@ public class Weapon : MonoBehaviour
         if (AttackTime <= 0.1)
         {
             isAssault = false;
-            AttackTime = ATTTACK_TİME;
+            AttackTime = ATTTACK_TIME;
         }
     }
 

@@ -8,20 +8,21 @@ public class AmmoBar : MonoBehaviour
     #region Constants
 
     private const string TAG_CHARACTER = "Support";
-    private const int Ammo_Bar_Background_Width = 250;
+    private const int AMMO_BAR_BACKGROUND_WIDTH = 250;
 
     #endregion
 
     #region Fields
 
     public GridLayoutGroup AmmoGridLayout;
-    public List<Image> BarImageList;
-    public List<GameObject> BarImageListObject;
+
     public GameManager gameManager;
     public Spawn spawn;
     public TiroNew tiroNew;
-    public Image BarImage;
 
+    public Image BarImage;
+    public List<Image> BarImageList;
+    public List<GameObject> BarImageListObject;
     public GameObject ReloadGUIObject;
 
     public Text ClipAmountText;
@@ -81,7 +82,7 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarsCreate()
     {
-        AmmoBarWidth = (Ammo_Bar_Background_Width / (AmmoCount + 1));
+        AmmoBarWidth = (AMMO_BAR_BACKGROUND_WIDTH / (AmmoCount + 1));
         AmmoBarGap = AmmoBarWidth / (AmmoCount + 1);
 
         AmmoGridLayout.cellSize = new Vector2(AmmoBarWidth, 100);

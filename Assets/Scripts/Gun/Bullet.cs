@@ -4,7 +4,7 @@ public class Bullet : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_Spawn = "Spawn";
+    private const string TAG_SPAWN = "Spawn";
     private const string TAG_CHARACTER = "Body";
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
@@ -95,7 +95,7 @@ public class Bullet : MonoBehaviour
 
     private void Initialize()
     {
-        spawn = GameObject.FindWithTag(TAG_Spawn).GetComponent<Spawn>();
+        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
         TargetTransform = spawn.CharacterList[0].transform;
     }
 

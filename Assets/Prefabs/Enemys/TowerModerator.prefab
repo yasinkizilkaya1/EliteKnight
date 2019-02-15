@@ -71,6 +71,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4833424091656316}
   - component: {fileID: 212411844612954026}
+  - component: {fileID: 50756468367699946}
+  - component: {fileID: 58710070864492576}
+  - component: {fileID: 114790231896865960}
   m_Layer: 10
   m_Name: TowerModerator
   m_TagString: wall
@@ -87,9 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4764992444656854}
   - component: {fileID: 212603154943025826}
-  - component: {fileID: 58722596957247708}
   - component: {fileID: 120624949900864356}
-  - component: {fileID: 114470563865178030}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Enemy
@@ -145,8 +146,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455966353729056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2072, y: 3032, z: 0}
-  m_LocalScale: {x: 0.99980175, y: 0.99985033, z: 0.9999004}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_Children:
   - {fileID: 4866501810920806}
   m_Father: {fileID: 0}
@@ -186,6 +187,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50756468367699946
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1455966353729056}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58676387068357546
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -198,15 +219,15 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7980778, y: 4.770727}
+  m_Offset: {x: -1.3394806, y: 4.7707324}
   serializedVersion: 2
-  m_Radius: 270.28683
---- !u!58 &58722596957247708
+  m_Radius: 247.505
+--- !u!58 &58710070864492576
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1522431051173184}
+  m_GameObject: {fileID: 1455966353729056}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -215,7 +236,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 39.52
+  m_Radius: 30
 --- !u!114 &114141100891435970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,16 +248,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153811475bd2a1e44a274dcc21f970c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerWeapon: {fileID: 114790231896865960}
   spawn: {fileID: 0}
-  towerWeapon: {fileID: 114470563865178030}
   inside: 0
   isStandartTower: 0
---- !u!114 &114470563865178030
+--- !u!114 &114790231896865960
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1522431051173184}
+  m_GameObject: {fileID: 1455966353729056}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71592b6912314884e8b3598279622293, type: 3}
@@ -245,13 +266,16 @@ MonoBehaviour:
   lineRenderer: {fileID: 120624949900864356}
   towerEnemy: {fileID: 114141100891435970}
   spawn: {fileID: 0}
+  tower: {fileID: 11400000, guid: 8176572094f45d541b07b061a43ba704, type: 2}
   shotPrefabTransform: {fileID: 4720740865376638, guid: ad37c6966f29b1f428145591382b9138,
     type: 2}
   OriginTransform: {fileID: 4833424091656316}
+  RoomObject: {fileID: 0}
   TowerObject: {fileID: 1455966353729056}
+  BarrelObject: {fileID: 1195607464790794}
   shootCoolDown: 0
-  Health: 0
-  Defence: 0
+  CurrentHealth: 0
+  CurrentDefence: 0
   isLinerenderer: 1
 --- !u!120 &120624949900864356
 LineRenderer:

@@ -4,12 +4,13 @@ public class TowerWeapon : MonoBehaviour
 {
     #region Constants
 
-    private const int HEALTH = 6;
-    private const int DEFENCE = 4;
-    private const float SHOOTİNGRATE = 0.75f;
     private const string TAG_CHARACTER = "Body";
     private const string TAG_BULLET = "bullet";
     private const string TAG_KNIFE = "knife";
+    private const string TAG_SPAWN = "Spawn";
+    private const float SHOOTINGRATE = 0.75f;
+    private const int HEALTH = 6;
+    private const int DEFENCE = 4;
 
     #endregion
 
@@ -18,16 +19,19 @@ public class TowerWeapon : MonoBehaviour
     public LineRenderer lineRenderer;
     public TowerEnemy towerEnemy;
     public Spawn spawn;
+    public Tower tower;
 
     public Transform shotPrefabTransform;
     public Transform OriginTransform;
 
+    public GameObject RoomObject;
     public GameObject TowerObject;
+    public GameObject BarrelObject;
 
     public float shootCoolDown;
 
-    public int Health;
-    public int Defence;
+    public int CurrentHealth;
+    public int CurrentDefence;
 
     public bool isLinerenderer;
 
@@ -67,10 +71,11 @@ public class TowerWeapon : MonoBehaviour
             shootCoolDown -= Time.deltaTime;
         }
 
-        if (Health == 0)
+        if (CurrentHealth == 0)
         {
+            RoomObject.GetComponent<Room>().EnemyCount--;
             towerEnemy.inside = false;
-            Destroy(TowerObject);
+            Destroy(gameObject);
             spawn.CharacterList[0].DeadEnemyCount++;
         }
     }
@@ -94,9 +99,9 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        Health = HEALTH;
-        Defence = DEFENCE;
+        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
+        CurrentHealth = tower.Health;
+        CurrentDefence = tower.Defence;
     }
 
     private void TowerMoving()
@@ -126,48 +131,48 @@ public class TowerWeapon : MonoBehaviour
 
     private void Moving()
     {
-        Transform shootTransformObject = transform;
+        Transform shootTransformObject = TowerObject.transform;
         shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
 
-        if (transform.rotation.z != shootTransformObject.rotation.z)
+        if (TowerObject.transform.rotation.z != shootTransformObject.rotation.z)
         {
-            transform.Rotate(0, 0, transform.position.z);
+            TowerObject.transform.Rotate(0, 0, TowerObject.transform.position.z);
         }
-        else if (transform.rotation.z == shootTransformObject.rotation.z)
+        else if (TowerObject.transform.rotation.z == shootTransformObject.rotation.z)
         {
-            transform.rotation = shootTransformObject.rotation;
+            TowerObject.transform.rotation = shootTransformObject.rotation;
         }
     }
 
     private void HealtDisCount()
     {
         int remainingDamage = 0;
-        if (Defence > 0)
+        if (CurrentDefence > 0)
         {
-            if (spawn.CharacterList[0].Power > Defence)
+            if (spawn.CharacterList[0].Power > CurrentDefence)
             {
-                remainingDamage = spawn.CharacterList[0].Power - Defence;
-                Defence = 0;
+                remainingDamage = spawn.CharacterList[0].Power - CurrentDefence;
+                CurrentDefence = 0;
             }
             else
             {
-                Defence -= spawn.CharacterList[0].Power;
+                CurrentDefence -= spawn.CharacterList[0].Power;
             }
         }
-        else if (Defence == 0 && Health > 0)
+        else if (CurrentDefence == 0 && CurrentHealth > 0)
         {
-            if (spawn.CharacterList[0].Power > Health)
+            if (spawn.CharacterList[0].Power > CurrentHealth)
             {
-                Health = 0;
+                CurrentHealth = 0;
             }
             else
             {
-                Health -= spawn.CharacterList[0].Power;
+                CurrentHealth -= spawn.CharacterList[0].Power;
             }
 
             if (remainingDamage != 0)
             {
-                Health -= remainingDamage;
+                CurrentHealth -= remainingDamage;
             }
         }
     }
@@ -180,11 +185,16 @@ public class TowerWeapon : MonoBehaviour
     {
         if (CanAttack)
         {
-            shootCoolDown = SHOOTİNGRATE;
+            shootCoolDown = SHOOTINGRATE;
             var shootTransformObject = Instantiate(shotPrefabTransform) as Transform;
-            shootTransformObject.position = transform.position;
+            shootTransformObject.position = BarrelObject.transform.position;
             shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
         }
+    }
+
+    public void RoomEqual(GameObject gameObject)
+    {
+        RoomObject = gameObject;
     }
 
     #endregion

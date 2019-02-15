@@ -35,6 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046225569628214}
   - component: {fileID: 212549625316254786}
+  - component: {fileID: 114399021842050028}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Enemy
@@ -83,7 +84,6 @@ GameObject:
   - component: {fileID: 4264727243169440}
   - component: {fileID: 212725711401160242}
   - component: {fileID: 50640950502401448}
-  - component: {fileID: 114480627066493294}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Enemy
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4051801962427776}
   - component: {fileID: 212614561823135958}
-  - component: {fileID: 58814860482601104}
+  - component: {fileID: 70876824252088086}
   m_Layer: 13
   m_Name: Head
   m_TagString: Enemy
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 1519125531596516}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 0.5000009, y: 0.50000054, z: 4}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_Children:
   - {fileID: 4264727243169440}
   m_Father: {fileID: 0}
@@ -219,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1659494496104860}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 47.3, z: 0}
+  m_LocalPosition: {x: -0, y: 43.5, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children: []
   m_Father: {fileID: 4264727243169440}
@@ -232,7 +232,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635491780894588}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.5, y: -47.3, z: 0}
+  m_LocalPosition: {x: 0.5, y: -43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4264727243169440}
@@ -271,8 +271,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &58814860482601104
-CircleCollider2D:
+--- !u!70 &70876824252088086
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -283,20 +283,21 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.00024414062}
-  serializedVersion: 2
-  m_Radius: 26.15
---- !u!114 &114480627066493294
+  m_Offset: {x: -2.426155, y: 0.0000002892202}
+  m_Size: {x: 115.23738, y: 50.000492}
+  m_Direction: 1
+--- !u!114 &114399021842050028
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1646935306993320}
+  m_GameObject: {fileID: 1519125531596516}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b814fc172a5d2243a3ffaa9f3fc9399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Room: {fileID: 0}
   enemyWarrior: {fileID: 11400000, guid: 488bac2b1ca005f4cbd54d337c006f5a, type: 2}
   Health: 0
   gameManager: {fileID: 0}
@@ -304,6 +305,7 @@ MonoBehaviour:
   GunObject: {fileID: 1308963332817960}
   BulletObjcet: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
+  Body: {fileID: 1646935306993320}
 --- !u!212 &212096433454336000
 SpriteRenderer:
   m_ObjectHideFlags: 1

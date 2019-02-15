@@ -49,7 +49,6 @@ MonoBehaviour:
   LoadingText: {fileID: 0}
   characterID: {fileID: 0}
   spawn: {fileID: 0}
-  towerEnemy: {fileID: 0}
   ammoBar: {fileID: 0}
   slider: {fileID: 0}
   SelectedCardNameString: 

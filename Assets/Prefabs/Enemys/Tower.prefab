@@ -20,8 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4352658490205416}
   - component: {fileID: 212191664571619124}
-  - component: {fileID: 58623705322083040}
-  - component: {fileID: 114062850488258192}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Enemy
@@ -38,6 +36,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4979029332856892}
   - component: {fileID: 212085468333578508}
+  - component: {fileID: 50873558683955756}
+  - component: {fileID: 58244656507616986}
+  - component: {fileID: 114481030299245790}
   m_Layer: 10
   m_Name: Tower
   m_TagString: wall
@@ -158,8 +159,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1230982751642756}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1504, y: 3341, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_Children:
   - {fileID: 4359007684926330}
   m_Father: {fileID: 0}
@@ -185,6 +186,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50873558683955756
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230982751642756}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58165755845148154
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -197,46 +218,24 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7980778, y: 4.770727}
+  m_Offset: {x: 1.4162804, y: 4.770731}
   serializedVersion: 2
-  m_Radius: 270.28683
---- !u!58 &58623705322083040
+  m_Radius: 248.19563
+--- !u!58 &58244656507616986
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1064757577607252}
+  m_GameObject: {fileID: 1230982751642756}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.2320993}
   serializedVersion: 2
-  m_Radius: 39.52
---- !u!114 &114062850488258192
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1064757577607252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71592b6912314884e8b3598279622293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  towerEnemy: {fileID: 114305842053895080}
-  spawn: {fileID: 0}
-  shotPrefabTransform: {fileID: 4188302573477616, guid: 4bed0f314812b1a4ba623d78325d5ed2,
-    type: 2}
-  OriginTransform: {fileID: 4352658490205416}
-  TowerObject: {fileID: 1230982751642756}
-  shootCoolDown: 0
-  Health: 0
-  Defence: 0
-  isLinerenderer: 0
+  m_Radius: 26.952522
 --- !u!114 &114305842053895080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,10 +247,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153811475bd2a1e44a274dcc21f970c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerWeapon: {fileID: 114481030299245790}
   spawn: {fileID: 0}
-  towerWeapon: {fileID: 114062850488258192}
   inside: 0
   isStandartTower: 1
+--- !u!114 &114481030299245790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230982751642756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71592b6912314884e8b3598279622293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 0}
+  towerEnemy: {fileID: 114305842053895080}
+  spawn: {fileID: 0}
+  tower: {fileID: 11400000, guid: 4ec1c4b1e38005441bf5daa78be155be, type: 2}
+  shotPrefabTransform: {fileID: 4188302573477616, guid: 4bed0f314812b1a4ba623d78325d5ed2,
+    type: 2}
+  OriginTransform: {fileID: 4352658490205416}
+  RoomObject: {fileID: 0}
+  TowerObject: {fileID: 1064757577607252}
+  BarrelObject: {fileID: 1570966413706164}
+  shootCoolDown: 0
+  CurrentHealth: 0
+  CurrentDefence: 0
+  isLinerenderer: 0
 --- !u!212 &212085468333578508
 SpriteRenderer:
   m_ObjectHideFlags: 1

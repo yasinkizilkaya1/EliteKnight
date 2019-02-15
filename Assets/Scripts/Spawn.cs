@@ -12,7 +12,7 @@ public class Spawn : MonoBehaviour
     private const string TAG_CHARACTERNAME = "Custom";
     private const string TAG_WEAPON = "knife";
     private const string TAG_ASSAULT = "Assault";
-    private const string TAG_SPEALİST = "Spealist";
+    private const string TAG_SPEALIST = "Spealist";
     private const string TAG_SUPPORT = "Support";
 
     #endregion
@@ -82,7 +82,7 @@ public class Spawn : MonoBehaviour
             case TAG_ASSAULT:
                 TransformObject = Instantiate(AssaultObject, transform);
                 break;
-            case TAG_SPEALİST:
+            case TAG_SPEALIST:
                 TransformObject = Instantiate(SpealistObject, transform);
                 break;
             case TAG_SUPPORT:

@@ -239,7 +239,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019246697, y: -0.9}
+  m_Offset: {x: -0.019246697, y: -1.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -264,7 +264,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019246697, y: 0.9}
+  m_Offset: {x: -0.019246697, y: 1.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -309,8 +309,9 @@ MonoBehaviour:
   RightDoor: {fileID: 1072493754716926}
   LeftDoor: {fileID: 1084858886739738}
   DoorLock: {fileID: 1990294421048830}
-  EnemyCount: 0
   IsLock: 0
+  IsInside: 0
+  EnemyCount: 0
   DoorAnimator: {fileID: 95170597095851066}
 --- !u!212 &212045691231343686
 SpriteRenderer:

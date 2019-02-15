@@ -4,21 +4,18 @@ public class Zombies : MonoBehaviour
 {
     #region Constants
 
+    private const string TAG_TOWER_ENEMY_SLIDER = "TowerEnemySlider";
     private const string TAG_BULLET = "bullet";
-    private const string TAG_KNİFE = "knife";
+    private const string TAG_KNIFE = "knife";
     private const string TAG_WALL = "wall";
     private const string TAG_ENEMY = "Enemy";
-    private const string TAG_TOWER_ENEMY_SLİDER = "TowerEnemySlider";
-    private const float WALLRADİUS = 0.2f;
-    private const int SPEED = 4;
+    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string TAG_SPAWN = "Spawn";
+    private const float WALLRADIUS = 0.2f;
 
-    private const float SHOOTİNG_RATE = 0.75f;
-    private const float AFFİNİTY_ATTACK = 1.1f;
-    private const float AFFİNİTY = 1f;
-    private const int ATTACK_POWER = 1;
-    private const int HEALTH = 5;
-    private const int CHARACTER_POWER = 1;
-    private const int DEFENCE = 3;
+    private const float SHOOTING_RATE = 0.75f;
+    private const float AFFINITY_ATTACK = 1.1f;
+    private const float AFFINITY = 1f;
 
     #endregion
 
@@ -29,22 +26,25 @@ public class Zombies : MonoBehaviour
 
     public GameManager gameManager;
     public Spawn spawn;
+    public Zombie zombie;
+
+    private int CurrrentHealth;
+    private int CurrentDefance;
 
     public Transform Radar;
     public Transform wallTransformObject;
     public Transform zombieTransformObject;
     public LayerMask isWall;
     public LayerMask iszombie;
+
+    public GameObject RoomObject;
     public GameObject BodyObject;
     public Animator animator;
 
     public float distance;
     public float rotationSpeed;
     public float shootcoolDown;
-    public int Health;
-    public int Defence;
 
-    private Zombie zombie;
     private bool isAttack;
 
     private RaycastHit2D raycastHit2D;
@@ -74,10 +74,11 @@ public class Zombies : MonoBehaviour
     {
         animator.SetBool("isAttack", attack);
 
-        if (Health == 0)
+        if (CurrrentHealth == 0)
         {
             Destroy(BodyObject);
             spawn.CharacterList[0].DeadEnemyCount++;
+            RoomObject.GetComponent<Room>().EnemyCount--;
         }
 
         if (shootcoolDown > 0f)
@@ -105,8 +106,8 @@ public class Zombies : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADİUS, isWall);
-        isZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADİUS, iszombie);
+        isHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADIUS, isWall);
+        isZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADIUS, iszombie);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -116,7 +117,7 @@ public class Zombies : MonoBehaviour
             DisHealth();
             Destroy(collision.gameObject);
         }
-        else if (collision.gameObject.CompareTag(TAG_KNİFE))
+        else if (collision.gameObject.CompareTag(TAG_KNIFE))
         {
             DisHealth();
         }
@@ -128,10 +129,12 @@ public class Zombies : MonoBehaviour
 
     private void Initialize()
     {
+        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
         Physics2D.queriesStartInColliders = false;
         shootcoolDown = 0f;
-        Health = HEALTH;
-        Defence = DEFENCE;
+        CurrrentHealth = zombie.Health;
+        CurrentDefance = zombie.Defence;
     }
 
     private void RaycasLine()
@@ -140,7 +143,7 @@ public class Zombies : MonoBehaviour
 
         if (raycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLİDER) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
+            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
             {
                 Radar.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
                 Debug.DrawLine(Radar.position, raycastHit2D.point, Color.red);
@@ -161,12 +164,12 @@ public class Zombies : MonoBehaviour
     {
         if (gameManager.isPlayerDead == false)
         {
-            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > AFFİNİTY)
+            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > AFFINITY)
             {
-                BodyObject.transform.Translate(Vector2.right * -SPEED * Time.deltaTime);
+                BodyObject.transform.Translate(Vector2.right * -zombie.Speed * Time.deltaTime);
                 BodyObject.transform.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, BodyObject.transform);
             }
-            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < AFFİNİTY_ATTACK)
+            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < AFFINITY_ATTACK)
             {
                 Attack();
             }
@@ -177,42 +180,51 @@ public class Zombies : MonoBehaviour
     {
         if (attack)
         {
-            shootcoolDown = SHOOTİNG_RATE;
-            spawn.CharacterList[0].HealthDisCount(CHARACTER_POWER);
+            shootcoolDown = SHOOTING_RATE;
+            spawn.CharacterList[0].HealthDisCount(spawn.CharacterList[0].Power);
         }
     }
 
     private void DisHealth()
     {
         int remainingDamage = 0;
-        if (Defence > 0)
+        if (CurrentDefance > 0)
         {
-            if (spawn.CharacterList[0].Power > Defence)
+            if (spawn.CharacterList[0].Power > CurrentDefance)
             {
-                remainingDamage = spawn.CharacterList[0].Power - Defence;
-                Defence = 0;
+                remainingDamage = spawn.CharacterList[0].Power - CurrentDefance;
+                CurrentDefance = 0;
             }
             else
             {
-                Defence -= spawn.CharacterList[0].Power;
+                CurrentDefance -= spawn.CharacterList[0].Power;
             }
         }
-        else if (Defence == 0 && Health > 0)
+        else if (CurrentDefance == 0 && CurrrentHealth > 0)
         {
-            if (spawn.CharacterList[0].Power > Health)
+            if (spawn.CharacterList[0].Power > CurrrentHealth)
             {
-                Health = 0;
+                CurrrentHealth = 0;
             }
             else
             {
-                Health -= spawn.CharacterList[0].Power;
+                CurrrentHealth -= spawn.CharacterList[0].Power;
             }
         }
 
         if (remainingDamage != 0)
         {
-            Health -= remainingDamage;
+            CurrrentHealth -= remainingDamage;
         }
+    }
+
+    #endregion
+
+    #region Public Method
+
+    public void RoomEqual(GameObject gameObject)
+    {
+        RoomObject = gameObject;
     }
 
     #endregion

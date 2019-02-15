@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     public Text LoadingText;
     public CharacterID characterID;
     public Spawn spawn;
-    public TowerEnemy towerEnemy;
     public AmmoBar ammoBar;
     public Slider slider;
     private Keys keys;

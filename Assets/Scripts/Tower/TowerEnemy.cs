@@ -6,26 +6,46 @@ public class TowerEnemy : MonoBehaviour
     #region Constant
 
     private const string TAG_TARGET = "Player";
+    private const string TAG_SPAWN = "Spawn";
 
     #endregion
 
     #region Fields
 
-    public Spawn spawn;
     public TowerWeapon towerWeapon;
+    public Spawn spawn;
 
     public bool inside;
     public bool isStandartTower;
 
     #endregion
 
+    #region Private Method
+
+    private void Init()
+    {
+        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
+    }
+
+    #endregion
+
     #region Unity Methods
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void Start()
     {
-        if (col.gameObject.CompareTag(TAG_TARGET))
+        Init();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(TAG_TARGET))
         {
             inside = true;
+
+            if (towerWeapon.isLinerenderer)
+            {
+                spawn.CharacterList[0].SlowDown(inside);
+            }
 
             if (isStandartTower && towerWeapon.CanAttack)
             {
@@ -36,9 +56,10 @@ public class TowerEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag(TAG_TARGET))
+        if (col.gameObject.gameObject.CompareTag(TAG_TARGET))
         {
             inside = false;
+            spawn.CharacterList[0].SlowDown(inside);
             StopAllCoroutines();
         }
     }
@@ -60,6 +81,6 @@ public class TowerEnemy : MonoBehaviour
                 break;
         }
     }
-    
+
     #endregion
 }

@@ -4,12 +4,13 @@ public class WarriorEnemy : MonoBehaviour
 {
     #region Contants 
 
+    private const string TAG_TOWER_ENEMY_SLIDER = "TowerEnemySlider";
+    private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_BULLET = "bullet";
+    private const string TAG_ENEMY = "Enemy";
     private const string TAG_KNIFE = "knife";
     private const string TAG_WALL = "wall";
-    private const string TAG_ENEMY = "Enemy";
-    private const string TAG_TOWER_ENEMY_SLİDER = "TowerEnemySlider";
-    private const float CAN_ATTACK_TİME = 0.75f;
+    private const float CAN_ATTACK_TIME = 0.75f;
 
     #endregion
 
@@ -29,8 +30,10 @@ public class WarriorEnemy : MonoBehaviour
 
     public Transform Radar;
 
+    public GameObject RoomObject;
     public GameObject GunObject;
     public GameObject BulletObjcet;
+    public GameObject Body;
 
     public RaycastHit2D raycastHit2D;
 
@@ -69,6 +72,7 @@ public class WarriorEnemy : MonoBehaviour
 
         if (Health == 0)
         {
+            RoomObject.GetComponent<Room>().EnemyCount--;
             Destroy(gameObject);
             gameManager.spawn.CharacterList[0].DeadEnemyCount++;
         }
@@ -98,7 +102,7 @@ public class WarriorEnemy : MonoBehaviour
             Destroy(collision.gameObject);
             DisHealth();
         }
-        else if(collision.gameObject.CompareTag(TAG_KNIFE))
+        else if (collision.gameObject.CompareTag(TAG_KNIFE))
         {
             DisHealth();
         }
@@ -110,6 +114,7 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Init()
     {
+        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         shootCoolDown = 0f;
         Health = enemyWarrior.Health;
@@ -123,16 +128,16 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Aim()
     {
-        Transform shootTransform = transform;
-        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.spawn.CharacterList[0].transform, transform);
+        Transform shootTransform = Body.transform;
+        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.spawn.CharacterList[0].transform, Body.transform);
 
-        if (transform.rotation.z != shootTransform.rotation.z)
+        if (Body.transform.rotation.z != shootTransform.rotation.z)
         {
-            transform.Rotate(0, 0, transform.position.z);
+            Body.transform.Rotate(0, 0, transform.position.z);
         }
-        else if (transform.rotation.z == shootTransform.rotation.z)
+        else if (Body.transform.rotation.z == shootTransform.rotation.z)
         {
-            transform.rotation = shootTransform.rotation;
+            Body.transform.rotation = shootTransform.rotation;
         }
     }
 
@@ -141,7 +146,7 @@ public class WarriorEnemy : MonoBehaviour
         if (CanAttack)
         {
             Aim();
-            shootCoolDown = CAN_ATTACK_TİME;
+            shootCoolDown = CAN_ATTACK_TIME;
             Instantiate(BulletObjcet, GunObject.transform.position, GunObject.transform.rotation);
             Following();
         }
@@ -153,7 +158,7 @@ public class WarriorEnemy : MonoBehaviour
 
         if (raycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLİDER))
+            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER))
             {
                 isTargetFind = false;
                 Radar.Rotate(Vector3.forward * Range * Time.deltaTime);
@@ -173,10 +178,10 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Following()
     {
-        if (Vector2.Distance(transform.position, gameManager.spawn.CharacterList[0].transform.position) > Distance)
+        if (Vector2.Distance(Body.transform.position, gameManager.spawn.CharacterList[0].transform.position) > Distance)
         {
             Aim();
-            transform.Translate(Vector2.right * -Speed * Time.deltaTime);
+            Body.transform.Translate(Vector2.right * -Speed * Time.deltaTime);
             isAim = false;
         }
         else
@@ -212,6 +217,15 @@ public class WarriorEnemy : MonoBehaviour
         {
             Health -= remainingDamage;
         }
+    }
+
+    #endregion
+
+    #region Public Method
+
+    public void RoomEqual(GameObject gameObject)
+    {
+        RoomObject = gameObject;
     }
 
     #endregion

@@ -9,7 +9,7 @@ public class Map : MonoBehaviour
 
     private const int MIN_VALUE = 25;
     private const int MAX_VALUE = 50;
-    private const int PLACE_MAX = 30;
+    private const int PLACE_MAX = 100;
     private const int MAP_PLACE_MinVALUE = 6;
     private const int MAP_PLACE_MaxVALUE = 17;
     private const int MAZE_WIDTH = 3;
@@ -20,17 +20,17 @@ public class Map : MonoBehaviour
 
     public List<Vector2Int> PlacesSizeList;
     public List<Vector2Int> DoorLocation;
-    public List<Vector3Int> PlacesCoordinatesList;
+    public List<Vector3Int> RoomCoordinatesList;
     private List<Vector3Int> mBridgeLocation;
     private List<Vector3Int> mWallLocation;
 
-    private Vector3Int OldTransform;
-    private Vector2Int vector2Int;
-    private Vector3Int vector3Int;
-
     public GameObject PlaceObject;
 
-    public int PlaceCount;
+    private Vector3Int vector3Int;
+    private Vector2Int vector2Int;
+    private Vector3Int OldTransform;
+
+    public int RoomCoun;
     private int upDoor;
     private int downDoor;
     private int rightDoor;
@@ -68,14 +68,14 @@ public class Map : MonoBehaviour
     {
         mBridgeLocation = new List<Vector3Int>();
         mWallLocation = new List<Vector3Int>();
-        PlaceCount = RandomValue(MAP_PLACE_MinVALUE, MAP_PLACE_MaxVALUE);
+        RoomCoun = RandomValue(MAP_PLACE_MinVALUE, MAP_PLACE_MaxVALUE);
         PlacesFind();
         MapCreate();
     }
 
     private void MapCreate()
     {
-        for (int i = 0; i < PlaceCount; i++)
+        for (int i = 0; i < RoomCoun; i++)
         {
             if (i != 0)
             {
@@ -86,10 +86,10 @@ public class Map : MonoBehaviour
             }
 
             DoorPlacesFind(i);
-            Place place = Instantiate(PlaceObject, PlacesCoordinatesList[i], Quaternion.identity).GetComponent<Place>();
-            place.GetComponent<Place>().MakeEqual(PlacesSizeList[i], PlacesCoordinatesList[i], upDoor, downDoor, rightDoor, leftDoor);
+            Room room = Instantiate(PlaceObject, RoomCoordinatesList[i], Quaternion.identity).GetComponent<Room>();
+            room.GetComponent<Room>().MakeEqual(PlacesSizeList[i], RoomCoordinatesList[i], upDoor, downDoor, rightDoor, leftDoor);
 
-            if (i != PlaceCount - 1)
+            if (i != RoomCoun - 1)
             {
                 BrigeCreate(i);
             }
@@ -98,7 +98,7 @@ public class Map : MonoBehaviour
 
     private void PlacesFind()
     {
-        for (int i = 0; i < PlaceCount; i++)
+        for (int i = 0; i < RoomCoun; i++)
         {
             TransformX = RandomValue(MIN_VALUE, MAX_VALUE);
             TransformY = RandomValue(MIN_VALUE, MAX_VALUE);
@@ -110,13 +110,13 @@ public class Map : MonoBehaviour
 
     private void BrigeCreate(int i)
     {
-        if (PlacesCoordinatesList[i].y < PlacesCoordinatesList[i + 1].y)
+        if (RoomCoordinatesList[i].y < RoomCoordinatesList[i + 1].y)
         {
             int FirstDoorLocationX = PlacesSizeList[i].x / 6;
             int SecondDoorLocationX = PlacesSizeList[i + 1].x / 6;
 
-            Vector2Int FirstDoor = new Vector2Int(PlacesCoordinatesList[i].x + FirstDoorLocationX, PlacesCoordinatesList[i].y + PlacesSizeList[i].y + 1);
-            Vector2Int SecondDoor = new Vector2Int(PlacesCoordinatesList[i + 1].x + SecondDoorLocationX, PlacesCoordinatesList[i + 1].y - 1);
+            Vector2Int FirstDoor = new Vector2Int(RoomCoordinatesList[i].x + FirstDoorLocationX, RoomCoordinatesList[i].y + PlacesSizeList[i].y + 1);
+            Vector2Int SecondDoor = new Vector2Int(RoomCoordinatesList[i + 1].x + SecondDoorLocationX, RoomCoordinatesList[i + 1].y - 1);
 
             DoorLocation.Add(FirstDoor);
             DoorLocation.Add(SecondDoor);
@@ -164,18 +164,18 @@ public class Map : MonoBehaviour
             BorderBridge(true, distanceY, FirstDoor, SecondDoor);
         }
 
-        if (PlacesCoordinatesList[i].x < PlacesCoordinatesList[i + 1].x)
+        if (RoomCoordinatesList[i].x < RoomCoordinatesList[i + 1].x)
         {
             int FirstDoorLocationY = PlacesSizeList[i].y / 6;
             int SecondDoorLocationY = PlacesSizeList[i + 1].y / 6;
 
-            Vector2Int FirstDoor = new Vector2Int(PlacesCoordinatesList[i].x + PlacesSizeList[i].x + 1, PlacesCoordinatesList[i].y + FirstDoorLocationY);
-            Vector2Int SecondDoor = new Vector2Int(PlacesCoordinatesList[i + 1].x - 1, PlacesCoordinatesList[i + 1].y + SecondDoorLocationY);
+            Vector2Int FirstDoor = new Vector2Int(RoomCoordinatesList[i].x + PlacesSizeList[i].x + 1, RoomCoordinatesList[i].y + FirstDoorLocationY);
+            Vector2Int SecondDoor = new Vector2Int(RoomCoordinatesList[i + 1].x - 1, RoomCoordinatesList[i + 1].y + SecondDoorLocationY);
 
             DoorLocation.Add(FirstDoor);
             DoorLocation.Add(SecondDoor);
 
-            int distanceX = Mathf.Abs(PlacesCoordinatesList[i + 1].x - FirstDoor.x);
+            int distanceX = Mathf.Abs(RoomCoordinatesList[i + 1].x - FirstDoor.x);
 
             if (FirstDoor.y != SecondDoor.y)
             {
@@ -370,7 +370,7 @@ public class Map : MonoBehaviour
         {
             vector3Int = new Vector3Int(placeX, placeY, 1);
         }
-        PlacesCoordinatesList.Add(vector3Int);
+        RoomCoordinatesList.Add(vector3Int);
     }
 
     private void DoorPlacesFind(int i)
@@ -382,19 +382,19 @@ public class Map : MonoBehaviour
 
         if (i == 0)
         {
-            downDoor = PlacesCoordinatesList[i + 1].y < PlacesCoordinatesList[i].y ? MAZE_WIDTH : 0;
-            upDoor = PlacesCoordinatesList[i + 1].y > PlacesCoordinatesList[i].y ? MAZE_WIDTH : 0;
-            leftDoor = PlacesCoordinatesList[i + 1].x < PlacesCoordinatesList[i].x ? MAZE_WIDTH : 0;
-            rightDoor = PlacesCoordinatesList[i + 1].x > PlacesCoordinatesList[i].x ? MAZE_WIDTH : 0;
+            downDoor = RoomCoordinatesList[i + 1].y < RoomCoordinatesList[i].y ? MAZE_WIDTH : 0;
+            upDoor = RoomCoordinatesList[i + 1].y > RoomCoordinatesList[i].y ? MAZE_WIDTH : 0;
+            leftDoor = RoomCoordinatesList[i + 1].x < RoomCoordinatesList[i].x ? MAZE_WIDTH : 0;
+            rightDoor = RoomCoordinatesList[i + 1].x > RoomCoordinatesList[i].x ? MAZE_WIDTH : 0;
         }
         else
         {
-            OldTransform = i == PlaceCount - 1 ? PlacesCoordinatesList[i - 1] : PlacesCoordinatesList[i + 1];
+            OldTransform = i == RoomCoun - 1 ? RoomCoordinatesList[i - 1] : RoomCoordinatesList[i + 1];
 
-            downDoor = PlacesCoordinatesList[i - 1].y < PlacesCoordinatesList[i].y && PlacesCoordinatesList[i - 1].y != PlacesCoordinatesList[i].y ? MAZE_WIDTH : 0;
-            upDoor = OldTransform.y > PlacesCoordinatesList[i].y && OldTransform.y != PlacesCoordinatesList[i].y ? MAZE_WIDTH : 0;
-            leftDoor = PlacesCoordinatesList[i - 1].x < PlacesCoordinatesList[i].x && PlacesCoordinatesList[i - 1].x != PlacesCoordinatesList[i].x ? MAZE_WIDTH : 0;
-            rightDoor = OldTransform.x > PlacesCoordinatesList[i].x && OldTransform.x != PlacesCoordinatesList[i].x ? MAZE_WIDTH : 0;
+            downDoor = RoomCoordinatesList[i - 1].y < RoomCoordinatesList[i].y && RoomCoordinatesList[i - 1].y != RoomCoordinatesList[i].y ? MAZE_WIDTH : 0;
+            upDoor = OldTransform.y > RoomCoordinatesList[i].y && OldTransform.y != RoomCoordinatesList[i].y ? MAZE_WIDTH : 0;
+            leftDoor = RoomCoordinatesList[i - 1].x < RoomCoordinatesList[i].x && RoomCoordinatesList[i - 1].x != RoomCoordinatesList[i].x ? MAZE_WIDTH : 0;
+            rightDoor = OldTransform.x > RoomCoordinatesList[i].x && OldTransform.x != RoomCoordinatesList[i].x ? MAZE_WIDTH : 0;
         }
     }
 

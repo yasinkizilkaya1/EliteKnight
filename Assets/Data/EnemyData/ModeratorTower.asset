@@ -8,15 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e03047e69876848b92595dfef2ddff, type: 3}
-  m_Name: WarriorEnemy
+  m_Script: {fileID: 11500000, guid: 50dbf25131a276145ad775b158ccae0f, type: 3}
+  m_Name: ModeratorTower
   m_EditorClassIdentifier: 
-  Id: 1
-  Name: WarriorEnemy
-  Health: 1
-  MaxHealth: 1
-  Defence: 0
-  Speed: 5
-  AttackPower: 1
-  Range: 200
-  Distance: 5
+  Id: 0
+  Name: 
+  Health: 8
+  MaxHealth: 8
+  Defence: 4
+  AttacPower: 1

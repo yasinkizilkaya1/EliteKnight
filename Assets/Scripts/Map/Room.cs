@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Place : MonoBehaviour
+public class Room : MonoBehaviour
 {
     #region Constants
 
@@ -25,6 +25,7 @@ public class Place : MonoBehaviour
     public Tile tileWall;
 
     public List<GameObject> DoorList;
+    public List<GameObject> EnemyList;
 
     public BoxCollider2D boxCollider;
 
@@ -38,11 +39,14 @@ public class Place : MonoBehaviour
 
     public int EnemyCount;
     public int ZombieCount;
+    public int PursueEnemyCount;
     public int TowerExplodCount;
     public int TowerModeratorCount;
     public int TowerStandartCount;
     public int ChestCount;
     public int BoxCount;
+
+    public bool IsCreate;
 
     public int UpDoorCount;
     public int DownDoorCount;
@@ -58,6 +62,19 @@ public class Place : MonoBehaviour
 
     #endregion
 
+    #region Property
+
+    enum EnemyType
+    {
+        Zombie,
+        PursueEnemy,
+        TowerExplod,
+        TowerModerator,
+        TowerStandart
+    }
+
+    #endregion
+
     #region Unity Methods
 
     private void Start()
@@ -69,11 +86,25 @@ public class Place : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(TAG_CHARACTER))
         {
-            if (EnemyCount > 0)
+            if (EnemyCount > 0 && IsCreate)
             {
+                EnemysCreate();
+
                 for (int i = 0; i < DoorList.Count; i++)
                 {
                     DoorList[i].GetComponent<Door>().DoorClose();
+                    DoorList[i].GetComponent<Door>().IsInside = true;
+                }
+                IsCreate = false;
+            }
+
+            if (EnemyCount == 0)
+            {
+                for (int i = 0; i < DoorList.Count; i++)
+                {
+                    DoorList[i].GetComponent<Door>().IsLock = false;
+                    DoorList[i].GetComponent<Door>().IsInside = false;
+                    DoorList[i].GetComponent<Door>().DoorLock.SetActive(false);
                 }
             }
         }
@@ -85,9 +116,15 @@ public class Place : MonoBehaviour
 
     private void Init()
     {
+        IsCreate = true;
+        ZombieCount = RandomValue(1, 8);
+        //PursueEnemyCount = RandomValue(1, 8);
+        TowerExplodCount = RandomValue(0, 2);
+        TowerModeratorCount = RandomValue(0, 2);
+        TowerStandartCount = RandomValue(0, 2);
         tilemapWall = GameObject.FindWithTag(TAG_TILEMAP_WALL).GetComponent<Tilemap>();
         tilemapGround = GameObject.FindWithTag(TAG_TILEMAP_GROUND).GetComponent<Tilemap>();
-        EnemyCount = ZombieCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
+        EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
         PlaceCreate();
     }
 
@@ -99,7 +136,7 @@ public class Place : MonoBehaviour
 
         vector3 = new Vector3Int((int)transform.position.x, (int)transform.position.y, 1);
 
-        boxCollider.size = new Vector2(size.x - 2, size.y - 2);
+        boxCollider.size = new Vector2(size.x, size.y);
         boxCollider.offset = new Vector2(size.x / 2, size.y / 2);
 
         for (int x = 0; x < size.y; x++)
@@ -147,9 +184,8 @@ public class Place : MonoBehaviour
                     DoorRightLeftPlace.Add(Location + x);
                 }
 
-                mObje = Instantiate(Door, new Vector3(vector3.x + size.x + number + 0.5f, vector3.y + Location + 0.5f, 2), Quaternion.identity);
+                mObje = Instantiate(Door, new Vector3(vector3.x + size.x + number + 0.5f, vector3.y + Location + 0.5f, 2), Quaternion.identity) as GameObject;
                 mObje.transform.Rotate(0, 0, -90);
-                mObje.GetComponent<Door>().EqualDatas(false, EnemyCount);
             }
             else
             {
@@ -159,8 +195,7 @@ public class Place : MonoBehaviour
                     DoorUpDownPlace.Add(Location + x);
                 }
 
-                mObje = Instantiate(Door, new Vector3(vector3.x + Location + 0.5f, vector3.y + size.y + number + 0.5f, 2), Quaternion.identity);
-                mObje.GetComponent<Door>().EqualDatas(true, EnemyCount);
+                mObje = Instantiate(Door, new Vector3(vector3.x + Location + 0.5f, vector3.y + size.y + number + 0.5f, 2), Quaternion.identity) as GameObject;
             }
 
             DoorList.Add(mObje);
@@ -197,13 +232,39 @@ public class Place : MonoBehaviour
         tilemap.SetTiles(positions, tilebase);
     }
 
-    private void ObjectCreate(GameObject createobje, int minvalue, int maxvalue, int objewidth)
+    private void EnemysCreate()
     {
-        int count = RandomValue(minvalue, maxvalue);
+        ObjeCreate(ZombieCount, EnemyList[0], EnemyType.Zombie);
+        ObjeCreate(PursueEnemyCount, EnemyList[1], EnemyType.PursueEnemy);
+        ObjeCreate(TowerExplodCount, EnemyList[2], EnemyType.TowerExplod);
+        ObjeCreate(TowerModeratorCount, EnemyList[3], EnemyType.TowerModerator);
+        ObjeCreate(TowerStandartCount, EnemyList[4], EnemyType.TowerStandart);
+    }
 
-        for (int i = 0; i < count; i++)
+    private void ObjeCreate(int finshValue, GameObject Object, EnemyType enemyType)
+    {
+        for (int i = 0; i < finshValue; i++)
         {
-            Instantiate(createobje, RandomLocationFind(objewidth), Quaternion.identity);
+            GameObject gameObject = Instantiate(Object, RandomLocationFind(4), Quaternion.identity) as GameObject;
+
+            switch (enemyType)
+            {
+                case EnemyType.Zombie:
+                    gameObject.GetComponentInChildren<Zombies>().RoomEqual(this.gameObject);
+                    break;
+                case EnemyType.PursueEnemy:
+                    gameObject.GetComponentInChildren<WarriorEnemy>().RoomEqual(this.gameObject);
+                    break;
+                case EnemyType.TowerExplod:
+                    gameObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this.gameObject);
+                    break;
+                case EnemyType.TowerModerator:
+                    gameObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this.gameObject);
+                    break;
+                case EnemyType.TowerStandart:
+                    gameObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this.gameObject);
+                    break;
+            }
         }
     }
 
@@ -212,7 +273,7 @@ public class Place : MonoBehaviour
         int transformX = RandomValue(objewidth, size.x - objewidth);
         int transformY = RandomValue(objewidth, size.y - objewidth);
 
-        Vector3 location = new Vector3(transform.position.x + transformX, transform.position.y + transformY);
+        Vector3 location = new Vector3(transform.position.x + transformX, transform.position.y + transformY, 1);
         return location;
     }
 

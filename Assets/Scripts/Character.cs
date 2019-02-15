@@ -5,7 +5,7 @@ public class Character : MonoBehaviour
 {
     #region Constants
 
-    private const string CARD_DATA_BİLL = ".asset";
+    private const string CARD_DATA_BILL = ".asset";
     private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
     private const string TAG_TOWERENEMYBULLET = "TowerEnemyBullet";
     private const string TAG_GAMEMANAGER = "GameManager";
@@ -16,11 +16,11 @@ public class Character : MonoBehaviour
     private const string TAG_AK47 = "Ak47";
     private const string TAG_SHOTGUN = "Shotgun";
     private const int RUN_SPEED = 10;
-    private const int DECELERATİON = 1;
+    private const int DECELERATION = 1;
     private const int BULLET_LOSS = 1;
     private const int EXPLODEDBULLETLOSS = 8;
     private const int CLIPAMOUNT = 30;
-    private const float ENERGYRELOADTİME = 5f;
+    private const float ENERGYRELOADTIME = 5f;
     private const float SHOOTİNGRATE = 1f;
 
     #endregion
@@ -73,7 +73,6 @@ public class Character : MonoBehaviour
         Moving(gameManager);
         Run(gameManager);
         CharacterTurn(gameManager);
-        SlowDown(gameManager.towerEnemy.inside);
 
         if (CurrentHP == 0)
         {
@@ -136,7 +135,7 @@ public class Character : MonoBehaviour
     private void Init()
     {
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        characterData = (WarriorData)AssetDatabase.LoadAssetAtPath(CARD_DATA_PATH + gameManager.SelectedCardNameString + CARD_DATA_BİLL, typeof(WarriorData));
+        characterData = (WarriorData)AssetDatabase.LoadAssetAtPath(CARD_DATA_PATH + gameManager.SelectedCardNameString + CARD_DATA_BILL, typeof(WarriorData));
 
         name = characterData.Name;
         CurrentHP = characterData.Health;
@@ -206,7 +205,7 @@ public class Character : MonoBehaviour
                 if (Energy > 0)
                 {
                     Speed = RUN_SPEED;
-                    Energy -= DECELERATİON;
+                    Energy -= DECELERATION;
                     run = 1;
                 }
                 else
@@ -234,12 +233,12 @@ public class Character : MonoBehaviour
 
                 if (EnergyReload <= 0.2 && mMaxEnergy >= Energy)
                 {
-                    Energy += DECELERATİON;
+                    Energy += DECELERATION;
 
                     if (mMaxEnergy == Energy)
                     {
                         isTire = false;
-                        EnergyReload = ENERGYRELOADTİME;
+                        EnergyReload = ENERGYRELOADTIME;
                     }
                 }
             }

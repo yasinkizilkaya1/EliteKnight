@@ -2183,12 +2183,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AmmoGridLayout: {fileID: 114159743733127990}
-  BarImageList: []
-  BarImageListObject: []
   gameManager: {fileID: 0}
   spawn: {fileID: 0}
   tiroNew: {fileID: 0}
   BarImage: {fileID: 114628980544263730, guid: 28f47c9e98e6c714bb8bf6a061c8462a, type: 2}
+  BarImageList: []
+  BarImageListObject: []
   ReloadGUIObject: {fileID: 1312029304788592}
   ClipAmountText: {fileID: 114078159619834220}
 --- !u!114 &114451148424663522
@@ -2598,7 +2598,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 224723537818919060}
   m_HandleRect: {fileID: 0}
