@@ -9,7 +9,7 @@ public class Map : MonoBehaviour
 
     private const int MIN_VALUE = 25;
     private const int MAX_VALUE = 50;
-    private const int PLACE_MAX = 100;
+    private const int PLACE_MAX = 30;
     private const int MAP_PLACE_MinVALUE = 6;
     private const int MAP_PLACE_MaxVALUE = 17;
     private const int MAZE_WIDTH = 3;
@@ -76,6 +76,8 @@ public class Map : MonoBehaviour
 
     private void MapCreate()
     {
+        GameObject Map = gameObject;
+
         for (int i = 0; i < RoomCoun; i++)
         {
             if (i != 0)
@@ -87,8 +89,10 @@ public class Map : MonoBehaviour
             }
 
             DoorPlacesFind(i);
-            Room room = Instantiate(PlaceObject, RoomCoordinatesList[i], Quaternion.identity).GetComponent<Room>();
-            room.GetComponent<Room>().MakeEqual(PlacesSizeList[i], RoomCoordinatesList[i], upDoor, downDoor, rightDoor, leftDoor);
+
+            Map = Instantiate(PlaceObject, transform);
+            Map.transform.position =RoomCoordinatesList[i];
+            Map.GetComponent<Room>().MakeEqual(PlacesSizeList[i], RoomCoordinatesList[i], upDoor, downDoor, rightDoor, leftDoor);
 
             if (i != RoomCoun - 1)
             {

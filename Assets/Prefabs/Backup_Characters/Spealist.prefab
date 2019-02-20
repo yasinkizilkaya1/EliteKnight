@@ -541,6 +541,7 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
+  Barrels: []
   SpareBulletCount: 0
   ClipCapacity: 0
   Ammo: 5
@@ -567,6 +568,7 @@ MonoBehaviour:
   PistolObject: {fileID: 0}
   WoodObject: {fileID: 0}
   Ak47Object: {fileID: 0}
+  ShotgunObject: {fileID: 0}
   RightWeaponObject: {fileID: 0}
   isPistolGun: 0
   isWoodGun: 0
@@ -584,17 +586,21 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   gun: {fileID: 114566776366071854}
   characterData: {fileID: 0}
-  Health: 0
-  MaxHealth: 0
-  Defence: 0
+  CurrentHP: 0
+  MaxHP: 0
+  CurrentDefence: 0
   Speed: 0
   Power: 0
   CharacterWay: 0
   run: 0
   Energy: 0
   MaxDefance: 0
+  DeadEnemyCount: 0
   isDead: 0
-  isFindAk47: 0
+  isGun: 0
+  isAk47: 0
+  isShotgun: 0
+  isShotgunUse: 0
   isTire: 0
   EnergyReload: 0
   shooting: 0
@@ -616,7 +622,8 @@ MonoBehaviour:
   AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  SpareBulletCount: 75
+  Barrels: []
+  SpareBulletCount: 1000
   ClipCapacity: 5
   Ammo: 0
   isbarrel: 1

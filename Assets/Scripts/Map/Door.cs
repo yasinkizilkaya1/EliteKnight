@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
 
     #region Fields
 
-    private Room mRoom;
+    public Room Room;
 
     private Collider2D mLeftDoorCollider;
     private Collider2D mRightDoorCollider;
@@ -23,8 +23,6 @@ public class Door : MonoBehaviour
     public GameObject DoorLock;
 
     public bool IsLock;
-    public bool IsInside;
-    public bool IsOpen;
 
     public int EnemyCount;
 
@@ -49,11 +47,25 @@ public class Door : MonoBehaviour
         Initialize();
     }
 
+    private void OnGUI()
+    {
+        if (EnemyCount != Room.EnemyCount)
+        {
+            EnemyCount = Room.EnemyCount;
+
+            if (EnemyCount == 0)
+            {
+                IsLock = false;
+                DoorLock.SetActive(false);
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(TAG_CHARCTER))
         {
-            if (IsLock == false && IsInside == false)
+            if (IsLock == false)
             {
                 ChangeDoorState(State.Open);
             }
@@ -93,12 +105,13 @@ public class Door : MonoBehaviour
     {
         mState = state;
         bool isbool = mState == State.Open ? false : true;
+        IsLock = isbool;
+        yield return new WaitForSeconds(0.1f);
         DoorAnimator.SetBool("IsOpen", !isbool);
         yield return new WaitForSeconds(1f);
         mLeftDoorCollider.enabled = isbool;
         mRightDoorCollider.enabled = isbool;
         DoorLock.SetActive(isbool);
-        IsLock = isbool;
     }
 
     #endregion

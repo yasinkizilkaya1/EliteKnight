@@ -31,9 +31,11 @@ public class Spawn : MonoBehaviour
 
     public Slider HealthBarSlider;
     public Slider ArmorBarSlider;
+    public Slider EnergyBarSlider;
 
     public GameObject HealthgameObject;
     public GameObject ArmorgameObject;
+    public GameObject EnergygameObject;
 
     #endregion
 
@@ -50,6 +52,7 @@ public class Spawn : MonoBehaviour
         {
             HealthBarSlider.value = CharacterList[0].CurrentHP;
             ArmorBarSlider.value = CharacterList[0].CurrentDefence;
+            EnergyBarSlider.value = CharacterList[0].Energy;
             StartCoroutine(SetActiveBars());
         }
         else
@@ -101,10 +104,13 @@ public class Spawn : MonoBehaviour
     IEnumerator Bars()
     {
         yield return new WaitForSeconds(0.1f);
+        EnergygameObject.SetActive(true);
         HealthBarSlider.maxValue = CharacterList[0].MaxHP;
         HealthBarSlider.value = CharacterList[0].characterData.Health;
         ArmorBarSlider.maxValue = CharacterList[0].characterData.Defence;
         ArmorBarSlider.value = CharacterList[0].characterData.Defence;
+        EnergyBarSlider.maxValue = CharacterList[0].characterData.MaxEnergy;
+        EnergyBarSlider.value = CharacterList[0].characterData.Energy;
         StopAllCoroutines();
     }
 
