@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212191664571619124}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114481030299245790}
   m_Layer: 10
   m_Name: Tower
-  m_TagString: wall
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 114305842053895080}
   m_Layer: 0
   m_Name: EffectArea
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -251,6 +251,7 @@ MonoBehaviour:
   spawn: {fileID: 0}
   inside: 0
   isStandartTower: 1
+  SlowPower: 1
 --- !u!114 &114481030299245790
 MonoBehaviour:
   m_ObjectHideFlags: 1

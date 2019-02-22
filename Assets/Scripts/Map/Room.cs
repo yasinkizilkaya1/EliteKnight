@@ -17,10 +17,10 @@ public class Room : MonoBehaviour
 
     #region Fields
 
-    private TileBase[] tileWallArray;
-    private TileBase[] tileGroundArray;
-    public Tilemap tilemapGround;
-    public Tilemap tilemapWall;
+    private TileBase[] mTileWallArray;
+    private TileBase[] mTileGroundArray;
+    public Tilemap tileMapGround;
+    public Tilemap tileMapWall;
 
     public room room;
 
@@ -96,8 +96,8 @@ public class Room : MonoBehaviour
         TowerExplodCount = RandomValue(0, 2);
         TowerModeratorCount = RandomValue(0, 2);
         TowerStandartCount = RandomValue(0, 2);
-        tilemapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
-        tilemapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
+        tileMapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
+        tileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
         PlaceCreate();
 
@@ -106,8 +106,8 @@ public class Room : MonoBehaviour
     private void PlaceCreate()
     {
         positions = new Vector3Int[size.x * size.y];
-        tileGroundArray = new TileBase[positions.Length];
-        tileWallArray = new TileBase[positions.Length];
+        mTileGroundArray = new TileBase[positions.Length];
+        mTileWallArray = new TileBase[positions.Length];
 
         vector3 = new Vector3Int((int)transform.position.x, (int)transform.position.y, 1);
 
@@ -117,7 +117,7 @@ public class Room : MonoBehaviour
             {
                 Tile tile = x % 2 == 0 ? room.tileGround : room.tileGround2;
                 Vector3Int position = new Vector3Int(vector3.x + y, vector3.y + x, 1);
-                tilemapGround.SetTile(position, tile);
+                tileMapGround.SetTile(position, tile);
             }
         }
 
@@ -154,7 +154,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, tileGroundArray, tilemapGround, room.tileGround);
+                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, mTileGroundArray, tileMapGround, room.tileGround);
                     DoorRightLeftPlace.Add(Location + x);
                 }
 
@@ -168,7 +168,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, tileGroundArray, tilemapGround, room.tileGround);
+                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, mTileGroundArray, tileMapGround, room.tileGround);
                     DoorUpDownPlace.Add(Location + x);
                 }
 
@@ -179,7 +179,7 @@ public class Room : MonoBehaviour
 
             }
 
-            DoorList.Add(gameObject);
+            DoorList.Add(RoomObject);
         }
     }
 
@@ -196,11 +196,11 @@ public class Room : MonoBehaviour
             {
                 if (isupdown == false)
                 {
-                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, tileWallArray, tilemapWall, room.tileWall);
+                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, mTileWallArray, tileMapWall, room.tileWall);
                 }
                 else
                 {
-                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, tileWallArray, tilemapWall, room.tileWall);
+                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, mTileWallArray, tileMapWall, room.tileWall);
                 }
             }
         }
@@ -217,12 +217,6 @@ public class Room : MonoBehaviour
     {
         if (IsCreate == true)
         {
-            if (DoorList.Count == 2)
-            {
-                DoorList[1].GetComponentInChildren<Door>().DoorClose();
-            }
-          
-
             ObjeCreate(ZombieCount, EnemyList[0], EnemyType.Zombie);
             ObjeCreate(PursueEnemyCount, EnemyList[1], EnemyType.PursueEnemy);
             ObjeCreate(TowerExplodCount, EnemyList[2], EnemyType.TowerExplod);

@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4747179111597534}
   - component: {fileID: 70122788320190214}
-  - component: {fileID: 114272085414257888}
+  - component: {fileID: 114627845913140162}
   m_Layer: 0
   m_Name: Bullet3
   m_TagString: bullet
@@ -123,7 +123,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.00615529, y: 0.0005595394}
   m_Size: {x: 0.09104716, y: 0.040685672}
   m_Direction: 1
---- !u!114 &114272085414257888
+--- !u!114 &114627845913140162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -131,22 +131,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1278051057937664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
+  m_Script: {fileID: 11500000, guid: 083ff2dd6e0ca534fa44e147021055da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  AmmoPrefabObject: {fileID: 1278051057937664}
-  clipObject: {fileID: 1442587598998342, guid: 3b35007423759fe44a7fb7c4f7de304c, type: 2}
-  SpareBulletCount: 0
-  ClipCapacity: 0
-  Ammo: 10
-  isbarrel: 0
-  isBulletPos: 1
-  isWeaponReload: 0
-  isShoot: 0
-  weaponReload: 0
-  Velocidade: 14
-  FillingAmount: 0
+  gun: {fileID: 0}
+  Speed: 10
 --- !u!212 &212935885676022342
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 4403118938020026}
   - component: {fileID: 70114313193528078}
   - component: {fileID: 50508956750092470}
-  - component: {fileID: 114454283417489886}
   m_Layer: 0
   m_Name: Bullet6
   m_TagString: bullet
@@ -123,31 +122,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.012750731, y: -0.00011126919}
   m_Size: {x: 0.0846382, y: 0.040734846}
   m_Direction: 1
---- !u!114 &114454283417489886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1655796993438374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  AmmoPrefabObject: {fileID: 1655796993438374}
-  clipObject: {fileID: 1442587598998342, guid: 3b35007423759fe44a7fb7c4f7de304c, type: 2}
-  Barrels: []
-  SpareBulletCount: 0
-  ClipCapacity: 0
-  Ammo: 0
-  isbarrel: 0
-  isBulletPos: 1
-  isWeaponReload: 0
-  isShoot: 0
-  weaponReload: 3
-  Velocidade: 1
-  FillingAmount: 0
 --- !u!212 &212619049128890056
 SpriteRenderer:
   m_ObjectHideFlags: 1

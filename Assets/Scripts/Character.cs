@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -7,9 +8,7 @@ public class Character : MonoBehaviour
 
     private const string CARD_DATA_BILL = ".asset";
     private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
-    private const string TAG_TOWERENEMYBULLET = "TowerEnemyBullet";
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_TOWERBULLET = "TowerBullet";
     private const string TAG_HEALTH = "Health";
     private const string TAG_ARMOR = "Armor";
     private const string TAG_CLIP = "Clip";
@@ -17,11 +16,9 @@ public class Character : MonoBehaviour
     private const string TAG_SHOTGUN = "Shotgun";
     private const int RUN_SPEED = 10;
     private const int DECELERATION = 1;
-    private const int BULLET_LOSS = 1;
-    private const int EXPLODEDBULLETLOSS = 8;
     private const int CLIPAMOUNT = 30;
     private const float ENERGYRELOADTIME = 5f;
-    private const float SHOOTİNGRATE = 1f;
+    private const float SHOOTİNGRATE = 1f; //Look
 
     #endregion
 
@@ -44,20 +41,19 @@ public class Character : MonoBehaviour
     private int mMaxEnergy;
     private int mDefaultSpeed;
 
+    public bool IsNewGun;
     public bool isDead;
-    public bool isGun;
-    public bool isAk47;
-    public bool isShotgun;
-    public bool isShotgunUse;
     public bool isTire;
 
     public float EnergyReload;
     public float shooting;
 
+    private Vector3 mousePositionVector;
     public GameObject characterObject;
     public GameObject BodyObject;
     public GameObject RightWeaponObject;
-    private Vector3 mousePositionVector;
+    public GameObject RightGunObject;
+    public List<GameObject> WeaponList;
 
     #endregion
 
@@ -70,9 +66,14 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        Moving(gameManager);
-        Run(gameManager);
-        CharacterTurn(gameManager);
+        if (gameManager != null)
+        {
+            Moving(gameManager);
+            Run(gameManager);
+            CharacterTurn(gameManager);
+            Attack();
+            AutoClipReload();
+        }
 
         if (CurrentHP == 0)
         {
@@ -81,37 +82,24 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collider)
     {
         if (Input.GetKey(KeyCode.E))
         {
-            if (collision.gameObject.CompareTag(TAG_AK47))
+            if (collider.gameObject.CompareTag(TAG_AK47))
             {
-                isAk47 = true;
-                Destroy(collision.gameObject);
+                GunChange(collider,WeaponList[1]);
             }
-            else if (collision.gameObject.CompareTag(TAG_SHOTGUN))
+            else if (collider.gameObject.CompareTag(TAG_SHOTGUN))
             {
-                isShotgun = true;
-                isShotgunUse = true;
-                Destroy(collision.gameObject);
+                GunChange(collider, WeaponList[2]);
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(TAG_TOWERBULLET))
-        {
-            HealthDisCount(BULLET_LOSS);
-            Destroy(collider.gameObject);
-        }
-        else if (collider.gameObject.CompareTag(TAG_TOWERENEMYBULLET))
-        {
-            HealthDisCount(EXPLODEDBULLETLOSS);
-            Destroy(collider.gameObject);
-        }
-        else if (collider.gameObject.CompareTag(TAG_HEALTH))
+        if (collider.gameObject.CompareTag(TAG_HEALTH))
         {
             CurrentHP++;// look at here
             Destroy(collider.gameObject);
@@ -123,7 +111,7 @@ public class Character : MonoBehaviour
         }
         else if (collider.gameObject.CompareTag(TAG_CLIP))
         {
-            gameManager.spawn.CharacterList[0].gun.tiroNew.SpareBulletCount += CLIPAMOUNT;
+            gameManager.spawn.CharacterList[0].gun.SpareBulletCount += CLIPAMOUNT;
             Destroy(collider.gameObject);
         }
     }
@@ -149,6 +137,17 @@ public class Character : MonoBehaviour
         EnergyReload = 5f;
         shooting = SHOOTİNGRATE;
         MaxDefance = characterData.Defence;
+    }
+
+    private void GunChange(Collider2D collider, GameObject GunObject)
+    {
+        IsNewGun = true;
+        Destroy(RightWeaponObject);
+        RightWeaponObject = RightGunObject;
+        RightWeaponObject = Instantiate(GunObject, RightWeaponObject.transform);
+        gun = RightWeaponObject.GetComponent<Gun>();
+        Destroy(collider.gameObject);
+
     }
 
     private void Moving(GameManager gameManager)
@@ -245,6 +244,22 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+        if (Input.GetButtonDown("Fire1") && gameManager.isPause == false )
+        {
+            gun.GunFire();
+        }
+    }
+
+    private void AutoClipReload()
+    {
+        if (gameManager.AutoClipReloadToggle.isOn == true && gameManager.isPause == false)
+        {
+            gun.AutoWeaponReloadEnum();
+        }
+    }
+
     #endregion
 
     #region Public Method
@@ -284,7 +299,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SlowDown(bool inside)
+    public void SlowDown(bool inside, int power)
     {
         if (inside == true)
         {
@@ -296,7 +311,7 @@ public class Character : MonoBehaviour
 
                 if (shooting <= 0)
                 {
-                    HealthDisCount(BULLET_LOSS);
+                    HealthDisCount(power);
                     shooting = SHOOTİNGRATE;
                 }
             }

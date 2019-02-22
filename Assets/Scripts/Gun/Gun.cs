@@ -1,27 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_WEAPON = "Barrel";
-    private const string TAG_CHARACTER = "Assault";
+    private const string TAG_SUPPORT = "Support";
+    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string TAG_TOGGLE = "Toggle";
 
     #endregion
 
     #region Fields
 
-    public TiroNew tiroNew;
+    private GameManager gameManager;
     public Character character;
+    public gun gun;
 
-    public GameObject PistolObject;
-    public GameObject WoodObject;
-    public GameObject Ak47Object;
-    public GameObject ShotgunObject;
-    public GameObject RightWeaponObject;
+    public List<GameObject> BarrelList;
+    public GameObject AmmoPrefabObject;
+    public GameObject clipObject;
 
-    public bool isPistolGun;
-    public bool isWoodGun;
+    public int SpareBulletCount;
+    public int ClipCapacity;
+    private int mCurrentAmmo;
+
+    public bool isWeaponReload;
+    public bool IsCanShoot;
+
+    private float mWeaponReload;
+    private float mFillingAmount;
 
     #endregion
 
@@ -29,60 +38,134 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        Init();
     }
 
     private void Update()
     {
-        if (tiroNew == null)
+        ClipReloadEnum();
+    }
+
+    #endregion
+
+    #region Public Method
+
+    public void GunFire()
+    {
+        if (mCurrentAmmo == 0)
         {
-            tiroNew = GameObject.FindWithTag(TAG_WEAPON).GetComponent<TiroNew>();
+            IsCanShoot = false;
+        }
+
+        if (mCurrentAmmo > 0 && IsCanShoot)
+        {
+            for (int i = BarrelList.Count - 1; i >= 0; i--)
+            {
+                mCurrentAmmo--;
+                GameObject Bullet = Instantiate(AmmoPrefabObject, BarrelList[i].transform.position, BarrelList[i].transform.rotation) as GameObject;
+                Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>();
+                gameManager.ammoBar.BarImageList[mCurrentAmmo].color = Color.grey;
+            }
+        }
+    }
+
+    public void ClipReloadEnum()
+    {
+        if (Input.GetKeyDown(gameManager.ReloadEnum) && gameManager.isPause == false && isWeaponReload == false && mCurrentAmmo != ClipCapacity && SpareBulletCount > 0)
+        {
+            Instantiate(clipObject, transform.position, transform.rotation);
+            mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
+            SpareBulletCount -= ClipCapacity - mCurrentAmmo;
+            isWeaponReload = true;
+            WeaponReload();
         }
         else
         {
-            if (tiroNew.SpareBulletCount == 0)
-            {
-                Destroy(RightWeaponObject);
-                RightWeaponObject = Instantiate(PistolObject, transform);
-                character.isAk47 = false;
-                character.isShotgun = false;
-                character.isShotgunUse = false;
-                character.isGun = true;
-            }
+            WeaponReload();
         }
+    }
 
-        if (character.isAk47 && character.name == TAG_CHARACTER)
+    public void AutoWeaponReloadEnum()
+    {
+        if (mCurrentAmmo == 0 && mWeaponReload == gun.ReloadTime && SpareBulletCount > 0)
         {
-            Destroy(RightWeaponObject);
-            RightWeaponObject = Instantiate(Ak47Object, transform);
-            character.isAk47 = false;
-            character.isShotgun = false;
-            character.isShotgunUse = false;
-            character.isGun = false;
-        }
-        else if (character.isShotgun && character.name == TAG_CHARACTER)
-        {
-            Destroy(RightWeaponObject);
-            RightWeaponObject = Instantiate(ShotgunObject, transform);
-            character.isShotgun = false;
-            character.isAk47 = false;
-            character.isGun = false;
+            Instantiate(clipObject, transform.position, transform.rotation);
+            mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
+            SpareBulletCount -= ClipCapacity - mCurrentAmmo;
+            isWeaponReload = true;
+            WeaponReload();
         }
     }
 
     #endregion
 
-    #region Private Method
+    #region Private Methods
 
-    private void Initialize()
+    private void Init()
     {
-        if (isPistolGun)
+        IsCanShoot = true;
+        isWeaponReload = false;
+        mWeaponReload = gun.ReloadTime;
+        ClipCapacity = gun.ClipCapacity;
+        mCurrentAmmo = ClipCapacity;
+        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        character = gameManager.spawn.CharacterList[0];
+    }
+
+    private void WeaponReload()
+    {
+        if (mWeaponReload > 0 && isWeaponReload)
         {
-            RightWeaponObject = Instantiate(PistolObject, transform);
+            mWeaponReload -= Time.deltaTime;
+            mCurrentAmmo = 0;
+            IsCanShoot = false;
+
+            if (mWeaponReload >= 0.2 && SpareBulletCount >= mCurrentAmmo)
+            {
+                StartCoroutine(BulletReloadEnum());
+            }
+
+            if (mWeaponReload <= 0.2)
+            {
+                IsCanShoot = true;
+                isWeaponReload = false;
+                StopAllCoroutines();
+
+                if (SpareBulletCount < ClipCapacity)
+                {
+                    mCurrentAmmo = SpareBulletCount;
+                    SpareBulletCount = 0;
+                }
+                else
+                {
+                    mCurrentAmmo = ClipCapacity;
+                }
+
+                mWeaponReload = gun.ReloadTime;
+            }
         }
-        else if (isWoodGun)
+    }
+
+    #endregion
+
+    #region Enumerator Method
+
+    IEnumerator BulletReloadEnum()
+    {
+        while (true)
         {
-            RightWeaponObject = Instantiate(WoodObject, transform);
+            if (mCurrentAmmo <= ClipCapacity && mCurrentAmmo != SpareBulletCount)
+            {
+                yield return new WaitForSeconds(mFillingAmount);
+                mCurrentAmmo++;
+
+                if (mCurrentAmmo <= ClipCapacity)
+                {
+                    gameManager.ammoBar.BarImageList[mCurrentAmmo - 1].color = Color.black;
+                }
+            }
+            else
+                break;
         }
     }
 

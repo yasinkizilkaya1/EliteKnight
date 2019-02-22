@@ -356,6 +356,7 @@ MonoBehaviour:
   spawn: {fileID: 0}
   TargetTransform: {fileID: 0}
   isEffectTowerBullet: 1
+  isBullet: 0
   bulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
   LocationObject1: {fileID: 1849688335819738}
@@ -367,6 +368,9 @@ MonoBehaviour:
   LocationObject7: {fileID: 1735722563420998}
   LocationObject8: {fileID: 1443057231804648}
   StandartTowerBulletObject: {fileID: 1639973589734038}
+  EffectTowerBulletPower: 8
+  NormalBulletPower: 1
+  FollowBulletPower: 2
 --- !u!212 &212086733657329694
 SpriteRenderer:
   m_ObjectHideFlags: 1

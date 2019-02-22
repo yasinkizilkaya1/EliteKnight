@@ -62,28 +62,28 @@ public class TiroNew : MonoBehaviour
             transform.Translate(Vector2.right * -Velocidade * Time.deltaTime);
         }
 
-        if (isbarrel)
-        {
-            if (Input.GetButtonDown("Fire1") && Ammo > 0 && isShoot && gameManager.isPause == false)
-            {
-                if (gameManager.spawn.CharacterList[0].isShotgunUse)
-                {
-                    for (int i = Barrels.Count - 1; i >= 0; i--)
-                    {
-                        Ammo--;
-                        Instantiate(AmmoPrefabObject, Barrels[i].transform.position, Barrels[i].transform.rotation);
-                        //1sn
-                        gameManager.ammoBar.BarImageList[Ammo].color = Color.grey;
-                    }
-                }
-                else
-                {
-                    Ammo--;
-                    Instantiate(AmmoPrefabObject, transform.position, transform.rotation);
-                    gameManager.ammoBar.BarImageList[Ammo].color = Color.grey;
-                }
-            }
-        }
+        //if (isbarrel)
+        //{
+        //    if (Input.GetButtonDown("Fire1") && Ammo > 0 && isShoot && gameManager.isPause == false)
+        //    {
+        //        if (gameManager.spawn.CharacterList[0].isShotgunUse)
+        //        {
+        //            for (int i = Barrels.Count - 1; i >= 0; i--)
+        //            {
+        //                Ammo--;
+        //                Instantiate(AmmoPrefabObject, Barrels[i].transform.position, Barrels[i].transform.rotation);
+        //                //1sn
+        //                gameManager.ammoBar.BarImageList[Ammo].color = Color.grey;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Ammo--;
+        //            Instantiate(AmmoPrefabObject, transform.position, transform.rotation);
+        //            gameManager.ammoBar.BarImageList[Ammo].color = Color.grey;
+        //        }
+        //    }
+        //}
 
         if (Ammo == 0)
         {
@@ -94,9 +94,9 @@ public class TiroNew : MonoBehaviour
         AutoWeaponReloadEnum(AutoClipReloadToggle.isOn);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (col.gameObject.CompareTag(TAG_WALL) || col.gameObject.CompareTag(TAG_CHEST))
+        if (collider.CompareTag(TAG_WALL) || collider.CompareTag(TAG_CHEST))
         {
             Destroy(gameObject);
         }

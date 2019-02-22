@@ -21,15 +21,15 @@ public class Zombies : MonoBehaviour
 
     #region Fields
 
-    private bool isHit;
-    private bool isZombie;
+    private bool mIsHit;
+    private bool mIsZombie;
 
     public GameManager gameManager;
     public Spawn spawn;
     public Zombie zombie;
 
-    private int CurrrentHealth;
-    private int CurrentDefance;
+    private int mCurrrentHealth;
+    private int mCurrentDefance;
 
     public Transform Radar;
     public Transform wallTransformObject;
@@ -45,9 +45,9 @@ public class Zombies : MonoBehaviour
     public float rotationSpeed;
     public float shootcoolDown;
 
-    private bool isAttack;
+    private bool mIsAttack;
 
-    private RaycastHit2D raycastHit2D;
+    private RaycastHit2D mRaycastHit2D;
 
     #endregion
 
@@ -74,7 +74,7 @@ public class Zombies : MonoBehaviour
     {
         animator.SetBool("isAttack", attack);
 
-        if (CurrrentHealth == 0)
+        if (mCurrrentHealth == 0)
         {
             Destroy(BodyObject);
             spawn.CharacterList[0].DeadEnemyCount++;
@@ -86,15 +86,15 @@ public class Zombies : MonoBehaviour
             shootcoolDown -= Time.deltaTime;
         }
 
-        if (isHit)
+        if (mIsHit)
         {
             RaycasLine();
         }
-        else if (isAttack && isZombie == false)
+        else if (mIsAttack && mIsZombie == false)
         {
             Following();
         }
-        else if (isZombie)
+        else if (mIsZombie)
         {
             RaycasLine();
         }
@@ -106,20 +106,15 @@ public class Zombies : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADIUS, isWall);
-        isZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADIUS, iszombie);
+        mIsHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADIUS, isWall);
+        mIsZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADIUS, iszombie);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(TAG_BULLET))
+        if (collision.gameObject.CompareTag(TAG_KNIFE))
         {
-            DisHealth();
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag(TAG_KNIFE))
-        {
-            DisHealth();
+            DisHealth(1);                                   //look
         }
     }
 
@@ -133,30 +128,30 @@ public class Zombies : MonoBehaviour
         spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
         Physics2D.queriesStartInColliders = false;
         shootcoolDown = 0f;
-        CurrrentHealth = zombie.Health;
-        CurrentDefance = zombie.Defence;
+        mCurrrentHealth = zombie.Health;
+        mCurrentDefance = zombie.Defence;
     }
 
     private void RaycasLine()
     {
-        raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
+        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
 
-        if (raycastHit2D.collider != null)
+        if (mRaycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
+            if (mRaycastHit2D.collider.CompareTag(TAG_WALL) || mRaycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER) || mRaycastHit2D.collider.CompareTag(TAG_ENEMY))
             {
                 Radar.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
-                Debug.DrawLine(Radar.position, raycastHit2D.point, Color.red);
+                Debug.DrawLine(Radar.position, mRaycastHit2D.point, Color.red);
             }
             else
             {
-                isAttack = true;
+                mIsAttack = true;
                 Following();
             }
         }
         else
         {
-            raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
+            mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
         }
     }
 
@@ -185,39 +180,6 @@ public class Zombies : MonoBehaviour
         }
     }
 
-    private void DisHealth()
-    {
-        int remainingDamage = 0;
-        if (CurrentDefance > 0)
-        {
-            if (spawn.CharacterList[0].Power > CurrentDefance)
-            {
-                remainingDamage = spawn.CharacterList[0].Power - CurrentDefance;
-                CurrentDefance = 0;
-            }
-            else
-            {
-                CurrentDefance -= spawn.CharacterList[0].Power;
-            }
-        }
-        else if (CurrentDefance == 0 && CurrrentHealth > 0)
-        {
-            if (spawn.CharacterList[0].Power > CurrrentHealth)
-            {
-                CurrrentHealth = 0;
-            }
-            else
-            {
-                CurrrentHealth -= spawn.CharacterList[0].Power;
-            }
-        }
-
-        if (remainingDamage != 0)
-        {
-            CurrrentHealth -= remainingDamage;
-        }
-    }
-
     #endregion
 
     #region Public Method
@@ -225,6 +187,39 @@ public class Zombies : MonoBehaviour
     public void RoomEqual(GameObject gameObject)
     {
         RoomObject = gameObject;
+    }
+
+    public void DisHealth(int power)
+    {
+        int remainingDamage = 0;
+        if (mCurrentDefance > 0)
+        {
+            if (power > mCurrentDefance)
+            {
+                remainingDamage = power - mCurrentDefance;
+                mCurrentDefance = 0;
+            }
+            else
+            {
+                mCurrentDefance -= power;
+            }
+        }
+        else if (mCurrentDefance == 0 && mCurrrentHealth > 0)
+        {
+            if (power > mCurrrentHealth)
+            {
+                mCurrrentHealth = 0;
+            }
+            else
+            {
+                mCurrrentHealth -= power;
+            }
+        }
+
+        if (remainingDamage != 0)
+        {
+            mCurrrentHealth -= remainingDamage;
+        }
     }
 
     #endregion

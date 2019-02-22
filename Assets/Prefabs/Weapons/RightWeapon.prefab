@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4183397684203410}
   - component: {fileID: 58447333185756336}
-  - component: {fileID: 114424903013060950}
   m_Layer: 0
   m_Name: RightWeapon
   m_TagString: TowerBullet
@@ -86,31 +85,6 @@ CircleCollider2D:
   m_Offset: {x: -0.0000001589457, y: 1.89478e-14}
   serializedVersion: 2
   m_Radius: 0.040350385
---- !u!114 &114424903013060950
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587257830817430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  AmmoPrefabObject: {fileID: 1587257830817430}
-  clipObject: {fileID: 0}
-  Barrels: []
-  SpareBulletCount: 0
-  ClipCapacity: 0
-  Ammo: 0
-  isbarrel: 1
-  isBulletPos: 0
-  isWeaponReload: 0
-  isShoot: 0
-  weaponReload: 0
-  Velocidade: 0
-  FillingAmount: 0
 --- !u!212 &212411613999249916
 SpriteRenderer:
   m_ObjectHideFlags: 1

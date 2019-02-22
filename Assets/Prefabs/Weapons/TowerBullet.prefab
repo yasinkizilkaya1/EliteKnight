@@ -109,6 +109,7 @@ MonoBehaviour:
   spawn: {fileID: 0}
   TargetTransform: {fileID: 0}
   isEffectTowerBullet: 0
+  isBullet: 0
   bulletObject: {fileID: 0}
   LocationObject1: {fileID: 0}
   LocationObject2: {fileID: 0}
@@ -119,6 +120,9 @@ MonoBehaviour:
   LocationObject7: {fileID: 0}
   LocationObject8: {fileID: 0}
   StandartTowerBulletObject: {fileID: 1432971038763504}
+  EffectTowerBulletPower: 8
+  NormalBulletPower: 1
+  FollowBulletPower: 2
 --- !u!212 &212804083423201260
 SpriteRenderer:
   m_ObjectHideFlags: 1

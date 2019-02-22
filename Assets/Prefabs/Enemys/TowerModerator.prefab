@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 114141100891435970}
   m_Layer: 0
   m_Name: EffectArea
-  m_TagString: TowerEnemySlider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114790231896865960}
   m_Layer: 10
   m_Name: TowerModerator
-  m_TagString: wall
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 120624949900864356}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   spawn: {fileID: 0}
   inside: 0
   isStandartTower: 0
+  SlowPower: 1
 --- !u!114 &114790231896865960
 MonoBehaviour:
   m_ObjectHideFlags: 1

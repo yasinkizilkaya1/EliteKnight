@@ -18,7 +18,7 @@ public class AmmoBar : MonoBehaviour
 
     public GameManager gameManager;
     public Spawn spawn;
-    public TiroNew tiroNew;
+    public Gun gun;
 
     public Image BarImage;
     public List<Image> BarImageList;
@@ -43,11 +43,11 @@ public class AmmoBar : MonoBehaviour
 
     private void Update()
     {
-        if (spawn.CharacterList[0].gun != null && spawn.CharacterList[0].gun.tiroNew != null && tiroNew != null)
+        if (gun != null)
         {
-            ClipAmountText.text = spawn.CharacterList[0].gun.tiroNew.SpareBulletCount.ToString();
+            ClipAmountText.text = spawn.CharacterList[0].gun.SpareBulletCount.ToString();
 
-            if (tiroNew.isShoot == false && tiroNew.AutoClipReloadToggle.isOn == false && tiroNew.isWeaponReload == false)
+            if (gun.IsCanShoot == false && gameManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
             {
                 ReloadGUIObject.SetActive(true);
             }
@@ -55,16 +55,16 @@ public class AmmoBar : MonoBehaviour
             {
                 ReloadGUIObject.SetActive(false);
             }
-
-            if (spawn.CharacterList[0].isAk47 || spawn.CharacterList[0].isShotgun || spawn.CharacterList[0].isGun)
-            {
-                StartCoroutine(Ammobar());
-                spawn.CharacterList[0].isGun = false;
-            }
         }
         else
         {
-            tiroNew = spawn.CharacterList[0].gun.tiroNew;
+            gun = spawn.CharacterList[0].gun;
+        }
+
+        if(spawn.CharacterList[0].IsNewGun)
+        {
+            StartCoroutine(Ammobar());
+            spawn.CharacterList[0].IsNewGun = false;
         }
     }
 
@@ -122,11 +122,11 @@ public class AmmoBar : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (spawn.CharacterList[0].gun.tiroNew != null)
+        if (spawn.CharacterList[0].gun != null)
         {
             AmmoBarDelete();
             yield return new WaitForSeconds(0.2f);
-            AmmoCount = spawn.CharacterList[0].gun.tiroNew.ClipCapacity;
+            AmmoCount = spawn.CharacterList[0].gun.ClipCapacity;
             yield return new WaitForSeconds(0.2f);
             AmmoBarsCreate();
         }

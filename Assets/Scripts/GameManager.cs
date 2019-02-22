@@ -10,19 +10,21 @@ public class GameManager : MonoBehaviour
 {
     #region Constants
 
-    private const string Keys_Bill = ".asset";
-    private const string Keys_Path = "Assets/Data/KeyData/";
+    private const string KEYS_BILL = ".asset";
+    private const string KEYS_PATH = "Assets/Data/KeyData/";
     private const string TAG_CHARACTER = "Body";
     private const string TAG_SUPPORT = "Support";
     private const string TAG_LOBBY = "Lobby";
-    private const string Saving_Key_Name = "Keys";
-    private const int MAXVALUE = 100;
+    private const string SAVING_KEY_NAME = "Keys";
+    private const int MAX_VALUE = 100;
 
     #endregion
 
     #region Fields
 
-    public GameObject StageObject;
+    public Toggle AutoClipReloadToggle;
+
+    public GameObject StagePanelObject;
     public GameObject PlayerItemPanelObject;
     public GameObject SliderObject;
     public GameObject PauseMenuObject;
@@ -88,10 +90,10 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     SliderObject.SetActive(true);
+                    StagePanelObject.SetActive(true);
                     AutoReloadObject.SetActive(true);
                 }
                 LoadingPanelObject.SetActive(false);
-                StageObject.SetActive(true);
                 PlayerItemPanelObject.SetActive(true);
                 StopAllCoroutines();
 
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        keys = (Keys)AssetDatabase.LoadAssetAtPath(Keys_Path + Saving_Key_Name + Keys_Bill, typeof(Keys));
+        keys = (Keys)AssetDatabase.LoadAssetAtPath(KEYS_PATH + SAVING_KEY_NAME + KEYS_BILL, typeof(Keys));
         keycapList = new List<string>() { keys.Up, keys.Down, keys.Left, keys.Right, keys.Reload, keys.Run };
         DefaultkeycapList = new List<string>() { "W", "S", "A", "D", "R", "LeftShift" };
 
@@ -142,7 +144,7 @@ public class GameManager : MonoBehaviour
 
         StartKeys();
         Time.timeScale = 1;
-        slider.maxValue = MAXVALUE;
+        slider.maxValue = MAX_VALUE;
     }
 
     private void KeysChange(int id)

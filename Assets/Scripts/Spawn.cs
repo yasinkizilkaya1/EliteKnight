@@ -19,7 +19,6 @@ public class Spawn : MonoBehaviour
 
     #region Fields
 
-    public GameObject TransformObject;
     public GameObject SupportObject;
     public GameObject SpealistObject;
     public GameObject AssaultObject;
@@ -27,7 +26,7 @@ public class Spawn : MonoBehaviour
 
     public List<Character> CharacterList;
 
-    public Weapon weapons;
+    public Knife knife;
 
     public Slider HealthBarSlider;
     public Slider ArmorBarSlider;
@@ -74,12 +73,14 @@ public class Spawn : MonoBehaviour
 
         if (CharacterList[0].name == TAG_CHARACTERNAME)
         {
-            weapons = GameObject.FindWithTag(TAG_WEAPON).GetComponent<Weapon>();
+            knife = GameObject.FindWithTag(TAG_WEAPON).GetComponent<Knife>();
         }
     }
 
     private void CharacterCreate()
     {
+       GameObject TransformObject = gameObject;
+
         switch (gameManager.SelectedCardNameString)
         {
             case TAG_ASSAULT:

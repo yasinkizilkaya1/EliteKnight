@@ -18,13 +18,13 @@ public class WarriorEnemy : MonoBehaviour
 
     public EnemyWarrior enemyWarrior;
 
-    public int Health;
-    private int MaxHealt;
-    private int Defence;
-    private int Speed;
-    private int AttacPower;
-    private int Range;
-    private int Distance;
+    public int CurrentHealth;
+    private int mMaxHealt;
+    private int mCurrentDefence;
+    private int mSpeed;
+    private int mAttacPower;
+    private int mRange;
+    private int mDistance;
 
     public GameManager gameManager;
 
@@ -37,10 +37,10 @@ public class WarriorEnemy : MonoBehaviour
 
     public RaycastHit2D raycastHit2D;
 
-    private bool isAim;
-    private bool isTargetFind;
+    private bool mIsAim;
+    private bool mIsTargetFind;
 
-    private float shootCoolDown;
+    private float mShootCoolDown;
 
     #endregion
 
@@ -50,7 +50,7 @@ public class WarriorEnemy : MonoBehaviour
     {
         get
         {
-            return shootCoolDown <= 0f;
+            return mShootCoolDown <= 0f;
         }
     }
 
@@ -65,12 +65,12 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (shootCoolDown > 0)
+        if (mShootCoolDown > 0)
         {
-            shootCoolDown -= Time.deltaTime;
+            mShootCoolDown -= Time.deltaTime;
         }
 
-        if (Health == 0)
+        if (CurrentHealth == 0)
         {
             RoomObject.GetComponent<Room>().EnemyCount--;
             Destroy(gameObject);
@@ -81,9 +81,9 @@ public class WarriorEnemy : MonoBehaviour
         {
             TargetFind();
 
-            if (isTargetFind)
+            if (mIsTargetFind)
             {
-                if (isAim)
+                if (mIsAim)
                 {
                     Attack();
                 }
@@ -97,14 +97,9 @@ public class WarriorEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(TAG_BULLET))
+        if (collision.gameObject.CompareTag(TAG_KNIFE))
         {
-            Destroy(collision.gameObject);
-            DisHealth();
-        }
-        else if (collision.gameObject.CompareTag(TAG_KNIFE))
-        {
-            DisHealth();
+            DisHealth(1); //look
         }
     }
 
@@ -116,14 +111,14 @@ public class WarriorEnemy : MonoBehaviour
     {
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
-        shootCoolDown = 0f;
-        Health = enemyWarrior.Health;
-        MaxHealt = enemyWarrior.MaxHealth;
-        Defence = enemyWarrior.Defence;
-        Speed = enemyWarrior.Speed;
-        AttacPower = enemyWarrior.AttackPower;
-        Range = enemyWarrior.Range;
-        Distance = enemyWarrior.Distance;
+        mShootCoolDown = 0f;
+        CurrentHealth = enemyWarrior.Health;
+        mMaxHealt = enemyWarrior.MaxHealth;
+        mCurrentDefence = enemyWarrior.Defence;
+        mSpeed = enemyWarrior.Speed;
+        mAttacPower = enemyWarrior.AttackPower;
+        mRange = enemyWarrior.Range;
+        mDistance = enemyWarrior.Distance;
     }
 
     private void Aim()
@@ -146,7 +141,7 @@ public class WarriorEnemy : MonoBehaviour
         if (CanAttack)
         {
             Aim();
-            shootCoolDown = CAN_ATTACK_TIME;
+            mShootCoolDown = CAN_ATTACK_TIME;
             Instantiate(BulletObjcet, GunObject.transform.position, GunObject.transform.rotation);
             Following();
         }
@@ -154,74 +149,74 @@ public class WarriorEnemy : MonoBehaviour
 
     private void TargetFind()
     {
-        raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, Range);
+        raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
 
         if (raycastHit2D.collider != null)
         {
             if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER))
             {
-                isTargetFind = false;
-                Radar.Rotate(Vector3.forward * Range * Time.deltaTime);
+                mIsTargetFind = false;
+                Radar.Rotate(Vector3.forward * mRange * Time.deltaTime);
                 Debug.DrawLine(Radar.position, raycastHit2D.point, Color.red);
             }
             else
             {
-                isTargetFind = true;
+                mIsTargetFind = true;
                 Aim();
             }
         }
         else
         {
-            raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, Range);
+            raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
         }
     }
 
     private void Following()
     {
-        if (Vector2.Distance(Body.transform.position, gameManager.spawn.CharacterList[0].transform.position) > Distance)
+        if (Vector2.Distance(Body.transform.position, gameManager.spawn.CharacterList[0].transform.position) > mDistance)
         {
             Aim();
-            Body.transform.Translate(Vector2.right * -Speed * Time.deltaTime);
-            isAim = false;
+            Body.transform.Translate(Vector2.right * -mSpeed * Time.deltaTime);
+            mIsAim = false;
         }
         else
         {
-            isAim = true;
-        }
-    }
-
-    private void DisHealth()
-    {
-        int remainingDamage = 0;
-
-        if (Defence > 0)
-        {
-            if (gameManager.spawn.CharacterList[0].Power > Defence)
-            {
-                remainingDamage = gameManager.spawn.CharacterList[0].Power - Defence;
-            }
-            else
-            {
-                Defence -= gameManager.spawn.CharacterList[0].Power;
-            }
-        }
-        else if (Health > 0)
-        {
-            if (Health >= gameManager.spawn.CharacterList[0].Power)
-            {
-                Health -= gameManager.spawn.CharacterList[0].Power;
-            }
-        }
-
-        if (remainingDamage != 0)
-        {
-            Health -= remainingDamage;
+            mIsAim = true;
         }
     }
 
     #endregion
 
     #region Public Method
+
+    public void DisHealth(int power)
+    {
+        int remainingDamage = 0;
+
+        if (mCurrentDefence > 0)
+        {
+            if (power > mCurrentDefence)
+            {
+                remainingDamage = power - mCurrentDefence;
+            }
+            else
+            {
+                mCurrentDefence -= power;
+            }
+        }
+        else if (CurrentHealth > 0)
+        {
+            if (CurrentHealth >= power)
+            {
+                CurrentHealth -= power;
+            }
+        }
+
+        if (remainingDamage != 0)
+        {
+            CurrentHealth -= remainingDamage;
+        }
+    }
 
     public void RoomEqual(GameObject gameObject)
     {

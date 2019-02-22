@@ -2,101 +2,53 @@
 
 public class Bullet : MonoBehaviour
 {
-    #region Constants
+    #region Contants
 
-    private const string TAG_SPAWN = "Spawn";
-    private const string TAG_CHARACTER = "Body";
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
-    private const int VELOCIDADE = 10;
+    private const string TAG_ENEMY = "Enemy";
+    private const string TAG_TOWER = "TowerEnemySlider";
 
     #endregion
 
     #region Fields
 
-    public Spawn spawn;
-    public Transform TargetTransform;
+    public Gun weapon;
 
-    public bool isEffectTowerBullet;
-    public bool isBullet;
-
-    public GameObject bulletObject;
-    public GameObject LocationObject1;
-    public GameObject LocationObject2;
-    public GameObject LocationObject3;
-    public GameObject LocationObject4;
-    public GameObject LocationObject5;
-    public GameObject LocationObject6;
-    public GameObject LocationObject7;
-    public GameObject LocationObject8;
-    public GameObject StandartTowerBulletObject;
+    public int Speed;
 
     #endregion
 
     #region Unity Methods
 
-    private void Start()
-    {
-        Initialize();
-    }
-
     private void Update()
     {
-        if (spawn.CharacterList[0] != null)
-        {
-            if (isEffectTowerBullet)
-            {
-                Destroy(gameObject, 3);
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
-            }
-            else if (isBullet && spawn.CharacterList[0].isDead == false)
-            {
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
-            }
-            else if (isEffectTowerBullet == false && spawn.CharacterList[0].isDead == false)
-            {
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
-                StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
-                Destroy(gameObject, 1.5f);
-            }
-        }
+        transform.Translate(Vector2.right * -Speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (col.gameObject.CompareTag(TAG_CHEST))
+        if (collider.CompareTag(TAG_WALL) || collider.CompareTag(TAG_CHEST))
         {
             Destroy(gameObject);
         }
-        else if (col.gameObject.CompareTag(TAG_WALL))
+        else if (collider.CompareTag(TAG_ENEMY) || collider.CompareTag(TAG_TOWER))
         {
-            if (isEffectTowerBullet)
+            if (collider.GetComponentInChildren<Zombies>())
             {
-                Instantiate(bulletObject, transform.position, LocationObject1.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject2.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject3.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject4.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject5.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject6.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject7.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject8.transform.rotation);
-                Destroy(gameObject);
+                collider.GetComponentInChildren<Zombies>().DisHealth(weapon.gun.Power);
             }
-            else
+            else if (collider.GetComponent<TowerWeapon>())
             {
-                Destroy(gameObject);
+                collider.GetComponent<TowerWeapon>().HealtDisCount(weapon.gun.Power);
             }
+            else if (collider.GetComponentInChildren<WarriorEnemy>())
+            {
+                collider.GetComponentInChildren<WarriorEnemy>().DisHealth(weapon.gun.Power);
+            }
+
+            Destroy(gameObject);
         }
-    }
-
-    #endregion
-
-    #region Private Method
-
-    private void Initialize()
-    {
-        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
-        TargetTransform = spawn.CharacterList[0].transform;
     }
 
     #endregion

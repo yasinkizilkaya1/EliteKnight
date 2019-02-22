@@ -141,6 +141,9 @@ MonoBehaviour:
   LocationObject7: {fileID: 0}
   LocationObject8: {fileID: 0}
   StandartTowerBulletObject: {fileID: 0}
+  EffectTowerBulletPower: 8
+  NormalBulletPower: 1
+  FollowBulletPower: 2
 --- !u!198 &198230387326174580
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4188302573477616}
-  - component: {fileID: 114000897213522000}
   - component: {fileID: 70099335978064080}
+  - component: {fileID: 114295873458954416}
   m_Layer: 0
   m_Name: Bullet2
   m_TagString: bullet
@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4598881926272358}
   - component: {fileID: 212804083423201260}
-  - component: {fileID: 58910127466810428}
   m_Layer: 0
   m_Name: Bullet1
   m_TagString: bullet
@@ -72,21 +71,6 @@ Transform:
   m_Father: {fileID: 4188302573477616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!58 &58910127466810428
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783934421846704}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: c67c0cab27a69ef48a16f93cf5c0feeb, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0000000038807206, y: -0.032}
-  serializedVersion: 2
-  m_Radius: 0.020518975
 --- !u!70 &70099335978064080
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -99,10 +83,10 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012750731, y: -0.00011126919}
-  m_Size: {x: 0.0846382, y: 0.040734846}
+  m_Offset: {x: -0.0021826068, y: 2.6018698e-10}
+  m_Size: {x: 0.07150308, y: 0.04000042}
   m_Direction: 1
---- !u!114 &114000897213522000
+--- !u!114 &114295873458954416
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -110,22 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1432971038763504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
+  m_Script: {fileID: 11500000, guid: 083ff2dd6e0ca534fa44e147021055da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  AmmoPrefabObject: {fileID: 1432971038763504}
-  clipObject: {fileID: 1442587598998342, guid: 3b35007423759fe44a7fb7c4f7de304c, type: 2}
-  Ammo: 0
-  MaxAmmo: 0
-  clipAmmount: 0
-  isbarrel: 0
-  isBulletPos: 1
-  isWeaponReload: 0
-  isShoot: 0
-  weaponReload: 1.5
-  Velocidade: 10
-  FillingAmount: 0
+  weapon: {fileID: 0}
+  Speed: 10
 --- !u!212 &212804083423201260
 SpriteRenderer:
   m_ObjectHideFlags: 1

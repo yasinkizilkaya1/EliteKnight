@@ -18,6 +18,8 @@ public class TowerEnemy : MonoBehaviour
     public bool inside;
     public bool isStandartTower;
 
+    public int SlowPower;
+
     #endregion
 
     #region Private Method
@@ -44,7 +46,7 @@ public class TowerEnemy : MonoBehaviour
 
             if (towerWeapon.isLinerenderer)
             {
-                spawn.CharacterList[0].SlowDown(inside);
+                spawn.CharacterList[0].SlowDown(inside,SlowPower);
             }
 
             if (isStandartTower && towerWeapon.CanAttack)
@@ -59,7 +61,7 @@ public class TowerEnemy : MonoBehaviour
         if (col.gameObject.gameObject.CompareTag(TAG_TARGET))
         {
             inside = false;
-            spawn.CharacterList[0].SlowDown(inside);
+            spawn.CharacterList[0].SlowDown(inside,SlowPower);
             StopAllCoroutines();
         }
     }

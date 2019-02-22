@@ -9,8 +9,6 @@ public class TowerWeapon : MonoBehaviour
     private const string TAG_KNIFE = "knife";
     private const string TAG_SPAWN = "Spawn";
     private const float SHOOTINGRATE = 0.75f;
-    private const int HEALTH = 6;
-    private const int DEFENCE = 4;
 
     #endregion
 
@@ -80,16 +78,11 @@ public class TowerWeapon : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (col.gameObject.CompareTag(TAG_BULLET))
+        if (collider.gameObject.CompareTag(TAG_KNIFE))
         {
-            Destroy(col.gameObject);
-            HealtDisCount();
-        }
-        else if (col.gameObject.CompareTag(TAG_KNIFE))
-        {
-            HealtDisCount();
+            HealtDisCount(1);                    //look
         }
     }
 
@@ -144,39 +137,6 @@ public class TowerWeapon : MonoBehaviour
         }
     }
 
-    private void HealtDisCount()
-    {
-        int remainingDamage = 0;
-        if (CurrentDefence > 0)
-        {
-            if (spawn.CharacterList[0].Power > CurrentDefence)
-            {
-                remainingDamage = spawn.CharacterList[0].Power - CurrentDefence;
-                CurrentDefence = 0;
-            }
-            else
-            {
-                CurrentDefence -= spawn.CharacterList[0].Power;
-            }
-        }
-        else if (CurrentDefence == 0 && CurrentHealth > 0)
-        {
-            if (spawn.CharacterList[0].Power > CurrentHealth)
-            {
-                CurrentHealth = 0;
-            }
-            else
-            {
-                CurrentHealth -= spawn.CharacterList[0].Power;
-            }
-
-            if (remainingDamage != 0)
-            {
-                CurrentHealth -= remainingDamage;
-            }
-        }
-    }
-
     #endregion
 
     #region Public Method
@@ -195,6 +155,39 @@ public class TowerWeapon : MonoBehaviour
     public void RoomEqual(GameObject gameObject)
     {
         RoomObject = gameObject;
+    }
+
+    public void HealtDisCount(int power)
+    {
+        int remainingDamage = 0;
+        if (CurrentDefence > 0)
+        {
+            if (power > CurrentDefence)
+            {
+                remainingDamage = power - CurrentDefence;
+                CurrentDefence = 0;
+            }
+            else
+            {
+                CurrentDefence -= power;
+            }
+        }
+        else if (CurrentDefence == 0 && CurrentHealth > 0)
+        {
+            if (power > CurrentHealth)
+            {
+                CurrentHealth = 0;
+            }
+            else
+            {
+                CurrentHealth -= power;
+            }
+
+            if (remainingDamage != 0)
+            {
+                CurrentHealth -= remainingDamage;
+            }
+        }
     }
 
     #endregion
