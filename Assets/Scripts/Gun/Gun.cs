@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Gun : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_SUPPORT = "Support";
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_TOGGLE = "Toggle";
 
     #endregion
 
@@ -29,6 +28,7 @@ public class Gun : MonoBehaviour
     public bool isWeaponReload;
     public bool IsCanShoot;
 
+    public float Range;
     private float mWeaponReload;
     private float mFillingAmount;
 
@@ -50,22 +50,29 @@ public class Gun : MonoBehaviour
 
     #region Public Method
 
-    public void GunFire()
+    public void Fire()
     {
-        if (mCurrentAmmo == 0)
-        {
-            IsCanShoot = false;
-        }
-
-        if (mCurrentAmmo > 0 && IsCanShoot)
+        if (mCurrentAmmo > 0 && IsCanShoot == true)
         {
             for (int i = BarrelList.Count - 1; i >= 0; i--)
             {
                 mCurrentAmmo--;
-                GameObject Bullet = Instantiate(AmmoPrefabObject, BarrelList[i].transform.position, BarrelList[i].transform.rotation) as GameObject;
-                Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>();
-                gameManager.ammoBar.BarImageList[mCurrentAmmo].color = Color.grey;
+                GameObject Bullet = ObjectPooler.SharedInstance.GetPooledObject("bullet");
+
+                if (Bullet != null)
+                {
+                    Bullet.transform.position =BarrelList[i].transform.position;
+                    Bullet.transform.rotation = BarrelList[i].transform.rotation;
+                    Bullet.SetActive(true);
+                    Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>();
+                    gameManager.ammoBar.BarImageList[mCurrentAmmo].color = Color.grey;
+                }
+
             }
+        }
+        else
+        {
+            IsCanShoot = false;
         }
     }
 
@@ -108,6 +115,7 @@ public class Gun : MonoBehaviour
         mWeaponReload = gun.ReloadTime;
         ClipCapacity = gun.ClipCapacity;
         mCurrentAmmo = ClipCapacity;
+        Range = gun.Range;
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         character = gameManager.spawn.CharacterList[0];
     }
@@ -152,20 +160,15 @@ public class Gun : MonoBehaviour
 
     IEnumerator BulletReloadEnum()
     {
-        while (true)
+        while ((mCurrentAmmo <= ClipCapacity && mCurrentAmmo != SpareBulletCount))
         {
-            if (mCurrentAmmo <= ClipCapacity && mCurrentAmmo != SpareBulletCount)
-            {
-                yield return new WaitForSeconds(mFillingAmount);
-                mCurrentAmmo++;
+            yield return new WaitForSeconds(mFillingAmount);
+            mCurrentAmmo++;
 
-                if (mCurrentAmmo <= ClipCapacity)
-                {
-                    gameManager.ammoBar.BarImageList[mCurrentAmmo - 1].color = Color.black;
-                }
+            if (mCurrentAmmo <= ClipCapacity)
+            {
+                gameManager.ammoBar.BarImageList[mCurrentAmmo - 1].color = Color.black;
             }
-            else
-                break;
         }
     }
 

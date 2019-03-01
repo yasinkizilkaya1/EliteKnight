@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 0
   Name: MagicBall
   Power: 2
+  Range: 1
   ClipCapacity: 5
-  TotalBullet: 2000
+  TotalBullet: 1000
   ReloadTime: 3

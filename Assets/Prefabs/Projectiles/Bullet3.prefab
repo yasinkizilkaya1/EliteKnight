@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 58457093841574068}
   - component: {fileID: 198546464317756660}
   - component: {fileID: 199937899908029136}
-  - component: {fileID: 114985032756171732}
+  - component: {fileID: 114115100092238208}
   m_Layer: 0
   m_Name: Bullet3
   m_TagString: Enemy
@@ -80,7 +80,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.04
---- !u!114 &114985032756171732
+--- !u!114 &114115100092238208
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -88,20 +88,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1542373711963196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
+  m_Script: {fileID: 11500000, guid: 083ff2dd6e0ca534fa44e147021055da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoPrefab: {fileID: 1542373711963196}
-  clip: {fileID: 0}
-  MaxAmmo: 0
-  Ammo: 0
-  barrel: 0
-  BulletPos: 1
-  Bullet: 0
-  WeaponReloaded: 0
-  shoot: 0
-  weaponReload: 0
-  m_Velocidade: 9
+  weapon: {fileID: 0}
+  Speed: 10
 --- !u!198 &198546464317756660
 ParticleSystem:
   m_ObjectHideFlags: 1

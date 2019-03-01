@@ -7,7 +7,6 @@ public class Spawn : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_CHARACTER = "Body";
     private const string TAG_GAMEMANAGER = "selectname";
     private const string TAG_CHARACTERNAME = "Custom";
     private const string TAG_WEAPON = "knife";
@@ -69,7 +68,6 @@ public class Spawn : MonoBehaviour
     {
         CharacterCreate();
         StartCoroutine(Bars());
-        CharacterList.Add(GameObject.FindWithTag(TAG_CHARACTER).GetComponent<Character>());
 
         if (CharacterList[0].name == TAG_CHARACTERNAME)
         {
@@ -96,6 +94,8 @@ public class Spawn : MonoBehaviour
                 Debug.Log("Spawn Null!!!");
                 break;
         }
+
+        CharacterList.Add(TransformObject.GetComponent<Character>());
     }
 
     #endregion

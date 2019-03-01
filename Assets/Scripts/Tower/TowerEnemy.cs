@@ -5,7 +5,7 @@ public class TowerEnemy : MonoBehaviour
 {
     #region Constant
 
-    private const string TAG_TARGET = "Player";
+    private const string TAG_TARGET = "Character";
     private const string TAG_SPAWN = "Spawn";
 
     #endregion

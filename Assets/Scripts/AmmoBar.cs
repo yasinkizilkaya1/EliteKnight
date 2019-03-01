@@ -7,7 +7,6 @@ public class AmmoBar : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_CHARACTER = "Support";
     private const int AMMO_BAR_BACKGROUND_WIDTH = 250;
 
     #endregion
@@ -61,7 +60,7 @@ public class AmmoBar : MonoBehaviour
             gun = spawn.CharacterList[0].gun;
         }
 
-        if(spawn.CharacterList[0].IsNewGun)
+        if (spawn.CharacterList[0].IsNewGun)
         {
             StartCoroutine(Ammobar());
             spawn.CharacterList[0].IsNewGun = false;
@@ -74,10 +73,7 @@ public class AmmoBar : MonoBehaviour
 
     private void Init()
     {
-        if (gameManager.SelectedCardNameString != TAG_CHARACTER)
-        {
-            StartCoroutine(Ammobar());
-        }
+        StartCoroutine(Ammobar());
     }
 
     private void AmmoBarsCreate()

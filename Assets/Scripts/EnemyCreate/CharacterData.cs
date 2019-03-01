@@ -12,4 +12,5 @@ public class CharacterData : ScriptableObject
     public int Power;
     public int Defence;
     public int Speed;
+    public int RunSpeed;
 }

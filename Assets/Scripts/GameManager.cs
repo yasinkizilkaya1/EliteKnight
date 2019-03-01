@@ -90,9 +90,9 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     SliderObject.SetActive(true);
-                    StagePanelObject.SetActive(true);
                     AutoReloadObject.SetActive(true);
                 }
+                StagePanelObject.SetActive(true);
                 LoadingPanelObject.SetActive(false);
                 PlayerItemPanelObject.SetActive(true);
                 StopAllCoroutines();

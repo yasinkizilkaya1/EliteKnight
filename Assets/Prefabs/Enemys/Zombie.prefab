@@ -51,6 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4992920935210858}
   - component: {fileID: 212911253234976314}
+  - component: {fileID: 70458642822130314}
   m_Layer: 13
   m_Name: LeftShoulder
   m_TagString: Enemy
@@ -114,6 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4151505392516342}
   - component: {fileID: 212513934976660694}
+  - component: {fileID: 70426598179298524}
   m_Layer: 13
   m_Name: RightShoulder
   m_TagString: Enemy
@@ -209,6 +211,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4407319741265494}
   - component: {fileID: 212857741880613494}
+  - component: {fileID: 50213871856936718}
+  - component: {fileID: 58299934819381338}
+  - component: {fileID: 114650724447183804}
   m_Layer: 13
   m_Name: Zombie
   m_TagString: Enemy
@@ -271,9 +276,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4809125903473560}
   - component: {fileID: 212568389115189382}
-  - component: {fileID: 50408797863791870}
-  - component: {fileID: 58509973441555222}
-  - component: {fileID: 114744786165386150}
   m_Layer: 13
   m_Name: Head
   m_TagString: Enemy
@@ -518,13 +520,13 @@ Transform:
   m_Father: {fileID: 4235834101172074}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50408797863791870
+--- !u!50 &50213871856936718
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996968116859944}
+  m_GameObject: {fileID: 1689897180856074}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -538,12 +540,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &58509973441555222
+--- !u!58 &58299934819381338
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996968116859944}
+  m_GameObject: {fileID: 1689897180856074}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -553,6 +555,36 @@ CircleCollider2D:
   m_Offset: {x: -0.0000000055879354, y: -9.313226e-10}
   serializedVersion: 2
   m_Radius: 27.500006
+--- !u!70 &70426598179298524
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340355533897732}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1, y: 13}
+  m_Size: {x: 25.5, y: 64.38}
+  m_Direction: 0
+--- !u!70 &70458642822130314
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1157509471613670}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1, y: 13}
+  m_Size: {x: 25.5, y: 64.38}
+  m_Direction: 0
 --- !u!95 &95026855835747692
 Animator:
   serializedVersion: 3
@@ -571,12 +603,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114744786165386150
+--- !u!114 &114650724447183804
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996968116859944}
+  m_GameObject: {fileID: 1689897180856074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8148578b7593a164aab6e62e57a7d409, type: 3}
@@ -594,6 +626,9 @@ MonoBehaviour:
   iszombie:
     serializedVersion: 2
     m_Bits: 8192
+  CharacterMask:
+    serializedVersion: 2
+    m_Bits: 2048
   RoomObject: {fileID: 0}
   BodyObject: {fileID: 1689897180856074}
   animator: {fileID: 95026855835747692}

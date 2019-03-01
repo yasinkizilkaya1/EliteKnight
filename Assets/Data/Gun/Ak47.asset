@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 3
   Name: Ak47
   Power: 1
+  Range: 1.5
   ClipCapacity: 10
   TotalBullet: 140
   ReloadTime: 3.5

@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
     private const string TAG_ENEMY = "Enemy";
-    private const string TAG_TOWER = "TowerEnemySlider";
 
     #endregion
 
@@ -16,6 +15,7 @@ public class Bullet : MonoBehaviour
     public Gun weapon;
 
     public int Speed;
+    public float range;
 
     #endregion
 
@@ -23,31 +23,42 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.right * -Speed * Time.deltaTime);
+        SetActiveObje();
+        transform.Translate(Vector2.right * Speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag(TAG_WALL) || collider.CompareTag(TAG_CHEST))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
-        else if (collider.CompareTag(TAG_ENEMY) || collider.CompareTag(TAG_TOWER))
+        else if (collider.CompareTag(TAG_ENEMY))
         {
-            if (collider.GetComponentInChildren<Zombies>())
+            if (collider.GetComponentInParent<Zombies>())
             {
-                collider.GetComponentInChildren<Zombies>().DisHealth(weapon.gun.Power);
+                collider.GetComponentInParent<Zombies>().DisHealth(weapon.gun.Power);
             }
             else if (collider.GetComponent<TowerWeapon>())
             {
-                collider.GetComponent<TowerWeapon>().HealtDisCount(weapon.gun.Power);
+                collider.GetComponent<TowerWeapon>().HealtDisCount(weapon.gun.Power);  //look at here
             }
-            else if (collider.GetComponentInChildren<WarriorEnemy>())
+            else if (collider.GetComponentInParent<WarriorEnemy>())
             {
-                collider.GetComponentInChildren<WarriorEnemy>().DisHealth(weapon.gun.Power);
+                collider.GetComponentInParent<WarriorEnemy>().DisHealth(weapon.gun.Power);
             }
+            gameObject.SetActive(false);
+        }
+    }
 
-            Destroy(gameObject);
+    private void SetActiveObje()
+    {
+        range -= Time.deltaTime;
+
+        if (range <= 0)
+        {
+            range = weapon.Range;
+            gameObject.SetActive(false);
         }
     }
 

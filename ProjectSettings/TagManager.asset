@@ -16,11 +16,9 @@ TagManager:
   - Slider
   - ExplodedBullet
   - TowerEnemyBullet
-  - TowerEnemy
   - Toggle
   - Barrel
   - GameManager
-  - TowerEnemySlider
   - Need_To_Reload_GUI
   - Weapon
   - LoadingSlider
@@ -37,11 +35,12 @@ TagManager:
   - Ak47
   - Projectile
   - Spawn
-  - TowerBullet
   - Shotgun
   - Tilemap_Ground
   - Map
   - Content
+  - gun
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

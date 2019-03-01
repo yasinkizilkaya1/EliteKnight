@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212481765171774648}
   - component: {fileID: 50553203242482464}
   - component: {fileID: 58551067463016430}
-  - component: {fileID: 114948473703764326}
+  - component: {fileID: 114625559937759200}
   m_Layer: 0
   m_Name: clip
   m_TagString: bullet
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.03
---- !u!114 &114948473703764326
+--- !u!114 &114625559937759200
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,22 +86,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1766454748759930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
+  m_Script: {fileID: 11500000, guid: 083ff2dd6e0ca534fa44e147021055da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  AmmoPrefabObject: {fileID: 0}
-  clipObject: {fileID: 0}
-  SpareBulletCount: 0
-  ClipCapacity: 0
-  Ammo: 0
-  isbarrel: 0
-  isBulletPos: 1
-  isWeaponReload: 0
-  isShoot: 0
-  weaponReload: 0
-  Velocidade: 10
-  FillingAmount: 0
+  weapon: {fileID: 0}
+  Speed: 10
 --- !u!212 &212481765171774648
 SpriteRenderer:
   m_ObjectHideFlags: 1

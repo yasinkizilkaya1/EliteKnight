@@ -4,9 +4,6 @@ public class TowerWeapon : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_CHARACTER = "Body";
-    private const string TAG_BULLET = "bullet";
-    private const string TAG_KNIFE = "knife";
     private const string TAG_SPAWN = "Spawn";
     private const float SHOOTINGRATE = 0.75f;
 
@@ -75,14 +72,6 @@ public class TowerWeapon : MonoBehaviour
             towerEnemy.inside = false;
             Destroy(gameObject);
             spawn.CharacterList[0].DeadEnemyCount++;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag(TAG_KNIFE))
-        {
-            HealtDisCount(1);                    //look
         }
     }
 

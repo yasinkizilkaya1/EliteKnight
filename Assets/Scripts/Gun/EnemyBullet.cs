@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
     #region Constants
 
     private const string TAG_SPAWN = "Spawn";
-    private const string TAG_CHARACTER = "Player";
+    private const string TAG_CHARACTER = "Character";
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
     private const int VELOCIDADE = 10;
@@ -21,14 +22,7 @@ public class EnemyBullet : MonoBehaviour
     public bool isBullet;
 
     public GameObject bulletObject;
-    public GameObject LocationObject1;
-    public GameObject LocationObject2;
-    public GameObject LocationObject3;
-    public GameObject LocationObject4;
-    public GameObject LocationObject5;
-    public GameObject LocationObject6;
-    public GameObject LocationObject7;
-    public GameObject LocationObject8;
+    public List<GameObject> BarrelList;
     public GameObject StandartTowerBulletObject;
 
     public int EffectTowerBulletPower;
@@ -76,14 +70,11 @@ public class EnemyBullet : MonoBehaviour
         {
             if (isEffectTowerBullet)
             {
-                Instantiate(bulletObject, transform.position, LocationObject1.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject2.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject3.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject4.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject5.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject6.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject7.transform.rotation);
-                Instantiate(bulletObject, transform.position, LocationObject8.transform.rotation);
+                for (int i = 0; i < BarrelList.Count; i++)
+                {
+                   GameObject bullet= Instantiate(bulletObject, BarrelList[i].transform.position, Quaternion.identity);
+                    bullet.transform.rotation = BarrelList[i].transform.rotation;
+                }
                 Destroy(gameObject);
             }
             else
@@ -91,23 +82,21 @@ public class EnemyBullet : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        else if(collider.CompareTag(TAG_CHARACTER))
+        else if (collider.CompareTag(TAG_CHARACTER))
         {
-            if(isEffectTowerBullet)
+            if (isEffectTowerBullet)
             {
                 spawn.CharacterList[0].HealthDisCount(EffectTowerBulletPower);
-                Destroy(gameObject);
             }
-            else if(isBullet)
+            else if (isBullet)
             {
                 spawn.CharacterList[0].HealthDisCount(NormalBulletPower);
-                Destroy(gameObject);
             }
             else
             {
                 spawn.CharacterList[0].HealthDisCount(FollowBulletPower);
-                Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
     }
 

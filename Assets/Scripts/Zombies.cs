@@ -4,13 +4,10 @@ public class Zombies : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_TOWER_ENEMY_SLIDER = "TowerEnemySlider";
-    private const string TAG_BULLET = "bullet";
-    private const string TAG_KNIFE = "knife";
-    private const string TAG_WALL = "wall";
-    private const string TAG_ENEMY = "Enemy";
     private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_SPAWN = "Spawn";
+    private const string TAG_ENEMY = "Enemy";
+    private const string TAG_WALL = "wall";
     private const float WALLRADIUS = 0.2f;
 
     private const float SHOOTING_RATE = 0.75f;
@@ -36,6 +33,7 @@ public class Zombies : MonoBehaviour
     public Transform zombieTransformObject;
     public LayerMask isWall;
     public LayerMask iszombie;
+    public LayerMask CharacterMask;
 
     public GameObject RoomObject;
     public GameObject BodyObject;
@@ -86,17 +84,9 @@ public class Zombies : MonoBehaviour
             shootcoolDown -= Time.deltaTime;
         }
 
-        if (mIsHit)
-        {
-            RaycasLine();
-        }
-        else if (mIsAttack && mIsZombie == false)
+        if (mIsAttack && mIsZombie == false && mIsHit == false)
         {
             Following();
-        }
-        else if (mIsZombie)
-        {
-            RaycasLine();
         }
         else
         {
@@ -108,14 +98,6 @@ public class Zombies : MonoBehaviour
     {
         mIsHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADIUS, isWall);
         mIsZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADIUS, iszombie);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(TAG_KNIFE))
-        {
-            DisHealth(1);                                   //look
-        }
     }
 
     #endregion
@@ -134,24 +116,16 @@ public class Zombies : MonoBehaviour
 
     private void RaycasLine()
     {
-        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
+        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance, CharacterMask);
+        Radar.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
 
         if (mRaycastHit2D.collider != null)
         {
-            if (mRaycastHit2D.collider.CompareTag(TAG_WALL) || mRaycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER) || mRaycastHit2D.collider.CompareTag(TAG_ENEMY))
-            {
-                Radar.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
-                Debug.DrawLine(Radar.position, mRaycastHit2D.point, Color.red);
-            }
-            else
+            if (!mRaycastHit2D.collider.CompareTag(TAG_WALL) || !mRaycastHit2D.collider.CompareTag(TAG_ENEMY))
             {
                 mIsAttack = true;
                 Following();
             }
-        }
-        else
-        {
-            mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance);
         }
     }
 

@@ -51,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1702415893692644}
   m_LocalRotation: {x: -0, y: -0, z: 0.00000005960463, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 2.58, y: 2.49, z: 1}
   m_LocalScale: {x: 0.022214405, y: 0.01997299, z: 0.022192212}
   m_Children:
   - {fileID: 4616849139316286}
@@ -106,11 +106,11 @@ MonoBehaviour:
     type: 2}
   SpealistObject: {fileID: 1737389855897982, guid: db7a2fc5cdbf5514bb5a2f305b814323,
     type: 2}
-  AssaultObject: {fileID: 1397403166917626, guid: 5d2d685cd391e8c4899a032058dd4caa,
+  AssaultObject: {fileID: 1397403166917626, guid: bde3020b06e776e4eb34288aa27aa6a4,
     type: 2}
   gameManager: {fileID: 0}
   CharacterList: []
-  weapons: {fileID: 0}
+  knife: {fileID: 0}
   HealthBarSlider: {fileID: 0}
   ArmorBarSlider: {fileID: 0}
   EnergyBarSlider: {fileID: 0}

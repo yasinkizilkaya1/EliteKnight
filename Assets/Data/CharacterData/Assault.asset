@@ -20,3 +20,4 @@ MonoBehaviour:
   Power: 1
   Defence: 10
   Speed: 5
+  RunSpeed: 10

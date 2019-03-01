@@ -4,11 +4,8 @@ public class WarriorEnemy : MonoBehaviour
 {
     #region Contants 
 
-    private const string TAG_TOWER_ENEMY_SLIDER = "TowerEnemySlider";
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_BULLET = "bullet";
     private const string TAG_ENEMY = "Enemy";
-    private const string TAG_KNIFE = "knife";
     private const string TAG_WALL = "wall";
     private const float CAN_ATTACK_TIME = 0.75f;
 
@@ -95,14 +92,6 @@ public class WarriorEnemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(TAG_KNIFE))
-        {
-            DisHealth(1); //look
-        }
-    }
-
     #endregion
 
     #region Private Methods
@@ -153,7 +142,7 @@ public class WarriorEnemy : MonoBehaviour
 
         if (raycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_TOWER_ENEMY_SLIDER))
+            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
             {
                 mIsTargetFind = false;
                 Radar.Rotate(Vector3.forward * mRange * Time.deltaTime);

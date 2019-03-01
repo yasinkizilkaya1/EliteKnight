@@ -21,9 +21,6 @@ GameObject:
   - component: {fileID: 4098156589367482}
   - component: {fileID: 212710162817103310}
   - component: {fileID: 95829996084634440}
-  - component: {fileID: 58762155059671684}
-  - component: {fileID: 50783502311635936}
-  - component: {fileID: 114545027866251104}
   m_Layer: 0
   m_Name: Custom
   m_TagString: Body
@@ -57,6 +54,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4688502608265710}
+  - component: {fileID: 50460474594844296}
+  - component: {fileID: 58669364692090992}
+  - component: {fileID: 114670678802308486}
   m_Layer: 11
   m_Name: Support
   m_TagString: Character
@@ -157,13 +157,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!50 &50783502311635936
+--- !u!50 &50460474594844296
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1074870930181420}
+  m_GameObject: {fileID: 1580405705202194}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -176,13 +176,13 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!58 &58762155059671684
+  m_Constraints: 4
+--- !u!58 &58669364692090992
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1074870930181420}
+  m_GameObject: {fileID: 1580405705202194}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -274,26 +274,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5779647140a83cd4387cce87bb49ae6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAssault: 0
   isattack: 0
-  AttackTime: 0
+  Power: 1
   Attack: {fileID: 95829996084634440}
   custom: {fileID: 95266261106324590}
-  character: {fileID: 114545027866251104}
---- !u!114 &114545027866251104
+  character: {fileID: 114670678802308486}
+--- !u!114 &114670678802308486
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1074870930181420}
+  m_GameObject: {fileID: 1580405705202194}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d52de825559312b4e8fc10a3cf056cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 0}
   gameManager: {fileID: 0}
   gun: {fileID: 0}
-  characterData: {fileID: 0}
+  knife: {fileID: 114505327535320368}
   CurrentHP: 0
   MaxHP: 0
   CurrentDefence: 0
@@ -309,7 +309,6 @@ MonoBehaviour:
   isTire: 0
   EnergyReload: 0
   shooting: 0
-  characterObject: {fileID: 1580405705202194}
   BodyObject: {fileID: 1074870930181420}
   RightWeaponObject: {fileID: 0}
   RightGunObject: {fileID: 0}

@@ -5,7 +5,7 @@ public class DoorInside : MonoBehaviour
 {
     #region Constants
 
-    private const string PLAYER_TAG = "Player";
+    private const string PLAYER_TAG = "Character";
 
     #endregion
 

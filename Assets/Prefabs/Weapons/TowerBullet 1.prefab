@@ -270,8 +270,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639973589734038}
-  m_LocalRotation: {x: 0, y: 0, z: -0.4627007, w: -0.88651454}
-  m_LocalPosition: {x: -12.687, y: 22.011818, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0.025, y: 0.025, z: 1}
   m_Children:
   - {fileID: 4848787664285518}
@@ -359,15 +359,17 @@ MonoBehaviour:
   isBullet: 0
   bulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
-  LocationObject1: {fileID: 1849688335819738}
-  LocationObject2: {fileID: 1661464943599208}
-  LocationObject3: {fileID: 1453656093593302}
-  LocationObject4: {fileID: 1862299300896080}
-  LocationObject5: {fileID: 1921552198210890}
-  LocationObject6: {fileID: 1819539659130658}
-  LocationObject7: {fileID: 1735722563420998}
-  LocationObject8: {fileID: 1443057231804648}
-  StandartTowerBulletObject: {fileID: 1639973589734038}
+  BarrelList:
+  - {fileID: 1849688335819738}
+  - {fileID: 1661464943599208}
+  - {fileID: 1453656093593302}
+  - {fileID: 1862299300896080}
+  - {fileID: 1921552198210890}
+  - {fileID: 1819539659130658}
+  - {fileID: 1735722563420998}
+  - {fileID: 1443057231804648}
+  StandartTowerBulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
+    type: 2}
   EffectTowerBulletPower: 8
   NormalBulletPower: 1
   FollowBulletPower: 2

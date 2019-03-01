@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 2
   Name: Shotgun
   Power: 1
+  Range: 0.5
   ClipCapacity: 8
   TotalBullet: 120
   ReloadTime: 4

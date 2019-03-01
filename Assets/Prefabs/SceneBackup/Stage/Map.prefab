@@ -33,8 +33,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233547099950428}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,12 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1563d2ae8b5f3eb44be4a9095a8f741a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlacesSizeList: []
+  RoomSizeList: []
   DoorLocation: []
-  PlacesCoordinatesList: []
-  PlaceObject: {fileID: 1055143785155314, guid: 6a04244491b16ef43af5705460a21c1c,
-    type: 2}
-  PlaceCount: 0
+  RoomCoordinatesList: []
+  RoomObject: {fileID: 1055143785155314, guid: 6a04244491b16ef43af5705460a21c1c, type: 2}
+  RoomCoun: 0
   UpDoor: 
   DownDoor: 
   RightDoor: 

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224482591944175084}
   - component: {fileID: 114834032114615708}
+  - component: {fileID: 114392270224593356}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: GameManager
@@ -27,6 +28,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114392270224593356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434519386761024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449af177f48248e41a22e9fcd9b963c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToPool:
+  - amountToPool: 20
+    objectToPool: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
+      type: 2}
+    shouldExpand: 1
+  - amountToPool: 20
+    objectToPool: {fileID: 1432971038763504, guid: 4bed0f314812b1a4ba623d78325d5ed2,
+      type: 2}
+    shouldExpand: 1
+  pooledObjectList: []
 --- !u!114 &114834032114615708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38,7 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022b120f113a77940b2e1783ba9cd3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StageObject: {fileID: 0}
+  AutoClipReloadToggle: {fileID: 0}
+  StagePanelObject: {fileID: 0}
   PlayerItemPanelObject: {fileID: 0}
   SliderObject: {fileID: 0}
   PauseMenuObject: {fileID: 0}

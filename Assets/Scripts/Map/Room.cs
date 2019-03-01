@@ -92,7 +92,7 @@ public class Room : MonoBehaviour
     private void Init()
     {
         ZombieCount = RandomValue(1, 8);
-        //PursueEnemyCount = RandomValue(1, 8);
+        PursueEnemyCount = RandomValue(1, 8);
         TowerExplodCount = RandomValue(0, 2);
         TowerModeratorCount = RandomValue(0, 2);
         TowerStandartCount = RandomValue(0, 2);
@@ -100,7 +100,6 @@ public class Room : MonoBehaviour
         tileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
         PlaceCreate();
-
     }
 
     private void PlaceCreate()

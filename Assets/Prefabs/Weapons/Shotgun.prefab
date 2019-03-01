@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4754605920388012}
-  - component: {fileID: 212703540316982246}
+  - component: {fileID: 212138993205904838}
   - component: {fileID: 61334029352670898}
   - component: {fileID: 114638564933829462}
   m_Layer: 0
@@ -29,14 +29,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1530248305080436
+--- !u!1 &1161348355316454
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4502613921126886}
+  - component: {fileID: 4023638862545578}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -44,14 +44,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1998787930722270
+--- !u!1 &1885450695893104
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4981446222769068}
+  - component: {fileID: 4039224326849102}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -59,45 +59,45 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4502613921126886
+--- !u!4 &4023638862545578
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1530248305080436}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_GameObject: {fileID: 1161348355316454}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1.0599991, y: 8.710001, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4754605920388012}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!4 &4039224326849102
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885450695893104}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.91000086, y: 8.65, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4754605920388012}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4754605920388012
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160372663281466}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children:
-  - {fileID: 4981446222769068}
-  - {fileID: 4502613921126886}
+  - {fileID: 4023638862545578}
+  - {fileID: 4039224326849102}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4981446222769068
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1998787930722270}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.0599991, y: 8.710001, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4754605920388012}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &61334029352670898
@@ -139,8 +139,8 @@ MonoBehaviour:
   character: {fileID: 0}
   gun: {fileID: 11400000, guid: bbcc0f87e26971440996c185e1930fe9, type: 2}
   BarrelList:
-  - {fileID: 1998787930722270}
-  - {fileID: 1530248305080436}
+  - {fileID: 1161348355316454}
+  - {fileID: 1885450695893104}
   AmmoPrefabObject: {fileID: 1278051057937664, guid: 496f9b10625e6cc469ae2ef7ed69b13d,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
@@ -148,9 +148,8 @@ MonoBehaviour:
   ClipCapacity: 10
   isWeaponReload: 0
   IsCanShoot: 0
-  weaponReload: 0
-  FillingAmount: 0
---- !u!212 &212703540316982246
+  Range: 0
+--- !u!212 &212138993205904838
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

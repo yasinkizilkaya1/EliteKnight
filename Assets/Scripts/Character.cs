@@ -14,19 +14,19 @@ public class Character : MonoBehaviour
     private const string TAG_CLIP = "Clip";
     private const string TAG_AK47 = "Ak47";
     private const string TAG_SHOTGUN = "Shotgun";
-    private const int RUN_SPEED = 10;
     private const int DECELERATION = 1;
     private const int CLIPAMOUNT = 30;
     private const float ENERGYRELOADTIME = 5f;
-    private const float SHOOTİNGRATE = 1f; //Look
+    private const float SHOOTİNGRATE = 1f;
 
     #endregion
 
     #region Fields
 
+    public CharacterData characterData;
     public GameManager gameManager;
     public Gun gun;
-    public CharacterData characterData;
+    public Knife knife;
 
     public int CurrentHP;
     public int MaxHP;
@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
     public int DeadEnemyCount;
     private int mMaxEnergy;
     private int mDefaultSpeed;
+    private int RunSpeed;
 
     public bool IsNewGun;
     public bool isDead;
@@ -49,7 +50,6 @@ public class Character : MonoBehaviour
     public float shooting;
 
     private Vector3 mousePositionVector;
-    public GameObject characterObject;
     public GameObject BodyObject;
     public GameObject RightWeaponObject;
     public GameObject RightGunObject;
@@ -77,8 +77,8 @@ public class Character : MonoBehaviour
 
         if (CurrentHP == 0)
         {
-            Destroy(gameObject);
             isDead = true;
+            Destroy(gameObject);
         }
     }
 
@@ -88,7 +88,7 @@ public class Character : MonoBehaviour
         {
             if (collider.gameObject.CompareTag(TAG_AK47))
             {
-                GunChange(collider,WeaponList[1]);
+                GunChange(collider, WeaponList[1]);
             }
             else if (collider.gameObject.CompareTag(TAG_SHOTGUN))
             {
@@ -135,6 +135,7 @@ public class Character : MonoBehaviour
 
         mDefaultSpeed = characterData.Speed;
         EnergyReload = 5f;
+        RunSpeed = characterData.RunSpeed;
         shooting = SHOOTİNGRATE;
         MaxDefance = characterData.Defence;
     }
@@ -142,12 +143,10 @@ public class Character : MonoBehaviour
     private void GunChange(Collider2D collider, GameObject GunObject)
     {
         IsNewGun = true;
-        Destroy(RightWeaponObject);
-        RightWeaponObject = RightGunObject;
-        RightWeaponObject = Instantiate(GunObject, RightWeaponObject.transform);
-        gun = RightWeaponObject.GetComponent<Gun>();
+        Destroy(RightGunObject);
+        RightGunObject = Instantiate(GunObject, RightWeaponObject.transform);
+        gun = RightGunObject.GetComponent<Gun>();
         Destroy(collider.gameObject);
-
     }
 
     private void Moving(GameManager gameManager)
@@ -156,25 +155,25 @@ public class Character : MonoBehaviour
         {
             if (Input.GetKey(gameManager.UpEnum))
             {
-                characterObject.transform.Translate(Speed * Time.deltaTime, 0, 0);
+                transform.Translate(Speed * Time.deltaTime, 0, 0);
                 CharacterWay = 1;
             }
 
             if (Input.GetKey(gameManager.DownEnum))
             {
-                characterObject.transform.Translate(-Speed * Time.deltaTime, 0, 0);
+                transform.Translate(-Speed * Time.deltaTime, 0, 0);
                 CharacterWay = 1;
             }
 
             if (Input.GetKey(gameManager.LeftEnum))
             {
-                characterObject.transform.Translate(0, Speed * Time.deltaTime, 0);
+                transform.Translate(0, Speed * Time.deltaTime, 0);
                 CharacterWay = 3;
             }
 
             if (Input.GetKey(gameManager.RightEnum))
             {
-                characterObject.transform.Translate(0, -Speed * Time.deltaTime, 0);
+                transform.Translate(0, -Speed * Time.deltaTime, 0);
                 CharacterWay = 2;
             }
 
@@ -203,7 +202,7 @@ public class Character : MonoBehaviour
             {
                 if (Energy > 0)
                 {
-                    Speed = RUN_SPEED;
+                    Speed = RunSpeed;
                     Energy -= DECELERATION;
                     run = 1;
                 }
@@ -246,9 +245,20 @@ public class Character : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetButtonDown("Fire1") && gameManager.isPause == false )
+        if (Input.GetButtonDown("Fire1") && gameManager.isPause == false)
         {
-            gun.GunFire();
+            if (gun == null && RightWeaponObject == null)
+            {
+                knife.isattack = true;
+            }
+            else
+            {
+                gun.Fire();
+            }
+        }
+        else if (Input.GetButtonDown("Fire1") == false && gun == null)
+        {
+            knife.isattack = false;
         }
     }
 
