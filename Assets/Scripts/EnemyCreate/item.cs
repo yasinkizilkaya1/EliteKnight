@@ -4,7 +4,14 @@
 
 public class item : Entity
 {
-    int Clip;
-    int Health;
-    int Defence;
+    public int Clip;
+    public int Health;
+    public int Defence;
+    public Type type;
+
+    public enum Type
+    {
+        Perish,
+        Weapon
+    }
 }

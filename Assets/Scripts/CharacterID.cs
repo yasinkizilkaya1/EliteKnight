@@ -21,7 +21,7 @@ public class CharacterID : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        Initialize();
     }
 
     private void Update()
@@ -54,6 +54,11 @@ public class CharacterID : MonoBehaviour
     #endregion
 
     #region Private Method
+
+    private void Initialize()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void GameStart()
     {

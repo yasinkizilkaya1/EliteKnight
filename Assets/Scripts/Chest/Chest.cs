@@ -15,10 +15,10 @@ public class Chest : MonoBehaviour
 
     #region Fields
 
+    public GameManager gameManager; 
     private WarriorData warriorData;
     public ChestEntity chestEntity;
     public List<GameObject> ItemList;
-    public GameManager gameManager;
 
     public GameObject HealthBarObject;
     public GameObject HealthBarObject1;

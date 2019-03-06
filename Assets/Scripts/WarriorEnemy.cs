@@ -16,8 +16,7 @@ public class WarriorEnemy : MonoBehaviour
     public EnemyWarrior enemyWarrior;
 
     public int CurrentHealth;
-    private int mMaxHealt;
-    private int mCurrentDefence;
+    public int CurrentDefence;
     private int mSpeed;
     private int mAttacPower;
     private int mRange;
@@ -102,8 +101,7 @@ public class WarriorEnemy : MonoBehaviour
         Physics2D.queriesStartInColliders = false;
         mShootCoolDown = 0f;
         CurrentHealth = enemyWarrior.Health;
-        mMaxHealt = enemyWarrior.MaxHealth;
-        mCurrentDefence = enemyWarrior.Defence;
+        CurrentDefence = enemyWarrior.Defence;
         mSpeed = enemyWarrior.Speed;
         mAttacPower = enemyWarrior.AttackPower;
         mRange = enemyWarrior.Range;
@@ -182,15 +180,15 @@ public class WarriorEnemy : MonoBehaviour
     {
         int remainingDamage = 0;
 
-        if (mCurrentDefence > 0)
+        if (CurrentDefence > 0)
         {
-            if (power > mCurrentDefence)
+            if (power > CurrentDefence)
             {
-                remainingDamage = power - mCurrentDefence;
+                remainingDamage = power - CurrentDefence;
             }
             else
             {
-                mCurrentDefence -= power;
+                CurrentDefence -= power;
             }
         }
         else if (CurrentHealth > 0)

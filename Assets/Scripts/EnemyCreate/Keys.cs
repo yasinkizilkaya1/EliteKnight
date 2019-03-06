@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenuAttribute(fileName = "New Keys", menuName = "Data/Keys")]
-public class Keys:Entity
+public class Keys: ScriptableObject
 {
     public string Up;
     public string Down;

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class Gun : MonoBehaviour
 {
@@ -61,7 +60,7 @@ public class Gun : MonoBehaviour
 
                 if (Bullet != null)
                 {
-                    Bullet.transform.position =BarrelList[i].transform.position;
+                    Bullet.transform.position = BarrelList[i].transform.position;
                     Bullet.transform.rotation = BarrelList[i].transform.rotation;
                     Bullet.SetActive(true);
                     Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>();

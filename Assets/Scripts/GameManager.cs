@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (AutoClipReloadToggle.isOn)
+        {
+            spawn.CharacterList[0].gun.AutoWeaponReloadEnum();
+        }
+
         if (isPlayerDead)
         {
             StartCoroutine(GameOver());

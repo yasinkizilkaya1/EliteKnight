@@ -643,6 +643,7 @@ MonoBehaviour:
   ClipCapacity: 5
   isWeaponReload: 0
   IsCanShoot: 0
+  OffSet: 10
   Range: 0
 --- !u!114 &114300225299033438
 MonoBehaviour:
@@ -664,6 +665,7 @@ MonoBehaviour:
   ClipCapacity: 0
   isWeaponReload: 0
   IsCanShoot: 0
+  OffSet: 0
   Range: 0
 --- !u!212 &212101566219055334
 SpriteRenderer:

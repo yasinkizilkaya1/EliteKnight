@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,9 +10,7 @@ public class Character : MonoBehaviour
     private const string CARD_DATA_BILL = ".asset";
     private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_HEALTH = "Health";
-    private const string TAG_ARMOR = "Armor";
-    private const string TAG_CLIP = "Clip";
+    private const string TAG_ITEM = "Item";
     private const string TAG_AK47 = "Ak47";
     private const string TAG_SHOTGUN = "Shotgun";
     private const int DECELERATION = 1;
@@ -54,9 +53,10 @@ public class Character : MonoBehaviour
     public GameObject RightWeaponObject;
     public GameObject RightGunObject;
     public List<GameObject> WeaponList;
+    public List<item> items;
 
     #endregion
-
+    
     #region Unity Methods
 
     private void Start()
@@ -72,7 +72,6 @@ public class Character : MonoBehaviour
             Run(gameManager);
             CharacterTurn(gameManager);
             Attack();
-            AutoClipReload();
         }
 
         if (CurrentHP == 0)
@@ -99,19 +98,23 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(TAG_HEALTH))
+        if (collider.CompareTag(TAG_ITEM))
         {
-            CurrentHP++;// look at here
-            Destroy(collider.gameObject);
-        }
-        else if (collider.gameObject.CompareTag(TAG_ARMOR))
-        {
-            CurrentDefence++;
-            Destroy(collider.gameObject);
-        }
-        else if (collider.gameObject.CompareTag(TAG_CLIP))
-        {
-            gameManager.spawn.CharacterList[0].gun.SpareBulletCount += CLIPAMOUNT;
+            //if (collider.GetComponent<item>().Health > 0)
+            //{
+            //    CurrentHP += collider.GetComponent<item>().Health;
+            //}
+
+            //if (collider.GetComponent<item>().Defence > 0)
+            //{
+            //    CurrentDefence += collider.GetComponent<item>().Defence;
+            //}
+
+            //if (collider.GetComponent<item>().Clip > 0)
+            //{
+            //    gun.SpareBulletCount += collider.GetComponent<item>().Clip;
+            //}
+
             Destroy(collider.gameObject);
         }
     }
@@ -259,14 +262,6 @@ public class Character : MonoBehaviour
         else if (Input.GetButtonDown("Fire1") == false && gun == null)
         {
             knife.isattack = false;
-        }
-    }
-
-    private void AutoClipReload()
-    {
-        if (gameManager.AutoClipReloadToggle.isOn == true && gameManager.isPause == false)
-        {
-            gun.AutoWeaponReloadEnum();
         }
     }
 

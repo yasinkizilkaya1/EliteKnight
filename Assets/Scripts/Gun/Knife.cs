@@ -4,7 +4,6 @@ public class Knife : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_CHARACTER = "Body";
     private const string TAG_ENEMY = "Enemy";
 
     #endregion
