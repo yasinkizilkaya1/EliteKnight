@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -53,10 +52,10 @@ public class Character : MonoBehaviour
     public GameObject RightWeaponObject;
     public GameObject RightGunObject;
     public List<GameObject> WeaponList;
-    public List<item> items;
+    public Collider2D collider2D;
 
     #endregion
-    
+
     #region Unity Methods
 
     private void Start()
@@ -85,14 +84,20 @@ public class Character : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            if (collider.gameObject.CompareTag(TAG_AK47))
+            if (collider.CompareTag(TAG_ITEM))
             {
-                GunChange(collider, WeaponList[1]);
+                Destroy(collider);
             }
-            else if (collider.gameObject.CompareTag(TAG_SHOTGUN))
-            {
-                GunChange(collider, WeaponList[2]);
-            }
+
+            //if (collider.CompareTag(TAG_AK47))
+            //{
+            //    GunChange(WeaponList[1]);
+            //    gameManager.inventory.ItemAdd(WeaponList[1].GetComponent<Gun>().weapon);
+            //}
+            //else if (collider.CompareTag(TAG_SHOTGUN))
+            //{
+            //    GunChange(WeaponList[2]);
+            //}
         }
     }
 
@@ -141,15 +146,6 @@ public class Character : MonoBehaviour
         RunSpeed = characterData.RunSpeed;
         shooting = SHOOTİNGRATE;
         MaxDefance = characterData.Defence;
-    }
-
-    private void GunChange(Collider2D collider, GameObject GunObject)
-    {
-        IsNewGun = true;
-        Destroy(RightGunObject);
-        RightGunObject = Instantiate(GunObject, RightWeaponObject.transform);
-        gun = RightGunObject.GetComponent<Gun>();
-        Destroy(collider.gameObject);
     }
 
     private void Moving(GameManager gameManager)
@@ -268,6 +264,14 @@ public class Character : MonoBehaviour
     #endregion
 
     #region Public Method
+
+    public void GunChange(GameObject GunObject)
+    {
+        IsNewGun = true;
+        Destroy(RightGunObject);
+        RightGunObject = Instantiate(GunObject, RightWeaponObject.transform);
+        gun = RightGunObject.GetComponent<Gun>();
+    }
 
     public void HealthDisCount(int value)
     {

@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
 
     #region Fields
 
-    public Gun weapon;
+    public Weapon weapon;
 
     public int Speed;
     public float range;
@@ -37,19 +37,23 @@ public class Bullet : MonoBehaviour
         {
             if (collider.GetComponentInParent<Zombies>())
             {
-                collider.GetComponentInParent<Zombies>().DisHealth(weapon.gun.Power);
+                collider.GetComponentInParent<Zombies>().DisHealth(weapon.Power);
             }
             else if (collider.GetComponent<TowerWeapon>())
             {
-                collider.GetComponent<TowerWeapon>().HealtDisCount(weapon.gun.Power);  //look at here
+                collider.GetComponent<TowerWeapon>().HealtDisCount(weapon.Power);  //look at here
             }
             else if (collider.GetComponentInParent<WarriorEnemy>())
             {
-                collider.GetComponentInParent<WarriorEnemy>().DisHealth(weapon.gun.Power);
+                collider.GetComponentInParent<WarriorEnemy>().DisHealth(weapon.Power);
             }
             gameObject.SetActive(false);
         }
     }
+
+    #endregion
+
+    #region Private Method
 
     private void SetActiveObje()
     {
@@ -57,7 +61,7 @@ public class Bullet : MonoBehaviour
 
         if (range <= 0)
         {
-            range = weapon.Range;
+            range =weapon.Range;
             gameObject.SetActive(false);
         }
     }

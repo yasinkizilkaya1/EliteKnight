@@ -621,6 +621,7 @@ MonoBehaviour:
   - {fileID: 1177416201596478, guid: b9a058c5a6b5f734aac615e669a72cb6, type: 2}
   - {fileID: 1411510944606112, guid: 3597263db4c72c14983886924169448b, type: 2}
   - {fileID: 1160372663281466, guid: 10ef91f99ac71a34b92adccf1213c0bf, type: 2}
+  items: []
 --- !u!114 &114271119392145524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114044195529235078}
-  gun: {fileID: 11400000, guid: c643a565aad844f449123db91ba93bd4, type: 2}
+  weapon: {fileID: 11400000, guid: bd540ca409180f9499f554539e54f4c9, type: 2}
   BarrelList:
   - {fileID: 1167790405938074}
   AmmoPrefabObject: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
@@ -643,7 +644,6 @@ MonoBehaviour:
   ClipCapacity: 5
   isWeaponReload: 0
   IsCanShoot: 0
-  OffSet: 10
   Range: 0
 --- !u!114 &114300225299033438
 MonoBehaviour:
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  gun: {fileID: 0}
+  weapon: {fileID: 0}
   BarrelList: []
   AmmoPrefabObject: {fileID: 0}
   clipObject: {fileID: 0}
@@ -665,7 +665,6 @@ MonoBehaviour:
   ClipCapacity: 0
   isWeaponReload: 0
   IsCanShoot: 0
-  OffSet: 0
   Range: 0
 --- !u!212 &212101566219055334
 SpriteRenderer:

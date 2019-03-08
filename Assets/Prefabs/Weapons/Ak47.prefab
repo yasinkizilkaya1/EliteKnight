@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  gun: {fileID: 11400000, guid: 4f63bd20bac436c4bbba9e05009e64ee, type: 2}
+  weapon: {fileID: 11400000, guid: cf94d77db10e75a4e85c54d7ad67d701, type: 2}
   BarrelList:
   - {fileID: 1893450525370272}
   AmmoPrefabObject: {fileID: 1278051057937664, guid: 496f9b10625e6cc469ae2ef7ed69b13d,

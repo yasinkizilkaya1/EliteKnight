@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Health
   m_EditorClassIdentifier: 
   Id: 0
-  Name: 
+  Name: Health
   Clip: 0
-  Health: 0
+  Health: 1
   Defence: 0
+  type: 0

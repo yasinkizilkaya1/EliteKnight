@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b121968f1e36f418de07ef146d06fa, type: 3}
   m_Name: Ammo
   m_EditorClassIdentifier: 
-  Id: 0
-  Name: 
-  Clip: 0
+  Id: 1
+  Name: Ammo
+  Clip: 30
   Health: 0
   Defence: 0
+  type: 0

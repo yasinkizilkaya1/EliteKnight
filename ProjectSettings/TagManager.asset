@@ -29,9 +29,6 @@ TagManager:
   - Pause
   - GameManager2
   - selectname
-  - Clip
-  - Armor
-  - Health
   - Ak47
   - Projectile
   - Spawn
@@ -41,6 +38,8 @@ TagManager:
   - Content
   - gun
   - EnemyBullet
+  - Item
+  - TowerBullet
   layers:
   - Default
   - TransparentFX

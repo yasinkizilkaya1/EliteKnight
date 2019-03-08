@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     #region Fields
 
+    public Inventory inventory;
     public Toggle AutoClipReloadToggle;
 
     public GameObject StagePanelObject;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject LoadingSliderObject;
     public GameObject PanelSettingObject;
     public GameObject AutoReloadObject;
+    public GameObject InventoryObject;
 
     public Text LoadingText;
     public CharacterID characterID;
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
                 StagePanelObject.SetActive(true);
                 LoadingPanelObject.SetActive(false);
                 PlayerItemPanelObject.SetActive(true);
+                InventoryObject.SetActive(true);
                 StopAllCoroutines();
 
                 if (spawn.CharacterList.Count != 0)

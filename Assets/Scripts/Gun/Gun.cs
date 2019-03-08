@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour
 
     private GameManager gameManager;
     public Character character;
-    public gun gun;
+    public Weapon weapon;
 
     public List<GameObject> BarrelList;
     public GameObject AmmoPrefabObject;
@@ -35,7 +35,7 @@ public class Gun : MonoBehaviour
 
     #region Unity Methods
 
-    private void Start()
+    private void OnEnable()
     {
         Init();
     }
@@ -63,10 +63,9 @@ public class Gun : MonoBehaviour
                     Bullet.transform.position = BarrelList[i].transform.position;
                     Bullet.transform.rotation = BarrelList[i].transform.rotation;
                     Bullet.SetActive(true);
-                    Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>();
+                    Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>().weapon;
                     gameManager.ammoBar.BarImageList[mCurrentAmmo].color = Color.grey;
                 }
-
             }
         }
         else
@@ -93,7 +92,7 @@ public class Gun : MonoBehaviour
 
     public void AutoWeaponReloadEnum()
     {
-        if (mCurrentAmmo == 0 && mWeaponReload == gun.ReloadTime && SpareBulletCount > 0)
+        if (mCurrentAmmo == 0 && mWeaponReload == weapon.ReloadTime && SpareBulletCount > 0)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
@@ -111,10 +110,10 @@ public class Gun : MonoBehaviour
     {
         IsCanShoot = true;
         isWeaponReload = false;
-        mWeaponReload = gun.ReloadTime;
-        ClipCapacity = gun.ClipCapacity;
+        mWeaponReload = weapon.ReloadTime;
+        ClipCapacity = weapon.ClipCapacity;
         mCurrentAmmo = ClipCapacity;
-        Range = gun.Range;
+        Range = weapon.Range;
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         character = gameManager.spawn.CharacterList[0];
     }
@@ -148,7 +147,7 @@ public class Gun : MonoBehaviour
                     mCurrentAmmo = ClipCapacity;
                 }
 
-                mWeaponReload = gun.ReloadTime;
+                mWeaponReload = weapon.ReloadTime;
             }
         }
     }
