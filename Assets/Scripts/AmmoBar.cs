@@ -35,7 +35,7 @@ public class AmmoBar : MonoBehaviour
 
     #region Unity Methods
 
-    private void OnEnable()
+    private void Start()
     {
         Init();
     }
@@ -44,7 +44,7 @@ public class AmmoBar : MonoBehaviour
     {
         if (gun != null)
         {
-            ClipAmountText.text = spawn.CharacterList[0].gun.SpareBulletCount.ToString();
+            ClipAmountText.text = spawn.CharacterList[0].Gun.SpareBulletCount.ToString();
 
             if (gun.IsCanShoot == false && gameManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
             {
@@ -57,12 +57,13 @@ public class AmmoBar : MonoBehaviour
         }
         else
         {
-            gun = spawn.CharacterList[0].gun;
+            gun = spawn.CharacterList[0].Gun;
         }
 
         if (spawn.CharacterList[0].IsNewGun)
         {
-            StartCoroutine(Ammobar());
+            gun = spawn.CharacterList[0].Gun;
+            AmmoBarInstantlyFilling();
             spawn.CharacterList[0].IsNewGun = false;
         }
     }
@@ -92,6 +93,13 @@ public class AmmoBar : MonoBehaviour
         }
     }
 
+    private void AmmoBarInstantlyFilling()
+    {
+        AmmoBarDelete();
+        AmmoCount = spawn.CharacterList[0].Gun.ClipCapacity;
+        AmmoBarsCreate();
+    }
+
     private void AmmoBarDelete()
     {
         for (int i = 0; i <= AmmoCount - 1; i++)
@@ -106,7 +114,7 @@ public class AmmoBar : MonoBehaviour
     {
         for (int i = 0; i < AmmoCount - 1; i++)
         {
-            BarImageList[i].color = Color.black;
+            BarImageList[i].color = Color.green;
         }
     }
 
@@ -118,12 +126,10 @@ public class AmmoBar : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (spawn.CharacterList[0].gun != null)
+        if (spawn.CharacterList[0].Gun != null)
         {
             AmmoBarDelete();
-            yield return new WaitForSeconds(0.2f);
-            AmmoCount = spawn.CharacterList[0].gun.ClipCapacity;
-            yield return new WaitForSeconds(0.2f);
+            AmmoCount = gun.ClipCapacity;
             AmmoBarsCreate();
         }
     }

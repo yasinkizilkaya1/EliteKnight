@@ -108,7 +108,7 @@ public class Door : MonoBehaviour
         IsLock = isbool;
         yield return new WaitForSeconds(0.1f);
         DoorAnimator.SetBool("IsOpen", !isbool);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         mLeftDoorCollider.enabled = isbool;
         mRightDoorCollider.enabled = isbool;
         DoorLock.SetActive(isbool);

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     #region Constants
 
     private const string KEYS_BILL = ".asset";
-    private const string KEYS_PATH = "Assets/Data/KeyData/";
+    private const string KEYS_PATH = "Assets/Data/Keys/";
     private const string TAG_CHARACTER = "Body";
     private const string TAG_SUPPORT = "Support";
     private const string TAG_LOBBY = "Lobby";
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     #region Fields
 
-    public Inventory inventory;
+    public GunSlot gunSlot;
     public Toggle AutoClipReloadToggle;
 
     public GameObject StagePanelObject;
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         if (AutoClipReloadToggle.isOn)
         {
-            spawn.CharacterList[0].gun.AutoWeaponReloadEnum();
+            spawn.CharacterList[0].Gun.AutoWeaponReload();
         }
 
         if (isPlayerDead)

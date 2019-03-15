@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
     #region Constants
 
     private const string TAG_GAMEMANAGER = "GameManager";
+    private const string TAG_CHARACETER = "Character";
 
     #endregion
 
@@ -22,7 +23,7 @@ public class Gun : MonoBehaviour
 
     public int SpareBulletCount;
     public int ClipCapacity;
-    private int mCurrentAmmo;
+    public int CurrentAmmo;
 
     public bool isWeaponReload;
     public bool IsCanShoot;
@@ -35,14 +36,14 @@ public class Gun : MonoBehaviour
 
     #region Unity Methods
 
-    private void OnEnable()
+    private void Start()
     {
         Init();
     }
 
     private void Update()
     {
-        ClipReloadEnum();
+        ClipReload();
     }
 
     #endregion
@@ -51,11 +52,11 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
-        if (mCurrentAmmo > 0 && IsCanShoot == true)
+        if (CurrentAmmo > 0 && IsCanShoot == true && weapon.IsAttak)
         {
             for (int i = BarrelList.Count - 1; i >= 0; i--)
             {
-                mCurrentAmmo--;
+                CurrentAmmo--;
                 GameObject Bullet = ObjectPooler.SharedInstance.GetPooledObject("bullet");
 
                 if (Bullet != null)
@@ -64,7 +65,7 @@ public class Gun : MonoBehaviour
                     Bullet.transform.rotation = BarrelList[i].transform.rotation;
                     Bullet.SetActive(true);
                     Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>().weapon;
-                    gameManager.ammoBar.BarImageList[mCurrentAmmo].color = Color.grey;
+                    gameManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
                 }
             }
         }
@@ -74,13 +75,13 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void ClipReloadEnum()
+    public void ClipReload()
     {
-        if (Input.GetKeyDown(gameManager.ReloadEnum) && gameManager.isPause == false && isWeaponReload == false && mCurrentAmmo != ClipCapacity && SpareBulletCount > 0)
+        if (Input.GetKeyDown(gameManager.ReloadEnum) && gameManager.isPause == false && isWeaponReload == false && CurrentAmmo != ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount -= ClipCapacity - mCurrentAmmo;
+            SpareBulletCount -= ClipCapacity - CurrentAmmo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -90,13 +91,13 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void AutoWeaponReloadEnum()
+    public void AutoWeaponReload()
     {
-        if (mCurrentAmmo == 0 && mWeaponReload == weapon.ReloadTime && SpareBulletCount > 0)
+        if (CurrentAmmo == 0 && mWeaponReload == weapon.ReloadTime && SpareBulletCount > 0)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount -= ClipCapacity - mCurrentAmmo;
+            SpareBulletCount -= ClipCapacity - CurrentAmmo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -112,7 +113,7 @@ public class Gun : MonoBehaviour
         isWeaponReload = false;
         mWeaponReload = weapon.ReloadTime;
         ClipCapacity = weapon.ClipCapacity;
-        mCurrentAmmo = ClipCapacity;
+        CurrentAmmo = ClipCapacity;
         Range = weapon.Range;
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         character = gameManager.spawn.CharacterList[0];
@@ -123,10 +124,10 @@ public class Gun : MonoBehaviour
         if (mWeaponReload > 0 && isWeaponReload)
         {
             mWeaponReload -= Time.deltaTime;
-            mCurrentAmmo = 0;
+            CurrentAmmo = 0;
             IsCanShoot = false;
 
-            if (mWeaponReload >= 0.2 && SpareBulletCount >= mCurrentAmmo)
+            if (mWeaponReload >= 0.2 && SpareBulletCount >= CurrentAmmo)
             {
                 StartCoroutine(BulletReloadEnum());
             }
@@ -139,12 +140,12 @@ public class Gun : MonoBehaviour
 
                 if (SpareBulletCount < ClipCapacity)
                 {
-                    mCurrentAmmo = SpareBulletCount;
+                    CurrentAmmo = SpareBulletCount;
                     SpareBulletCount = 0;
                 }
                 else
                 {
-                    mCurrentAmmo = ClipCapacity;
+                    CurrentAmmo = ClipCapacity;
                 }
 
                 mWeaponReload = weapon.ReloadTime;
@@ -158,14 +159,14 @@ public class Gun : MonoBehaviour
 
     IEnumerator BulletReloadEnum()
     {
-        while ((mCurrentAmmo <= ClipCapacity && mCurrentAmmo != SpareBulletCount))
+        while ((CurrentAmmo <= ClipCapacity && CurrentAmmo != SpareBulletCount))
         {
             yield return new WaitForSeconds(mFillingAmount);
-            mCurrentAmmo++;
+            CurrentAmmo++;
 
-            if (mCurrentAmmo <= ClipCapacity)
+            if (CurrentAmmo <= ClipCapacity)
             {
-                gameManager.ammoBar.BarImageList[mCurrentAmmo - 1].color = Color.black;
+                gameManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
             }
         }
     }

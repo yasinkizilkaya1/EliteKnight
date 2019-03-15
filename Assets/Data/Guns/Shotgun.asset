@@ -9,14 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1283aeb897c025d438b37429a01ba309, type: 3}
-  m_Name: AK47
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  Id: 1
-  Name: Ak47
-  Sprite: {fileID: 21300012, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
-  itemObject: {fileID: 1411510944606112, guid: 3597263db4c72c14983886924169448b, type: 2}
+  Id: 2
+  Name: Shotgun
+  Icon: {fileID: 21300014, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
+  StackSize: 1
+  ItemObject: {fileID: 1160372663281466, guid: 10ef91f99ac71a34b92adccf1213c0bf, type: 2}
+  IsAttak: 1
   Power: 1
-  ClipCapacity: 10
+  ClipCapacity: 8
   TotalBullet: 220
-  Range: 0.8
-  ReloadTime: 2.5
+  Range: 0.6
+  ReloadTime: 2.8

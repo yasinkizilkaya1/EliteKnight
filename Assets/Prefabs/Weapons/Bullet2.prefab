@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   Speed: 10
+  range: 0
 --- !u!212 &212804083423201260
 SpriteRenderer:
   m_ObjectHideFlags: 1

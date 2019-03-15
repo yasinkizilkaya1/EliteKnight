@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class CharacterFeature : Item
+{
+    public int Health;
+    public int Defence;
+    public int Speed;
+    public int Energy;
 
-public class CharacterFeature : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void Use(Character character)
+    {
+        character.CurrentHP += Health;
+        character.CurrentDefence += Defence;
+        character.Speed += Speed;
+        character.MaxEnergy += Energy;
+    }
 }

@@ -7,13 +7,10 @@ public class Character : MonoBehaviour
     #region Constants
 
     private const string CARD_DATA_BILL = ".asset";
-    private const string CARD_DATA_PATH = "Assets/Data/CharacterData/";
+    private const string CARD_DATA_PATH = "Assets/Data/Characters/";
     private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_ITEM = "Item";
-    private const string TAG_AK47 = "Ak47";
-    private const string TAG_SHOTGUN = "Shotgun";
     private const int DECELERATION = 1;
-    private const int CLIPAMOUNT = 30;
     private const float ENERGYRELOADTIME = 5f;
     private const float SHOOTİNGRATE = 1f;
 
@@ -23,7 +20,7 @@ public class Character : MonoBehaviour
 
     public CharacterData characterData;
     public GameManager gameManager;
-    public Gun gun;
+    public Gun Gun;
     public Knife knife;
 
     public int CurrentHP;
@@ -36,7 +33,7 @@ public class Character : MonoBehaviour
     public int Energy;
     public int MaxDefance;
     public int DeadEnemyCount;
-    private int mMaxEnergy;
+    public int MaxEnergy;
     private int mDefaultSpeed;
     private int RunSpeed;
 
@@ -50,9 +47,8 @@ public class Character : MonoBehaviour
     private Vector3 mousePositionVector;
     public GameObject BodyObject;
     public GameObject RightWeaponObject;
-    public GameObject RightGunObject;
-    public List<GameObject> WeaponList;
-    public Collider2D collider2D;
+    public List<Gun> Guns;
+    public int SelectionWeaponId;
 
     #endregion
 
@@ -71,6 +67,32 @@ public class Character : MonoBehaviour
             Run(gameManager);
             CharacterTurn(gameManager);
             Attack();
+
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f && Guns.Count > 1)
+            {
+                if (SelectionWeaponId < Guns.Count - 1)
+                {
+                    SelectionWeaponId++;
+                }
+                else
+                {
+                    SelectionWeaponId = 0;
+                }
+                GunChange(Guns[SelectionWeaponId]);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f && Guns.Count > 1)
+            {
+                if (SelectionWeaponId > 0)
+                {
+                    SelectionWeaponId--;
+                }
+                else
+                {
+                    SelectionWeaponId = Guns.Count - 1;
+                }
+                GunChange(Guns[SelectionWeaponId]);
+            }
         }
 
         if (CurrentHP == 0)
@@ -80,47 +102,12 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (collider.CompareTag(TAG_ITEM))
-            {
-                Destroy(collider);
-            }
-
-            //if (collider.CompareTag(TAG_AK47))
-            //{
-            //    GunChange(WeaponList[1]);
-            //    gameManager.inventory.ItemAdd(WeaponList[1].GetComponent<Gun>().weapon);
-            //}
-            //else if (collider.CompareTag(TAG_SHOTGUN))
-            //{
-            //    GunChange(WeaponList[2]);
-            //}
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag(TAG_ITEM))
         {
-            //if (collider.GetComponent<item>().Health > 0)
-            //{
-            //    CurrentHP += collider.GetComponent<item>().Health;
-            //}
-
-            //if (collider.GetComponent<item>().Defence > 0)
-            //{
-            //    CurrentDefence += collider.GetComponent<item>().Defence;
-            //}
-
-            //if (collider.GetComponent<item>().Clip > 0)
-            //{
-            //    gun.SpareBulletCount += collider.GetComponent<item>().Clip;
-            //}
-
             Destroy(collider.gameObject);
+            GunAdd(collider.GetComponent<Gun>().weapon);
         }
     }
 
@@ -137,7 +124,7 @@ public class Character : MonoBehaviour
         CurrentHP = characterData.Health;
         MaxHP = CurrentHP;
         Energy = characterData.Energy;
-        mMaxEnergy = Energy;
+        MaxEnergy = Energy;
         CurrentDefence = characterData.Defence;
         Power = characterData.Power;
 
@@ -228,11 +215,11 @@ public class Character : MonoBehaviour
                     run = 0;
                 }
 
-                if (EnergyReload <= 0.2 && mMaxEnergy >= Energy)
+                if (EnergyReload <= 0.2 && MaxEnergy >= Energy)
                 {
                     Energy += DECELERATION;
 
-                    if (mMaxEnergy == Energy)
+                    if (MaxEnergy == Energy)
                     {
                         isTire = false;
                         EnergyReload = ENERGYRELOADTIME;
@@ -246,18 +233,37 @@ public class Character : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && gameManager.isPause == false)
         {
-            if (gun == null && RightWeaponObject == null)
+            if (Gun == null && RightWeaponObject == null)
             {
                 knife.isattack = true;
             }
             else
             {
-                gun.Fire();
+                Gun.Fire();
             }
         }
-        else if (Input.GetButtonDown("Fire1") == false && gun == null)
+        else if (Input.GetButtonDown("Fire1") == false && Gun == null)
         {
             knife.isattack = false;
+        }
+    }
+
+    private void GunChangeDringClipReload(Gun gun)
+    {
+        int DiminishedBulletValue = 0;
+
+        if (gun.ClipCapacity != gun.CurrentAmmo)
+        {
+            DiminishedBulletValue = gun.ClipCapacity - gun.CurrentAmmo;
+            gun.CurrentAmmo = gun.ClipCapacity;
+        }
+
+        if (DiminishedBulletValue > 0)
+        {
+            gun.SpareBulletCount -= DiminishedBulletValue;
+            DiminishedBulletValue = 0;
+            gun.isWeaponReload = false;
+            gun.IsCanShoot = true;
         }
     }
 
@@ -265,12 +271,26 @@ public class Character : MonoBehaviour
 
     #region Public Method
 
-    public void GunChange(GameObject GunObject)
+    public void GunAdd(Weapon weapon)
     {
-        IsNewGun = true;
-        Destroy(RightGunObject);
-        RightGunObject = Instantiate(GunObject, RightWeaponObject.transform);
-        gun = RightGunObject.GetComponent<Gun>();
+        Gun NewGun = Instantiate(weapon.ItemObject, RightWeaponObject.transform).GetComponent<Gun>() as Gun;
+        NewGun.transform.localScale = new Vector3(10, 10, 1);
+        NewGun.gameObject.SetActive(false);
+        Guns.Add(NewGun);
+    }
+
+    public void GunChange(Gun gun)
+    {
+        if (Gun != gun && Gun.isWeaponReload == false)
+        {
+            GunChangeDringClipReload(Gun);
+            IsNewGun = true;
+            Gun.gameObject.SetActive(false);
+            Gun = gun;
+            gun.gameObject.SetActive(true);
+            gameManager.gunSlot.ItemImage[0].sprite = gun.weapon.Icon;
+            gameManager.gunSlot.Items[0] = Gun.weapon;
+        }
     }
 
     public void HealthDisCount(int value)

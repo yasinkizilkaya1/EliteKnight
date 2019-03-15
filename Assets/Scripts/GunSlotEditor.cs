@@ -1,30 +1,28 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Inventory))]
-public class InventoryEditor : Editor
+[CustomEditor(typeof(GunSlot))]
+public class GunSlotEditor : Editor
 {
     private const string inventoryPropItemImagesName = "ItemImage";
     private const string inventoryRropItemsName = "Items";
-    private const string inventoryRropItemDropName = "itemDropButton";
 
-    private bool[] showItemSlots = new bool[Inventory.numItemSlot];
+    private bool[] showItemSlots;
     private SerializedProperty itemImagesProperty;
     private SerializedProperty itemsProperty;
-    private SerializedProperty itemDropProperty;
 
     private void OnEnable()
     {
+        showItemSlots = new bool[GunSlot.numItemSlot];
         itemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
         itemsProperty = serializedObject.FindProperty(inventoryRropItemsName);
-        itemDropProperty = serializedObject.FindProperty(inventoryRropItemDropName);
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        for (int i = 0; i < Inventory.numItemSlot; i++)
+        for (int i = 0; i < GunSlot.numItemSlot; i++)
         {
             ItemSlotGUI(i);
         }
@@ -37,13 +35,12 @@ public class InventoryEditor : Editor
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUI.indentLevel++;
 
-        showItemSlots[index] = EditorGUILayout.Foldout(showItemSlots[index], "Item Slot");
+        showItemSlots[index] = EditorGUILayout.Foldout(showItemSlots[index], "Gun Slot");
 
         if (showItemSlots[index])
         {
-            EditorGUILayout.PropertyField(itemImagesProperty.GetArrayElementAtIndex(index));
-            EditorGUILayout.PropertyField(itemsProperty.GetArrayElementAtIndex(index));
-            EditorGUILayout.PropertyField(itemDropProperty.GetArrayElementAtIndex(index));
+            EditorGUILayout.PropertyField(itemImagesProperty.GetArrayElementAtIndex(index),new GUIContent("Icon"));
+            EditorGUILayout.PropertyField(itemsProperty.GetArrayElementAtIndex(index),new GUIContent("Item"));
         }
 
         EditorGUI.indentLevel--;

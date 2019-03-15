@@ -44,10 +44,6 @@ MonoBehaviour:
     objectToPool: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
       type: 2}
     shouldExpand: 1
-  - amountToPool: 20
-    objectToPool: {fileID: 1432971038763504, guid: 4bed0f314812b1a4ba623d78325d5ed2,
-      type: 2}
-    shouldExpand: 1
   pooledObjectList: []
 --- !u!114 &114834032114615708
 MonoBehaviour:
@@ -60,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022b120f113a77940b2e1783ba9cd3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunSlot: {fileID: 0}
   AutoClipReloadToggle: {fileID: 0}
   StagePanelObject: {fileID: 0}
   PlayerItemPanelObject: {fileID: 0}
@@ -69,6 +66,7 @@ MonoBehaviour:
   LoadingSliderObject: {fileID: 0}
   PanelSettingObject: {fileID: 0}
   AutoReloadObject: {fileID: 0}
+  InventoryObject: {fileID: 0}
   LoadingText: {fileID: 0}
   characterID: {fileID: 0}
   spawn: {fileID: 0}
