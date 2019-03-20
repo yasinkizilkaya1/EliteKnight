@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
     public int DeadEnemyCount;
     public int MaxEnergy;
     private int mDefaultSpeed;
-    private int RunSpeed;
+    private int mRunSpeed;
 
     public bool IsNewGun;
     public bool isDead;
@@ -44,7 +44,7 @@ public class Character : MonoBehaviour
     public float EnergyReload;
     public float shooting;
 
-    private Vector3 mousePositionVector;
+    private Vector3 mMousePositionVector;
     public GameObject BodyObject;
     public GameObject RightWeaponObject;
     public List<Gun> Guns;
@@ -130,7 +130,7 @@ public class Character : MonoBehaviour
 
         mDefaultSpeed = characterData.Speed;
         EnergyReload = 5f;
-        RunSpeed = characterData.RunSpeed;
+        mRunSpeed = characterData.RunSpeed;
         shooting = SHOOTİNGRATE;
         MaxDefance = characterData.Defence;
     }
@@ -174,9 +174,9 @@ public class Character : MonoBehaviour
     {
         if (gameManager.isPause == false)
         {
-            mousePositionVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePositionVector.z = transform.position.z;
-            BodyObject.transform.right = (mousePositionVector - transform.position);
+            mMousePositionVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mMousePositionVector.z = transform.position.z;
+            BodyObject.transform.right = (mMousePositionVector - transform.position);
         }
     }
 
@@ -188,7 +188,7 @@ public class Character : MonoBehaviour
             {
                 if (Energy > 0)
                 {
-                    Speed = RunSpeed;
+                    Speed = mRunSpeed;
                     Energy -= DECELERATION;
                     run = 1;
                 }
@@ -248,25 +248,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void GunChangeDringClipReload(Gun gun)
-    {
-        int DiminishedBulletValue = 0;
-
-        if (gun.ClipCapacity != gun.CurrentAmmo)
-        {
-            DiminishedBulletValue = gun.ClipCapacity - gun.CurrentAmmo;
-            gun.CurrentAmmo = gun.ClipCapacity;
-        }
-
-        if (DiminishedBulletValue > 0)
-        {
-            gun.SpareBulletCount -= DiminishedBulletValue;
-            DiminishedBulletValue = 0;
-            gun.isWeaponReload = false;
-            gun.IsCanShoot = true;
-        }
-    }
-
     #endregion
 
     #region Public Method
@@ -283,7 +264,6 @@ public class Character : MonoBehaviour
     {
         if (Gun != gun && Gun.isWeaponReload == false)
         {
-            GunChangeDringClipReload(Gun);
             IsNewGun = true;
             Gun.gameObject.SetActive(false);
             Gun = gun;

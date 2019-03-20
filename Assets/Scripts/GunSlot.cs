@@ -6,11 +6,10 @@ public class GunSlot : MonoBehaviour
     private const string TAG_GAMEMANAGER = "GameManager";
     public const int numItemSlot = 1;
 
-    private GameManager gameManager;
+    private GameManager mGameManager;
 
     public Image[] ItemImage;
     public Item[] Items;
-    private Rigidbody2D rigidbody;
 
     private void Start()
     {
@@ -19,11 +18,11 @@ public class GunSlot : MonoBehaviour
 
     private void Initialize()
     {
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        mGameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
 
-        for (int index = 0; index < gameManager.spawn.CharacterList[0].Guns.Count; index++)
+        for (int index = 0; index < mGameManager.spawn.CharacterList[0].Guns.Count; index++)
         {
-            ItemAdd(gameManager.spawn.CharacterList[0].Guns[index].weapon);
+            ItemAdd(mGameManager.spawn.CharacterList[0].Guns[index].weapon);
         }
     }
 

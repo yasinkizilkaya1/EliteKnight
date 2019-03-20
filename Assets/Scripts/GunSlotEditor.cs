@@ -8,14 +8,14 @@ public class GunSlotEditor : Editor
     private const string inventoryRropItemsName = "Items";
 
     private bool[] showItemSlots;
-    private SerializedProperty itemImagesProperty;
-    private SerializedProperty itemsProperty;
+    private SerializedProperty mItemImagesProperty;
+    private SerializedProperty mItemsProperty;
 
     private void OnEnable()
     {
         showItemSlots = new bool[GunSlot.numItemSlot];
-        itemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
-        itemsProperty = serializedObject.FindProperty(inventoryRropItemsName);
+        mItemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
+        mItemsProperty = serializedObject.FindProperty(inventoryRropItemsName);
     }
 
     public override void OnInspectorGUI()
@@ -39,8 +39,8 @@ public class GunSlotEditor : Editor
 
         if (showItemSlots[index])
         {
-            EditorGUILayout.PropertyField(itemImagesProperty.GetArrayElementAtIndex(index),new GUIContent("Icon"));
-            EditorGUILayout.PropertyField(itemsProperty.GetArrayElementAtIndex(index),new GUIContent("Item"));
+            EditorGUILayout.PropertyField(mItemImagesProperty.GetArrayElementAtIndex(index),new GUIContent("Icon"));
+            EditorGUILayout.PropertyField(mItemsProperty.GetArrayElementAtIndex(index),new GUIContent("Item"));
         }
 
         EditorGUI.indentLevel--;

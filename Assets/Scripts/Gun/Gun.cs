@@ -13,7 +13,7 @@ public class Gun : MonoBehaviour
 
     #region Fields
 
-    private GameManager gameManager;
+    private GameManager mgameManager;
     public Character character;
     public Weapon weapon;
 
@@ -22,7 +22,6 @@ public class Gun : MonoBehaviour
     public GameObject clipObject;
 
     public int SpareBulletCount;
-    public int ClipCapacity;
     public int CurrentAmmo;
 
     public bool isWeaponReload;
@@ -65,7 +64,7 @@ public class Gun : MonoBehaviour
                     Bullet.transform.rotation = BarrelList[i].transform.rotation;
                     Bullet.SetActive(true);
                     Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>().weapon;
-                    gameManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
+                    mgameManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
                 }
             }
         }
@@ -77,11 +76,11 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(gameManager.ReloadEnum) && gameManager.isPause == false && isWeaponReload == false && CurrentAmmo != ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(mgameManager.ReloadEnum) && mgameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
-            mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount -= ClipCapacity - CurrentAmmo;
+            mFillingAmount = (mWeaponReload - 0.4f) / weapon.ClipCapacity;
+            SpareBulletCount -= weapon.ClipCapacity - CurrentAmmo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -96,8 +95,8 @@ public class Gun : MonoBehaviour
         if (CurrentAmmo == 0 && mWeaponReload == weapon.ReloadTime && SpareBulletCount > 0)
         {
             Instantiate(clipObject, transform.position, transform.rotation);
-            mFillingAmount = (mWeaponReload - 0.4f) / ClipCapacity;
-            SpareBulletCount -= ClipCapacity - CurrentAmmo;
+            mFillingAmount = (mWeaponReload - 0.4f) / weapon.ClipCapacity;
+            SpareBulletCount -= weapon.ClipCapacity - CurrentAmmo;
             isWeaponReload = true;
             WeaponReload();
         }
@@ -112,11 +111,10 @@ public class Gun : MonoBehaviour
         IsCanShoot = true;
         isWeaponReload = false;
         mWeaponReload = weapon.ReloadTime;
-        ClipCapacity = weapon.ClipCapacity;
-        CurrentAmmo = ClipCapacity;
+        CurrentAmmo = weapon.ClipCapacity; 
         Range = weapon.Range;
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        character = gameManager.spawn.CharacterList[0];
+        mgameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        character = mgameManager.spawn.CharacterList[0];
     }
 
     private void WeaponReload()
@@ -138,14 +136,14 @@ public class Gun : MonoBehaviour
                 isWeaponReload = false;
                 StopAllCoroutines();
 
-                if (SpareBulletCount < ClipCapacity)
+                if (SpareBulletCount < weapon.ClipCapacity )
                 {
                     CurrentAmmo = SpareBulletCount;
                     SpareBulletCount = 0;
                 }
                 else
                 {
-                    CurrentAmmo = ClipCapacity;
+                    CurrentAmmo = weapon.ClipCapacity;
                 }
 
                 mWeaponReload = weapon.ReloadTime;
@@ -159,14 +157,14 @@ public class Gun : MonoBehaviour
 
     IEnumerator BulletReloadEnum()
     {
-        while ((CurrentAmmo <= ClipCapacity && CurrentAmmo != SpareBulletCount))
+        while ((CurrentAmmo <= weapon.ClipCapacity && CurrentAmmo != SpareBulletCount))
         {
             yield return new WaitForSeconds(mFillingAmount);
             CurrentAmmo++;
 
-            if (CurrentAmmo <= ClipCapacity)
+            if (CurrentAmmo <= weapon.ClipCapacity)
             {
-                gameManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
+                mgameManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
             }
         }
     }

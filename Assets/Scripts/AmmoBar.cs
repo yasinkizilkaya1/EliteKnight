@@ -26,10 +26,10 @@ public class AmmoBar : MonoBehaviour
 
     public Text ClipAmountText;
 
-    private float AmmoBarGap;
+    private float mAmmoBarGap;
 
-    private int AmmoBarWidth;
-    private int AmmoCount;
+    private int mAmmoBarWidth;
+    private int mAmmoCount;
 
     #endregion
 
@@ -79,13 +79,13 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarsCreate()
     {
-        AmmoBarWidth = (AMMO_BAR_BACKGROUND_WIDTH / (AmmoCount + 1));
-        AmmoBarGap = AmmoBarWidth / (AmmoCount + 1);
+        mAmmoBarWidth = (AMMO_BAR_BACKGROUND_WIDTH / (mAmmoCount + 1));
+        mAmmoBarGap = mAmmoBarWidth / (mAmmoCount + 1);
 
-        AmmoGridLayout.cellSize = new Vector2(AmmoBarWidth, 100);
-        AmmoGridLayout.spacing = new Vector2(AmmoBarGap + 0.5f, 0);
+        AmmoGridLayout.cellSize = new Vector2(mAmmoBarWidth, 100);
+        AmmoGridLayout.spacing = new Vector2(mAmmoBarGap + 0.5f, 0);
 
-        for (int i = 0; i < AmmoCount; i++)
+        for (int i = 0; i < mAmmoCount; i++)
         {
             Image Bar = Instantiate(BarImage, transform);
             BarImageListObject.Add(Bar.gameObject);
@@ -96,13 +96,14 @@ public class AmmoBar : MonoBehaviour
     private void AmmoBarInstantlyFilling()
     {
         AmmoBarDelete();
-        AmmoCount = spawn.CharacterList[0].Gun.ClipCapacity;
+        mAmmoCount = spawn.CharacterList[0].Gun.weapon.ClipCapacity;
         AmmoBarsCreate();
+        AmmoBarsBackup();
     }
 
     private void AmmoBarDelete()
     {
-        for (int i = 0; i <= AmmoCount - 1; i++)
+        for (int i = 0; i <= mAmmoCount - 1; i++)
         {
             Destroy(BarImageListObject[i]);
         }
@@ -112,9 +113,12 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarsBackup()
     {
-        for (int i = 0; i < AmmoCount - 1; i++)
+        if (gun.CurrentAmmo != mAmmoCount)
         {
-            BarImageList[i].color = Color.green;
+            for (int i = mAmmoCount - 1; i >= gun.CurrentAmmo; i--)
+            {
+                BarImageList[i].color = Color.grey;
+            }
         }
     }
 
@@ -129,7 +133,7 @@ public class AmmoBar : MonoBehaviour
         if (spawn.CharacterList[0].Gun != null)
         {
             AmmoBarDelete();
-            AmmoCount = gun.ClipCapacity;
+            mAmmoCount = gun.weapon.ClipCapacity;
             AmmoBarsCreate();
         }
     }

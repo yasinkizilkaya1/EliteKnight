@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     public Spawn spawn;
     public AmmoBar ammoBar;
     public Slider slider;
-    private Keys keys;
+    private Keys mKeys;
 
     public string SelectedCardNameString;
 
@@ -140,8 +140,8 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        keys = (Keys)AssetDatabase.LoadAssetAtPath(KEYS_PATH + SAVING_KEY_NAME + KEYS_BILL, typeof(Keys));
-        keycapList = new List<string>() { keys.Up, keys.Down, keys.Left, keys.Right, keys.Reload, keys.Run };
+        mKeys = (Keys)AssetDatabase.LoadAssetAtPath(KEYS_PATH + SAVING_KEY_NAME + KEYS_BILL, typeof(Keys));
+        keycapList = new List<string>() { mKeys.Up, mKeys.Down, mKeys.Left, mKeys.Right, mKeys.Reload, mKeys.Run };
         DefaultkeycapList = new List<string>() { "W", "S", "A", "D", "R", "LeftShift" };
 
         if (characterID == null)
@@ -225,12 +225,12 @@ public class GameManager : MonoBehaviour
         ReloadEnum = (KeyCode)Enum.Parse(typeof(KeyCode), reload);
         RunEnum = (KeyCode)Enum.Parse(typeof(KeyCode), run);
 
-        keys.Up = up;
-        keys.Down = down;
-        keys.Left = left;
-        keys.Right = right;
-        keys.Reload = reload;
-        keys.Run = run;
+        mKeys.Up = up;
+        mKeys.Down = down;
+        mKeys.Left = left;
+        mKeys.Right = right;
+        mKeys.Reload = reload;
+        mKeys.Run = run;
     }
 
     public void ApplicationisPause()
