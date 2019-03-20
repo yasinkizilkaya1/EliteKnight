@@ -9,6 +9,8 @@ public class CharacterData : ScriptableObject
     public int MaxHealth;
     public int Energy;
     public int MaxEnergy;
+    public int EnergyIncreaseAmmount;
+    public float EnergyReloadTime;
     public int Power;
     public int Defence;
     public int Speed;

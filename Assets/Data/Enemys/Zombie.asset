@@ -18,3 +18,5 @@ MonoBehaviour:
   Defence: 0
   Speed: 4
   AttackPower: 1
+  AttackRange: 0.75
+  ShootingRate: 1

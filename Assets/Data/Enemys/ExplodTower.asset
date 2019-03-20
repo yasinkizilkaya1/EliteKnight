@@ -17,3 +17,4 @@ MonoBehaviour:
   MaxHealth: 6
   Defence: 2
   AttacPower: 2
+  AttackTime: 1

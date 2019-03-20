@@ -46,7 +46,7 @@ public class TowerEnemy : MonoBehaviour
 
             if (towerWeapon.isLinerenderer)
             {
-                spawn.CharacterList[0].SlowDown(inside,SlowPower);
+                spawn.CharacterList[0].SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
             }
 
             if (isStandartTower && towerWeapon.CanAttack)
@@ -61,7 +61,7 @@ public class TowerEnemy : MonoBehaviour
         if (col.gameObject.gameObject.CompareTag(TAG_TARGET))
         {
             inside = false;
-            spawn.CharacterList[0].SlowDown(inside,SlowPower);
+            spawn.CharacterList[0].SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
             StopAllCoroutines();
         }
     }

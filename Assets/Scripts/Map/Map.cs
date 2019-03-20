@@ -223,8 +223,10 @@ public class Map : MonoBehaviour
             BorderBridge(false, distanceX, FirstDoor, SecondDoor);
         }
 
-        for (int t = 0; t < mBridgeLocation.Count; t++)        {
-            BridgeTilemap.SetTile(mBridgeLocation[t], BridgeTile);        }
+        for (int t = 0; t < mBridgeLocation.Count; t++)
+        {
+            BridgeTilemap.SetTile(mBridgeLocation[t], BridgeTile);
+        }
 
         for (int k = 0; k < mWallLocation.Count; k++)
         {

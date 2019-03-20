@@ -17,6 +17,8 @@ MonoBehaviour:
   MaxHealth: 15
   Energy: 100
   MaxEnergy: 100
+  EnergyIncreaseAmmount: 1
+  EnergyReloadTime: 2
   Power: 2
   Defence: 25
   Speed: 5

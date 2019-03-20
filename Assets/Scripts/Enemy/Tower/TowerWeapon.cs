@@ -5,7 +5,6 @@ public class TowerWeapon : MonoBehaviour
     #region Constants
 
     private const string TAG_SPAWN = "Spawn";
-    private const float SHOOTINGRATE = 0.75f;
 
     #endregion
 
@@ -134,7 +133,7 @@ public class TowerWeapon : MonoBehaviour
     {
         if (CanAttack)
         {
-            shootCoolDown = SHOOTINGRATE;
+            shootCoolDown = tower.AttackTime;
             var shootTransformObject = Instantiate(shotPrefabTransform) as Transform;
             shootTransformObject.position = BarrelObject.transform.position;
             shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);

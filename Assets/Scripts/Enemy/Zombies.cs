@@ -10,10 +10,6 @@ public class Zombies : MonoBehaviour
     private const string TAG_WALL = "wall";
     private const float WALLRADIUS = 0.2f;
 
-    private const float SHOOTING_RATE = 0.75f;
-    private const float AFFINITY_ATTACK = 1.1f;
-    private const float AFFINITY = 1f;
-
     #endregion
 
     #region Fields
@@ -133,12 +129,12 @@ public class Zombies : MonoBehaviour
     {
         if (gameManager.isPlayerDead == false)
         {
-            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > AFFINITY)
+            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > zombie.AttackRange)
             {
                 BodyObject.transform.Translate(Vector2.right * -zombie.Speed * Time.deltaTime);
                 BodyObject.transform.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, BodyObject.transform);
             }
-            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < AFFINITY_ATTACK)
+            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < zombie.AttackRange + 0.1f)
             {
                 Attack();
             }
@@ -149,7 +145,7 @@ public class Zombies : MonoBehaviour
     {
         if (attack)
         {
-            shootcoolDown = SHOOTING_RATE;
+            shootcoolDown = zombie.ShootingRate;
             spawn.CharacterList[0].HealthDisCount(spawn.CharacterList[0].Power);
         }
     }

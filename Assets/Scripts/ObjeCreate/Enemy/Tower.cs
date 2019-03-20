@@ -4,4 +4,5 @@
 public class Tower:DamageableEntity
 {
     public int AttacPower;
+    public float AttackTime;
 }

@@ -511,6 +511,16 @@ Prefab:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 529628847}
+    - target: {fileID: 20624077881337486, guid: 53f3d1c2105693c45b70c15fae305f57,
+        type: 2}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 20624077881337486, guid: 53f3d1c2105693c45b70c15fae305f57,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294852607
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53f3d1c2105693c45b70c15fae305f57, type: 2}
   m_IsPrefabParent: 0
@@ -774,6 +784,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fca093620968b124da659c61792552de, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1871556134 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1654883535935786, guid: fca093620968b124da659c61792552de,
+    type: 2}
+  m_PrefabInternal: {fileID: 1871556133}
 --- !u!1839735485 &1871556135 stripped
 Tilemap:
   m_PrefabParentObject: {fileID: 8195094282818641632, guid: fca093620968b124da659c61792552de,
@@ -784,6 +799,21 @@ Tilemap:
   m_PrefabParentObject: {fileID: 8195094281987275232, guid: fca093620968b124da659c61792552de,
     type: 2}
   m_PrefabInternal: {fileID: 1871556133}
+--- !u!114 &1871556137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1871556134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0184ff86886f974d95dfead14754f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MultiplicativeColor: {r: 0, g: 0, b: 0, a: 1}
+  AdditiveColor: {r: 0, g: 0, b: 0, a: 0}
+  Material: {fileID: 2100000, guid: 0a8c132f813f5514b9f5b48ff3956482, type: 2}
+  LightObstacleScale: 1
 --- !u!114 &2068436619 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114605943833127574, guid: 479bbeb0af5a6d74b9f891130c5465c3,

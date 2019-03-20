@@ -13,9 +13,6 @@ TagManager:
   - body
   - Target
   - Body
-  - Slider
-  - ExplodedBullet
-  - TowerEnemyBullet
   - Toggle
   - Barrel
   - GameManager
@@ -27,9 +24,7 @@ TagManager:
   - Player_BulletBar
   - Loding_Panel
   - Pause
-  - GameManager2
   - selectname
-  - Projectile
   - Spawn
   - Tilemap_Ground
   - Map
@@ -53,9 +48,9 @@ TagManager:
   - Character
   - body
   - Zombie
-  - 
-  - 
-  - 
+  - LightSources
+  - LightObstacles
+  - AmbientLight
   - 
   - 
   - 

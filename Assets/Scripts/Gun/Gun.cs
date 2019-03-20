@@ -78,6 +78,7 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetKeyDown(mgameManager.ReloadEnum) && mgameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
+            GunClipDrup();
             Instantiate(clipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / weapon.ClipCapacity;
             SpareBulletCount -= weapon.ClipCapacity - CurrentAmmo;
@@ -111,7 +112,7 @@ public class Gun : MonoBehaviour
         IsCanShoot = true;
         isWeaponReload = false;
         mWeaponReload = weapon.ReloadTime;
-        CurrentAmmo = weapon.ClipCapacity; 
+        CurrentAmmo = weapon.ClipCapacity;
         Range = weapon.Range;
         mgameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         character = mgameManager.spawn.CharacterList[0];
@@ -136,7 +137,7 @@ public class Gun : MonoBehaviour
                 isWeaponReload = false;
                 StopAllCoroutines();
 
-                if (SpareBulletCount < weapon.ClipCapacity )
+                if (SpareBulletCount < weapon.ClipCapacity)
                 {
                     CurrentAmmo = SpareBulletCount;
                     SpareBulletCount = 0;
@@ -148,6 +149,14 @@ public class Gun : MonoBehaviour
 
                 mWeaponReload = weapon.ReloadTime;
             }
+        }
+    }
+
+    private void GunClipDrup()
+    {
+        for (int i = 0; i < CurrentAmmo; i++)
+        {
+            character.gameManager.ammoBar.BarImageList[i].color = Color.grey;
         }
     }
 

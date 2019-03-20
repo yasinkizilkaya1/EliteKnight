@@ -608,7 +608,6 @@ MonoBehaviour:
   Energy: 0
   MaxDefance: 0
   DeadEnemyCount: 0
-  MaxEnergy: 0
   IsNewGun: 0
   isDead: 0
   isTire: 0
@@ -638,7 +637,6 @@ MonoBehaviour:
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
   SpareBulletCount: 995
-  ClipCapacity: 5
   CurrentAmmo: 0
   isWeaponReload: 0
   IsCanShoot: 0

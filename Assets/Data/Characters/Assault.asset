@@ -15,8 +15,10 @@ MonoBehaviour:
   Name: Assault
   Health: 20
   MaxHealth: 20
-  Energy: 769
-  MaxEnergy: 769
+  Energy: 200
+  MaxEnergy: 200
+  EnergyIncreaseAmmount: 1
+  EnergyReloadTime: 3
   Power: 1
   Defence: 10
   Speed: 5

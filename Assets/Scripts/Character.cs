@@ -10,9 +10,6 @@ public class Character : MonoBehaviour
     private const string CARD_DATA_PATH = "Assets/Data/Characters/";
     private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_ITEM = "Item";
-    private const int DECELERATION = 1;
-    private const float ENERGYRELOADTIME = 5f;
-    private const float SHOOTİNGRATE = 1f;
 
     #endregion
 
@@ -33,7 +30,6 @@ public class Character : MonoBehaviour
     public int Energy;
     public int MaxDefance;
     public int DeadEnemyCount;
-    public int MaxEnergy;
     private int mDefaultSpeed;
     private int mRunSpeed;
 
@@ -124,14 +120,12 @@ public class Character : MonoBehaviour
         CurrentHP = characterData.Health;
         MaxHP = CurrentHP;
         Energy = characterData.Energy;
-        MaxEnergy = Energy;
         CurrentDefence = characterData.Defence;
         Power = characterData.Power;
 
         mDefaultSpeed = characterData.Speed;
-        EnergyReload = 5f;
+        EnergyReload = characterData.EnergyReloadTime;
         mRunSpeed = characterData.RunSpeed;
-        shooting = SHOOTİNGRATE;
         MaxDefance = characterData.Defence;
     }
 
@@ -189,7 +183,7 @@ public class Character : MonoBehaviour
                 if (Energy > 0)
                 {
                     Speed = mRunSpeed;
-                    Energy -= DECELERATION;
+                    Energy -= characterData.EnergyIncreaseAmmount;
                     run = 1;
                 }
                 else
@@ -215,14 +209,14 @@ public class Character : MonoBehaviour
                     run = 0;
                 }
 
-                if (EnergyReload <= 0.2 && MaxEnergy >= Energy)
+                if (EnergyReload <= 0.2 && characterData.MaxEnergy >= Energy)
                 {
-                    Energy += DECELERATION;
+                    Energy += characterData.EnergyIncreaseAmmount;
 
-                    if (MaxEnergy == Energy)
+                    if (characterData.MaxEnergy == Energy)
                     {
                         isTire = false;
-                        EnergyReload = ENERGYRELOADTIME;
+                        EnergyReload = characterData.EnergyReloadTime;
                     }
                 }
             }
@@ -308,26 +302,33 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SlowDown(bool inside, int power)
+    public void SlowDown(bool inside, int power, float healthDecreaseTime)
     {
-        if (inside == true)
+        if (shooting > 0)
         {
-            Speed = 2;
-
-            if (shooting > 0)
+            if (inside == true)
             {
-                shooting -= Time.deltaTime;
+                Speed = 2;
 
-                if (shooting <= 0)
+                if (shooting > 0)
                 {
-                    HealthDisCount(power);
-                    shooting = SHOOTİNGRATE;
+                    shooting -= Time.deltaTime;
+
+                    if (shooting <= 0)
+                    {
+                        HealthDisCount(power);
+                        shooting = healthDecreaseTime;
+                    }
                 }
             }
+            else if (Input.GetKey(gameManager.RunEnum) == false && inside == false)
+            {
+                Speed = characterData.Speed;
+            }
         }
-        else if (Input.GetKey(gameManager.RunEnum) == false && inside == false)
+        else
         {
-            Speed = characterData.Speed;
+            shooting = healthDecreaseTime;
         }
     }
 

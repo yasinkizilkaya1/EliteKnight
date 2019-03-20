@@ -82,11 +82,6 @@ public class GameManager : MonoBehaviour
 
         if (slider != null)
         {
-            if (slider.value <= 100)
-            {
-                StartCoroutine(Loading());
-            }
-
             if (slider.value == 100 && isPlayerDead == false)
             {
                 if (SelectedCardNameString == TAG_SUPPORT)
@@ -140,6 +135,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        StartCoroutine(Loading());
         mKeys = (Keys)AssetDatabase.LoadAssetAtPath(KEYS_PATH + SAVING_KEY_NAME + KEYS_BILL, typeof(Keys));
         keycapList = new List<string>() { mKeys.Up, mKeys.Down, mKeys.Left, mKeys.Right, mKeys.Reload, mKeys.Run };
         DefaultkeycapList = new List<string>() { "W", "S", "A", "D", "R", "LeftShift" };
@@ -267,10 +263,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Loading()
     {
-        if (slider.value <= 100)
+        while (true)
         {
-            yield return new WaitForSeconds(0.8f);
-            slider.value++;
+            if (slider.value <= 100)
+            {
+                yield return new WaitForSeconds(0.01f);
+                slider.value++;
+            }
+            else
+                break;
         }
     }
 
@@ -278,6 +279,7 @@ public class GameManager : MonoBehaviour
     {
         LoadingPanelObject.SetActive(true);
         LoadingSliderObject.SetActive(false);
+        InventoryObject.SetActive(false);
         LoadingText.text = "GAME OVER";
         LoadingText.fontSize = 60;
         yield return new WaitForSeconds(3f);
