@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114714034108673988}
   m_Layer: 0
   m_Name: TowerBullet
-  m_TagString: EnemyBullet
+  m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,14 +111,7 @@ MonoBehaviour:
   isEffectTowerBullet: 0
   isBullet: 0
   bulletObject: {fileID: 0}
-  LocationObject1: {fileID: 0}
-  LocationObject2: {fileID: 0}
-  LocationObject3: {fileID: 0}
-  LocationObject4: {fileID: 0}
-  LocationObject5: {fileID: 0}
-  LocationObject6: {fileID: 0}
-  LocationObject7: {fileID: 0}
-  LocationObject8: {fileID: 0}
+  BarrelList: []
   StandartTowerBulletObject: {fileID: 1432971038763504}
   EffectTowerBulletPower: 8
   NormalBulletPower: 1

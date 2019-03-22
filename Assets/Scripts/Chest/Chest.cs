@@ -9,14 +9,15 @@ public class Chest : MonoBehaviour
     private const string TAG_KNIFE = "knife";
     private const string TAG_SUPPORT = "Support";
     private const string TAG_SPEALİST = "Spealist";
+    private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_BULLET = "bullet";
 
     #endregion
 
     #region Fields
 
-    public GameManager gameManager; 
-    private WarriorData warriorData;
+    public GameManager gameManager;
+    private CharacterData CharacterData;
     public ChestEntity chestEntity;
     public List<GameObject> ItemList;
 
@@ -31,7 +32,6 @@ public class Chest : MonoBehaviour
     public GameObject DefanceBarObject5;
     public GameObject ItemObject;
 
-    public int ItemId;
     public int Health;
     public int Defence;
 
@@ -62,7 +62,7 @@ public class Chest : MonoBehaviour
 
                 if (chestEntity.ItemDrop)
                 {
-                    ItemObject = Instantiate(ItemList[RandomItemId(ItemList.Count)], ItemObject.transform);
+                    ItemObject = Instantiate(ItemList[Random.Range(0, ItemList.Count - 1)], ItemObject.transform);
                 }
                 HealthBarObject.SetActive(false);
                 Destroy(gameObject);
@@ -94,41 +94,7 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag(TAG_BULLET))
-        {
-            Destroy(col.gameObject);
-
-            int remainingDamage = 0;
-            if (Defence > 0)
-            {
-                if (warriorData.Power > Defence)
-                {
-                    remainingDamage = warriorData.Power - Defence;
-                    Defence = 0;
-                }
-                else
-                {
-                    Defence -= warriorData.Power;
-                }
-            }
-            else if (Health > 0)
-            {
-                if (warriorData.Power > Health)
-                {
-                    Health = 0;
-                }
-                else
-                {
-                    Health -= warriorData.Power;
-                }
-
-                if (remainingDamage != 0)
-                {
-                    Health -= remainingDamage;
-                }
-            }
-        }
-        else if (col.gameObject.CompareTag(TAG_KNIFE))
+        if (col.gameObject.CompareTag(TAG_KNIFE))
         {
             if (Defence > 0)
             {
@@ -147,18 +113,19 @@ public class Chest : MonoBehaviour
 
     private void Init()
     {
-        warriorData = (WarriorData)AssetDatabase.LoadAssetAtPath("Assets/Data/CharacterData/" + gameManager.SelectedCardNameString + ".asset", typeof(WarriorData));
+        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        CharacterData = gameManager.CharacterData;
         name = chestEntity.Name;
         Defence = chestEntity.Defence;
         Health = chestEntity.Health;
 
-        if (gameManager.SelectedCardNameString == TAG_SUPPORT)
+        if (gameManager.CharacterData.Name == TAG_SUPPORT)
         {
             ItemList.Remove(ItemList[4]);
             ItemList.Remove(ItemList[3]);
             ItemList.Remove(ItemList[2]);
         }
-        else if (gameManager.SelectedCardNameString == TAG_SPEALİST)
+        else if (gameManager.CharacterData.Name == TAG_SPEALİST)
         {
             ItemList.Remove(ItemList[4]);
             ItemList.Remove(ItemList[3]);
@@ -182,10 +149,41 @@ public class Chest : MonoBehaviour
         DefanceBarObject5.SetActive(istruefalse5);
     }
 
-    private int RandomItemId(int end)
+    #endregion
+
+    #region Public Method
+
+    public void DisHealth(int power)
     {
-        ItemId = Random.Range(0, end);
-        return ItemId;
+        int remainingDamage = 0;
+        if (Defence > 0)
+        {
+            if (power > Defence)
+            {
+                remainingDamage = power - Defence;
+                Defence = 0;
+            }
+            else
+            {
+                Defence -= power;
+            }
+        }
+        else if (Health > 0)
+        {
+            if (power > Health)
+            {
+                Health = 0;
+            }
+            else
+            {
+                Health -= power;
+            }
+
+            if (remainingDamage != 0)
+            {
+                Health -= remainingDamage;
+            }
+        }
     }
 
     #endregion

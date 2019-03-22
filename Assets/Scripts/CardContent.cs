@@ -11,9 +11,7 @@ public class CardContent : MonoBehaviour
     public List<CharacterData> CharacterList;
     public List<Toggle> ToggleList;
 
-    public bool isToggle1;
-    public bool isToggle2;
-    public bool isToggle3;
+    public ToggleGroup ToggleGroup;
 
     #endregion
 
@@ -22,13 +20,6 @@ public class CardContent : MonoBehaviour
     private void Start()
     {
         Initialize();
-    }
-
-    private void Update()
-    {
-        isToggle1 = ToggleList[0].isOn;
-        isToggle2 = ToggleList[1].isOn;
-        isToggle3 = ToggleList[2].isOn;
     }
 
     #endregion
@@ -42,9 +33,10 @@ public class CardContent : MonoBehaviour
         for (int i = 0; i < CharacterList.Count; i++)
         {
             GameObject card = Instantiate(cardPrefabObject, transform);
-            card.GetComponent<Card>().UpEnumdateData(CharacterList[i]);
-            card.GetComponent<Toggle>().group = GameObject.FindWithTag("Content").GetComponent<ToggleGroup>();
-            ToggleList.Add(card.GetComponent<Toggle>());
+            card.GetComponent<Card>().UpdateData(CharacterList[i]);
+            Toggle toggle = card.GetComponent<Toggle>();
+            toggle.group = ToggleGroup;
+            ToggleList.Add(toggle);
         }
     }
 

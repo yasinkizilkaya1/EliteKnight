@@ -21,7 +21,8 @@ public class Spawn : MonoBehaviour
     public GameObject SupportObject;
     public GameObject SpealistObject;
     public GameObject AssaultObject;
-    public GameManager gameManager;
+    public GameManager GameManager;
+    public UIManager UIManager;
 
     public List<Character> CharacterList;
 
@@ -79,7 +80,7 @@ public class Spawn : MonoBehaviour
     {
        GameObject TransformObject = gameObject;
 
-        switch (gameManager.SelectedCardNameString)
+        switch (GameManager.CharacterData.Name)
         {
             case TAG_ASSAULT:
                 TransformObject = Instantiate(AssaultObject, transform);

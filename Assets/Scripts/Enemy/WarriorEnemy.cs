@@ -6,8 +6,8 @@ public class WarriorEnemy : MonoBehaviour
 
     private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_ENEMY = "Enemy";
+    private const string TAG_CHEST = "chest";
     private const string TAG_WALL = "wall";
-    private const float CAN_ATTACK_TIME = 0.75f;
 
     #endregion
 
@@ -70,10 +70,10 @@ public class WarriorEnemy : MonoBehaviour
         {
             RoomObject.GetComponent<Room>().EnemyCount--;
             Destroy(gameObject);
-            gameManager.spawn.CharacterList[0].DeadEnemyCount++;
+            gameManager.Spawn.CharacterList[0].DeadEnemyCount++;
         }
 
-        if (gameManager.spawn.CharacterList[0] != null)
+        if (gameManager.Spawn.CharacterList[0] != null)
         {
             TargetFind();
 
@@ -111,7 +111,7 @@ public class WarriorEnemy : MonoBehaviour
     private void Aim()
     {
         Transform shootTransform = Body.transform;
-        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.spawn.CharacterList[0].transform, Body.transform);
+        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.Spawn.CharacterList[0].transform, Body.transform);
 
         if (Body.transform.rotation.z != shootTransform.rotation.z)
         {
@@ -128,7 +128,7 @@ public class WarriorEnemy : MonoBehaviour
         if (CanAttack)
         {
             Aim();
-            mShootCoolDown = CAN_ATTACK_TIME;
+            mShootCoolDown = enemyWarrior.AttackTime;
             Instantiate(BulletObjcet, GunObject.transform.position, GunObject.transform.rotation);
             Following();
         }
@@ -140,7 +140,7 @@ public class WarriorEnemy : MonoBehaviour
 
         if (raycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY))
+            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_CHEST))
             {
                 mIsTargetFind = false;
                 Radar.Rotate(Vector3.forward * mRange * Time.deltaTime);
@@ -160,7 +160,7 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Following()
     {
-        if (Vector2.Distance(Body.transform.position, gameManager.spawn.CharacterList[0].transform.position) > mDistance)
+        if (Vector2.Distance(Body.transform.position, gameManager.Spawn.CharacterList[0].transform.position) > mDistance)
         {
             Aim();
             Body.transform.Translate(Vector2.right * -mSpeed * Time.deltaTime);

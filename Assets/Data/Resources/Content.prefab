@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224698493160400406}
+  - component: {fileID: 114320793732801654}
   - component: {fileID: 114685803595259640}
   - component: {fileID: 114661279497251596}
   - component: {fileID: 114015833349327062}
-  - component: {fileID: 114320793732801654}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -41,11 +41,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666ba2685c4272c429f7eaa02659ce9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 1675761733805182, guid: b9f832e6c5539704cbf7bfa863351097, type: 2}
-  Characters:
-  - {fileID: 11400000, guid: 2763a8a14d680d041a23fd852248b668, type: 2}
-  - {fileID: 11400000, guid: 0b56ca1f610790b43b16e3c3a319a949, type: 2}
-  - {fileID: 11400000, guid: b529bb9a602019849ad424ea8011e6b1, type: 2}
+  cardPrefabObject: {fileID: 0}
+  CharacterList: []
+  ToggleList: []
+  ToggleGroup: {fileID: 0}
 --- !u!114 &114320793732801654
 MonoBehaviour:
   m_ObjectHideFlags: 1

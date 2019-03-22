@@ -26,13 +26,13 @@ public class HoldingDown : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void Update()
     {
-        if (HoldingTime > 0 && IsHoldingDown && gameManager.spawn.CharacterList[0].Guns.Count > 1)
+        if (HoldingTime > 0 && IsHoldingDown && gameManager.Spawn.CharacterList[0].Guns.Count > 1)
         {
             HoldingTime -= 1;
         }
-        else if (HoldingTime <= 0 && gameManager.gunSlot.Items[0] != null)
+        else if (HoldingTime <= 0 && gameManager.GunSlot.Items[0] != null)
         {
-            gameManager.gunSlot.ItemDrop(gameManager.spawn.CharacterList[0]);
+            gameManager.GunSlot.ItemDrop(gameManager.Spawn.CharacterList[0]);
             HoldingTime = HoldingDownTime;
         }
     }

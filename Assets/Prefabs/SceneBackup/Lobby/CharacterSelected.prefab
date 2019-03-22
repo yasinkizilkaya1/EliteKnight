@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114220067445090898}
   m_Layer: 5
   m_Name: CharacterSelected
-  m_TagString: selectname
+  m_TagString: LobbyManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1864304780824060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c7bb2fbf0461324f8a9488ac0f6fbd3, type: 3}
+  m_Script: {fileID: 11500000, guid: f920d49de3e4fe847a07b82c2a2f51b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardContent: {fileID: 0}
-  SelectedCardNameString: 
+  CardContent: {fileID: 0}
+  CharacterData: {fileID: 0}

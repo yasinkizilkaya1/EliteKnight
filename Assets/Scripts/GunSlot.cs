@@ -20,9 +20,9 @@ public class GunSlot : MonoBehaviour
     {
         mGameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
 
-        for (int index = 0; index < mGameManager.spawn.CharacterList[0].Guns.Count; index++)
+        for (int index = 0; index < mGameManager.Spawn.CharacterList[0].Guns.Count; index++)
         {
-            ItemAdd(mGameManager.spawn.CharacterList[0].Guns[index].weapon);
+            ItemAdd(mGameManager.Spawn.CharacterList[0].Guns[index].weapon);
         }
     }
 

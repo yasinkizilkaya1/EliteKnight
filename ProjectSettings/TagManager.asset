@@ -10,29 +10,21 @@ TagManager:
   - chest
   - bullet
   - knife
-  - body
-  - Target
   - Body
-  - Toggle
-  - Barrel
   - GameManager
-  - Need_To_Reload_GUI
-  - Weapon
-  - LoadingSlider
-  - Stage
-  - PlayerItems_Panel
-  - Player_BulletBar
-  - Loding_Panel
-  - Pause
-  - selectname
   - Spawn
   - Tilemap_Ground
   - Map
-  - Content
-  - gun
-  - EnemyBullet
   - Item
-  - TowerBullet
+  - UIManager
+  - Toggle
+  - Content
+  - Stage
+  - Barrel
+  - Weapon
+  - Undefined
+  - Need_To_Reload_GUI
+  - LobbyManager
   layers:
   - Default
   - TransparentFX

@@ -29,8 +29,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag(TAG_WALL) || collider.CompareTag(TAG_CHEST))
+        if (collider.CompareTag(TAG_WALL))
         {
+            gameObject.SetActive(false);
+        }
+        else if (collider.CompareTag(TAG_CHEST))
+        {
+            collider.GetComponent<Chest>().DisHealth(weapon.Power);
             gameObject.SetActive(false);
         }
         else if (collider.CompareTag(TAG_ENEMY))
@@ -61,7 +66,7 @@ public class Bullet : MonoBehaviour
 
         if (range <= 0)
         {
-            range =weapon.Range;
+            range = weapon.Range;
             gameObject.SetActive(false);
         }
     }

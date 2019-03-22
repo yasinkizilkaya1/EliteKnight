@@ -7,7 +7,8 @@ public class AmmoBar : MonoBehaviour
 {
     #region Constants
 
-    private const int AMMO_BAR_BACKGROUND_WIDTH = 250;
+    private const int AMMO_BAR_BACKGROUND_WIDTH = 85;
+    private const int AMMO_BAR_BACKGROUND_GAP = 6;
 
     #endregion
 
@@ -15,7 +16,7 @@ public class AmmoBar : MonoBehaviour
 
     public GridLayoutGroup AmmoGridLayout;
 
-    public GameManager gameManager;
+    public UIManager UIManager;
     public Spawn spawn;
     public Gun gun;
 
@@ -46,13 +47,18 @@ public class AmmoBar : MonoBehaviour
         {
             ClipAmountText.text = spawn.CharacterList[0].Gun.SpareBulletCount.ToString();
 
-            if (gun.IsCanShoot == false && gameManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
+            if (gun.IsCanShoot == false && UIManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
             {
                 ReloadGUIObject.SetActive(true);
             }
             else
             {
                 ReloadGUIObject.SetActive(false);
+            }
+
+            if (UIManager.AutoClipReloadToggle.isOn)
+            {
+                gun.AutoWeaponReload();
             }
         }
         else
@@ -79,11 +85,11 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarsCreate()
     {
-        mAmmoBarWidth = (AMMO_BAR_BACKGROUND_WIDTH / (mAmmoCount + 1));
-        mAmmoBarGap = mAmmoBarWidth / (mAmmoCount + 1);
+        mAmmoBarWidth = AMMO_BAR_BACKGROUND_WIDTH / mAmmoCount;
+        mAmmoBarGap =(float)AMMO_BAR_BACKGROUND_GAP / (mAmmoCount - 1);
 
-        AmmoGridLayout.cellSize = new Vector2(mAmmoBarWidth, 100);
-        AmmoGridLayout.spacing = new Vector2(mAmmoBarGap + 0.5f, 0);
+        AmmoGridLayout.cellSize = new Vector2(mAmmoBarWidth, 80);
+        AmmoGridLayout.spacing = new Vector2(mAmmoBarGap, 0);
 
         for (int i = 0; i < mAmmoCount; i++)
         {

@@ -6,14 +6,14 @@ public class Gun : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string TAG_UIMANAGER = "UIManager";
     private const string TAG_CHARACETER = "Character";
 
     #endregion
 
     #region Fields
 
-    private GameManager mgameManager;
+    private UIManager mUIManager;
     public Character character;
     public Weapon weapon;
 
@@ -64,7 +64,7 @@ public class Gun : MonoBehaviour
                     Bullet.transform.rotation = BarrelList[i].transform.rotation;
                     Bullet.SetActive(true);
                     Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>().weapon;
-                    mgameManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
+                    mUIManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
                 }
             }
         }
@@ -76,7 +76,7 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(mgameManager.ReloadEnum) && mgameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(mUIManager.ReloadEnum) && mUIManager.GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             GunClipDrup();
             Instantiate(clipObject, transform.position, transform.rotation);
@@ -114,8 +114,8 @@ public class Gun : MonoBehaviour
         mWeaponReload = weapon.ReloadTime;
         CurrentAmmo = weapon.ClipCapacity;
         Range = weapon.Range;
-        mgameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        character = mgameManager.spawn.CharacterList[0];
+        mUIManager = GameObject.FindWithTag(TAG_UIMANAGER).GetComponent<UIManager>();
+        character = mUIManager.spawn.CharacterList[0];
     }
 
     private void WeaponReload()
@@ -156,7 +156,7 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < CurrentAmmo; i++)
         {
-            character.gameManager.ammoBar.BarImageList[i].color = Color.grey;
+            character.UIManager.ammoBar.BarImageList[i].color = Color.grey;
         }
     }
 
@@ -173,7 +173,7 @@ public class Gun : MonoBehaviour
 
             if (CurrentAmmo <= weapon.ClipCapacity)
             {
-                mgameManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
+                mUIManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
             }
         }
     }

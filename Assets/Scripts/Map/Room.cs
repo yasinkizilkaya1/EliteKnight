@@ -96,6 +96,7 @@ public class Room : MonoBehaviour
         TowerExplodCount = RandomValue(0, 2);
         TowerModeratorCount = RandomValue(0, 2);
         TowerStandartCount = RandomValue(0, 2);
+        ChestCount = RandomValue(1, 2);
         tileMapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
         tileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
@@ -221,6 +222,7 @@ public class Room : MonoBehaviour
             ObjeCreate(TowerExplodCount, EnemyList[2], EnemyType.TowerExplod);
             ObjeCreate(TowerModeratorCount, EnemyList[3], EnemyType.TowerModerator);
             ObjeCreate(TowerStandartCount, EnemyList[4], EnemyType.TowerStandart);
+            ObjeCreate(ChestCount, ChestObject);
             IsCreate = false;
         }
     }
@@ -252,6 +254,17 @@ public class Room : MonoBehaviour
                     roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
                     break;
             }
+        }
+    }
+
+    private void ObjeCreate(int finshValue, GameObject Object)
+    {
+        GameObject roomObject = gameObject;
+
+        for (int i = 0; i < finshValue; i++)
+        {
+            roomObject = Instantiate(Object, transform);
+            roomObject.transform.position = RandomLocationFind(4);
         }
     }
 

@@ -11,9 +11,9 @@ public class Card : MonoBehaviour
     public Text PowerText;
     public Toggle toogle;
 
-    public void UpEnumdateData(CharacterData data)
+    public void UpdateData(CharacterData data)
     {
-        name = data.Name;
+        this.gameObject.name = data.Name;
         NameText.text = data.Name;
         HealthText.text = data.Health.ToString();
         SpeedText.text = data.Speed.ToString();

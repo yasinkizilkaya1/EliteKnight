@@ -2,7 +2,7 @@
 
 public class CompleteCameraController : MonoBehaviour
 {
-    public GameManager gameManager;
+    public UIManager gameManager;
 
     private void Update()
     {

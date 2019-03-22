@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
 
     public CharacterData characterData;
     public GameManager gameManager;
+    public UIManager UIManager;
     public Gun Gun;
     public Knife knife;
 
@@ -59,8 +60,8 @@ public class Character : MonoBehaviour
     {
         if (gameManager != null)
         {
-            Moving(gameManager);
-            Run(gameManager);
+            Moving(gameManager, UIManager);
+            Run(gameManager, UIManager);
             CharacterTurn(gameManager);
             Attack();
 
@@ -94,7 +95,7 @@ public class Character : MonoBehaviour
         if (CurrentHP == 0)
         {
             isDead = true;
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -114,8 +115,8 @@ public class Character : MonoBehaviour
     private void Init()
     {
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        characterData = (WarriorData)AssetDatabase.LoadAssetAtPath(CARD_DATA_PATH + gameManager.SelectedCardNameString + CARD_DATA_BILL, typeof(WarriorData));
-
+        UIManager = gameManager.UIManager;
+        characterData = gameManager.CharacterData;
         name = characterData.Name;
         CurrentHP = characterData.Health;
         MaxHP = CurrentHP;
@@ -129,35 +130,35 @@ public class Character : MonoBehaviour
         MaxDefance = characterData.Defence;
     }
 
-    private void Moving(GameManager gameManager)
+    private void Moving(GameManager GameManager, UIManager uIManager)
     {
-        if (gameManager.isPause == false)
+        if (GameManager.isPause == false)
         {
-            if (Input.GetKey(gameManager.UpEnum))
+            if (Input.GetKey(uIManager.UpEnum))
             {
                 transform.Translate(Speed * Time.deltaTime, 0, 0);
                 CharacterWay = 1;
             }
 
-            if (Input.GetKey(gameManager.DownEnum))
+            if (Input.GetKey(uIManager.DownEnum))
             {
                 transform.Translate(-Speed * Time.deltaTime, 0, 0);
                 CharacterWay = 1;
             }
 
-            if (Input.GetKey(gameManager.LeftEnum))
+            if (Input.GetKey(uIManager.LeftEnum))
             {
                 transform.Translate(0, Speed * Time.deltaTime, 0);
                 CharacterWay = 3;
             }
 
-            if (Input.GetKey(gameManager.RightEnum))
+            if (Input.GetKey(uIManager.RightEnum))
             {
                 transform.Translate(0, -Speed * Time.deltaTime, 0);
                 CharacterWay = 2;
             }
 
-            if (Input.GetKey(gameManager.UpEnum) == false && Input.GetKey(gameManager.LeftEnum) == false && Input.GetKey(gameManager.DownEnum) == false && Input.GetKey(gameManager.RightEnum) == false)
+            if (Input.GetKey(uIManager.UpEnum) == false && Input.GetKey(uIManager.LeftEnum) == false && Input.GetKey(uIManager.DownEnum) == false && Input.GetKey(uIManager.RightEnum) == false)
             {
                 CharacterWay = 0;
             }
@@ -174,11 +175,11 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void Run(GameManager gameManager)
+    private void Run(GameManager gameManager, UIManager uIManager)
     {
         if (gameManager.isPause == false)
         {
-            if (Input.GetKey(gameManager.RunEnum))
+            if (Input.GetKey(uIManager.RunEnum))
             {
                 if (Energy > 0)
                 {
@@ -262,8 +263,8 @@ public class Character : MonoBehaviour
             Gun.gameObject.SetActive(false);
             Gun = gun;
             gun.gameObject.SetActive(true);
-            gameManager.gunSlot.ItemImage[0].sprite = gun.weapon.Icon;
-            gameManager.gunSlot.Items[0] = Gun.weapon;
+            gameManager.GunSlot.ItemImage[0].sprite = gun.weapon.Icon;
+            gameManager.GunSlot.Items[0] = Gun.weapon;
         }
     }
 
@@ -321,7 +322,7 @@ public class Character : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKey(gameManager.RunEnum) == false && inside == false)
+            else if (Input.GetKey(UIManager.RunEnum) == false && inside == false)
             {
                 Speed = characterData.Speed;
             }
