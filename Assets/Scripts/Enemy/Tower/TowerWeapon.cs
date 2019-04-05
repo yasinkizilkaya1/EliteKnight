@@ -4,15 +4,16 @@ public class TowerWeapon : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_SPAWN = "Spawn";
+    private const string TAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
     #region Fields
 
+    private GameManager GameManager;
+
     public LineRenderer lineRenderer;
     public TowerEnemy towerEnemy;
-    public Spawn spawn;
     public Tower tower;
 
     public Transform shotPrefabTransform;
@@ -70,7 +71,7 @@ public class TowerWeapon : MonoBehaviour
             RoomObject.GetComponent<Room>().EnemyCount--;
             towerEnemy.inside = false;
             Destroy(gameObject);
-            spawn.CharacterList[0].DeadEnemyCount++;
+            GameManager.Character.DeadEnemyCount++;
         }
     }
 
@@ -80,14 +81,14 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
-        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = tower.Health;
         CurrentDefence = tower.Defence;
     }
 
     private void TowerMoving()
     {
-        if (spawn.CharacterList[0].isDead == false && towerEnemy.inside)
+        if (GameManager.Character.isDead == false && towerEnemy.inside)
         {
             Moving();
         }
@@ -95,10 +96,10 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerLinerender()
     {
-        if (spawn.CharacterList[0].isDead == false && isLinerenderer == true && towerEnemy.inside)
+        if (GameManager.Character.isDead == false && isLinerenderer == true && towerEnemy.inside)
         {
             lineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-            lineRenderer.SetPosition(1, new Vector3(spawn.CharacterList[0].transform.position.x, spawn.CharacterList[0].transform.position.y, 1));
+            lineRenderer.SetPosition(1, new Vector3(GameManager.Character.transform.position.x, GameManager.Character.transform.position.y, 1));
         }
         else
         {
@@ -113,7 +114,7 @@ public class TowerWeapon : MonoBehaviour
     private void Moving()
     {
         Transform shootTransformObject = TowerObject.transform;
-        shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
+        shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
 
         if (TowerObject.transform.rotation.z != shootTransformObject.rotation.z)
         {
@@ -136,7 +137,7 @@ public class TowerWeapon : MonoBehaviour
             shootCoolDown = tower.AttackTime;
             var shootTransformObject = Instantiate(shotPrefabTransform) as Transform;
             shootTransformObject.position = BarrelObject.transform.position;
-            shootTransformObject.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, shootTransformObject.transform);
+            shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
         }
     }
 

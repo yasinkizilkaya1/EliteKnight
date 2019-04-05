@@ -5,7 +5,7 @@ public class EnemyBullet : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_SPAWN = "Spawn";
+    private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_CHARACTER = "Character";
     private const string TAG_WALL = "wall";
     private const string TAG_CHEST = "chest";
@@ -15,11 +15,12 @@ public class EnemyBullet : MonoBehaviour
 
     #region Fields
 
-    public Spawn spawn;
     public Transform TargetTransform;
 
     public bool isEffectTowerBullet;
     public bool isBullet;
+
+    private GameManager GameManager;
 
     public GameObject bulletObject;
     public List<GameObject> BarrelList;
@@ -40,18 +41,18 @@ public class EnemyBullet : MonoBehaviour
 
     private void Update()
     {
-        if (spawn.CharacterList[0] != null)
+        if (GameManager.Character != null)
         {
             if (isEffectTowerBullet)
             {
                 Destroy(gameObject, 3);
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
             }
-            else if (isBullet && spawn.CharacterList[0].isDead == false)
+            else if (isBullet && GameManager.Character.isDead == false)
             {
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
             }
-            else if (isEffectTowerBullet == false && spawn.CharacterList[0].isDead == false)
+            else if (isEffectTowerBullet == false && GameManager.Character.isDead == false)
             {
                 transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
                 StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
@@ -86,15 +87,15 @@ public class EnemyBullet : MonoBehaviour
         {
             if (isEffectTowerBullet)
             {
-                spawn.CharacterList[0].HealthDisCount(EffectTowerBulletPower);
+                GameManager.Character.HealthDisCount(EffectTowerBulletPower);
             }
             else if (isBullet)
             {
-                spawn.CharacterList[0].HealthDisCount(NormalBulletPower);
+                GameManager.Character.HealthDisCount(NormalBulletPower);
             }
             else
             {
-                spawn.CharacterList[0].HealthDisCount(FollowBulletPower);
+                GameManager.Character.HealthDisCount(FollowBulletPower);
             }
             Destroy(gameObject);
         }
@@ -106,8 +107,8 @@ public class EnemyBullet : MonoBehaviour
 
     private void Initialize()
     {
-        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
-        TargetTransform = spawn.CharacterList[0].transform;
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        TargetTransform = GameManager.Character.transform;
     }
 
     #endregion

@@ -1,12 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-[CreateAssetMenuAttribute(fileName = "New Keys", menuName = "Data/Keys")]
-public class Keys: ScriptableObject
+public enum KeyType
 {
-    public string Up;
-    public string Down;
-    public string Left;
-    public string Right;
-    public string Run;
-    public string Reload;
+    up,
+    down,
+    right,
+    left,
+    run,
+    reload,
+    shoot
 }
+
+[System.Serializable]
+public class Key
+{
+    public KeyType KeyType;
+    public KeyCode CurrentKey;
+    public KeyCode DefaultKey;
+}
+
+[CreateAssetMenuAttribute(fileName = "New Keys", menuName = "Data/KeySettings")]
+public class KeySettings : ScriptableObject
+{
+    public List<Key> Keys;
+
+    public void KeysReset()
+    {
+        foreach (Key item in Keys)
+        {
+            item.CurrentKey = item.DefaultKey;
+        }
+    }
+}
+// linq

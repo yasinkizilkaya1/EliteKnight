@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Warrior : MonoBehaviour
+public class Data : MonoBehaviour
 {
-    public WarriorData warriorData;
+    public CharacterData CharacterData;
 }

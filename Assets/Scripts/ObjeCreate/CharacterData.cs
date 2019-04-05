@@ -1,18 +1,29 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class CharacterData : ScriptableObject
+[CreateAssetMenuAttribute(fileName = "New CharacterData", menuName = "Data/CharacterData")]
+public class CharacterData : MoveableEntity
 {
-    public int Id;
-    public string Name;
-    public int Health;
-    public int MaxHealth;
     public int Energy;
     public int MaxEnergy;
     public int EnergyIncreaseAmmount;
     public float EnergyReloadTime;
     public int Power;
-    public int Defence;
-    public int Speed;
     public int RunSpeed;
+    public GameObject GameObject;
+
+    public CharacterData(int id,string name,int health,int maxhealth,int speed,int defence,int energy,int maxenergy,int energyIncreaseAmmount,float energyReloadTime,int power,int runspeed)
+    {
+        Id = id;
+        Name = name;
+        Health = health;
+        MaxHealth = maxhealth;
+        Speed = speed;
+        Defence = defence;
+        Energy = energy;
+        MaxEnergy = maxhealth;
+        EnergyIncreaseAmmount = energyIncreaseAmmount;
+        EnergyReloadTime = energyReloadTime;
+        Power = power;
+        RunSpeed = runspeed;
+    }
 }

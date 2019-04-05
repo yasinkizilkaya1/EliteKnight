@@ -8,7 +8,6 @@ public class Card : MonoBehaviour
     public Text SpeedText;
     public Text EnergyText;
     public Text DefanceText;
-    public Text PowerText;
     public Toggle toogle;
 
     public void UpdateData(CharacterData data)
@@ -19,6 +18,5 @@ public class Card : MonoBehaviour
         SpeedText.text = data.Speed.ToString();
         EnergyText.text = data.Energy.ToString();
         DefanceText.text = data.Defence.ToString();
-        PowerText.text = data.Power.ToString();
     }
 }

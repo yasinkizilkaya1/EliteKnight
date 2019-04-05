@@ -8,18 +8,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49333b61c5d035340bcae3f234513172, type: 3}
+  m_Script: {fileID: 11500000, guid: 8dcfe521dcd02644cb74630ea0660f7a, type: 3}
   m_Name: Support
   m_EditorClassIdentifier: 
-  Id: 3
+  Id: 1
   Name: Support
-  Health: 15
-  MaxHealth: 15
+  Health: 20
+  MaxHealth: 20
+  Defence: 10
+  Speed: 5
   Energy: 100
   MaxEnergy: 100
   EnergyIncreaseAmmount: 1
-  EnergyReloadTime: 2
-  Power: 2
-  Defence: 25
-  Speed: 5
-  RunSpeed: 10
+  EnergyReloadTime: 3
+  Power: 1
+  RunSpeed: 7
+  GameObject: {fileID: 1580405705202194, guid: 58bef7701571d424590ea150b617d687, type: 2}

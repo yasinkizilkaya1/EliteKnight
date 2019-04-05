@@ -20,5 +20,5 @@ MonoBehaviour:
   Power: 1
   ClipCapacity: 5
   TotalBullet: 1005
-  Range: 0.5
+  Range: 0.8
   ReloadTime: 3

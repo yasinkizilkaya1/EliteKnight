@@ -21,6 +21,11 @@ public class Bullet : MonoBehaviour
 
     #region Unity Methods
 
+    private void OnEnable()
+    {
+        Init();
+    }
+
     private void Update()
     {
         SetActiveObje();
@@ -60,14 +65,21 @@ public class Bullet : MonoBehaviour
 
     #region Private Method
 
+    private void Init()
+    {
+        if (weapon != null)
+        {
+            range = weapon.Range;
+        }
+    }
+
     private void SetActiveObje()
     {
         range -= Time.deltaTime;
 
         if (range <= 0)
         {
-            range = weapon.Range;
-            gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
 

@@ -5,7 +5,6 @@ public class Zombies : MonoBehaviour
     #region Constants
 
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_SPAWN = "Spawn";
     private const string TAG_ENEMY = "Enemy";
     private const string TAG_WALL = "wall";
     private const float WALLRADIUS = 0.2f;
@@ -17,8 +16,7 @@ public class Zombies : MonoBehaviour
     private bool mIsHit;
     private bool mIsZombie;
 
-    public GameManager gameManager;
-    public Spawn spawn;
+    public GameManager GameManager;
     public Zombie zombie;
 
     private int mCurrrentHealth;
@@ -71,7 +69,7 @@ public class Zombies : MonoBehaviour
         if (mCurrrentHealth == 0)
         {
             Destroy(BodyObject);
-            spawn.CharacterList[0].DeadEnemyCount++;
+            GameManager.Character.DeadEnemyCount++;
             RoomObject.GetComponent<Room>().EnemyCount--;
         }
 
@@ -102,8 +100,7 @@ public class Zombies : MonoBehaviour
 
     private void Initialize()
     {
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         shootcoolDown = 0f;
         mCurrrentHealth = zombie.Health;
@@ -127,14 +124,14 @@ public class Zombies : MonoBehaviour
 
     private void Following()
     {
-        if (gameManager.isPlayerDead == false)
+        if (GameManager.isPlayerDead == false)
         {
-            if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) > zombie.AttackRange)
+            if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) > zombie.AttackRange)
             {
                 BodyObject.transform.Translate(Vector2.right * -zombie.Speed * Time.deltaTime);
-                BodyObject.transform.rotation = ScriptHelper.LookAt2D(spawn.CharacterList[0].transform, BodyObject.transform);
+                BodyObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, BodyObject.transform);
             }
-            else if (Vector2.Distance(Radar.position, spawn.CharacterList[0].transform.position) < zombie.AttackRange + 0.1f)
+            else if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) < zombie.AttackRange + 0.1f)
             {
                 Attack();
             }
@@ -146,7 +143,7 @@ public class Zombies : MonoBehaviour
         if (attack)
         {
             shootcoolDown = zombie.ShootingRate;
-            spawn.CharacterList[0].HealthDisCount(spawn.CharacterList[0].Power);
+            GameManager.Character.HealthDisCount(GameManager.Character.Power);
         }
     }
 

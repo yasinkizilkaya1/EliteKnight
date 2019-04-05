@@ -18,11 +18,10 @@ public class WarriorEnemy : MonoBehaviour
     public int CurrentHealth;
     public int CurrentDefence;
     private int mSpeed;
-    private int mAttacPower;
     private int mRange;
     private int mDistance;
 
-    public GameManager gameManager;
+    public GameManager GameManager;
 
     public Transform Radar;
 
@@ -70,10 +69,10 @@ public class WarriorEnemy : MonoBehaviour
         {
             RoomObject.GetComponent<Room>().EnemyCount--;
             Destroy(gameObject);
-            gameManager.Spawn.CharacterList[0].DeadEnemyCount++;
-        }
-
-        if (gameManager.Spawn.CharacterList[0] != null)
+            GameManager.Character.DeadEnemyCount++;
+        }              
+                       
+        if (GameManager.Character!= null)
         {
             TargetFind();
 
@@ -97,13 +96,12 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Init()
     {
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         mShootCoolDown = 0f;
         CurrentHealth = enemyWarrior.Health;
         CurrentDefence = enemyWarrior.Defence;
         mSpeed = enemyWarrior.Speed;
-        mAttacPower = enemyWarrior.AttackPower;
         mRange = enemyWarrior.Range;
         mDistance = enemyWarrior.Distance;
     }
@@ -111,7 +109,7 @@ public class WarriorEnemy : MonoBehaviour
     private void Aim()
     {
         Transform shootTransform = Body.transform;
-        shootTransform.rotation = ScriptHelper.LookAt2D(gameManager.Spawn.CharacterList[0].transform, Body.transform);
+        shootTransform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, Body.transform);
 
         if (Body.transform.rotation.z != shootTransform.rotation.z)
         {
@@ -160,7 +158,7 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Following()
     {
-        if (Vector2.Distance(Body.transform.position, gameManager.Spawn.CharacterList[0].transform.position) > mDistance)
+        if (Vector2.Distance(Body.transform.position, GameManager.Character.transform.position) > mDistance)
         {
             Aim();
             Body.transform.Translate(Vector2.right * -mSpeed * Time.deltaTime);

@@ -12,7 +12,6 @@ public class DoorInside : MonoBehaviour
     #region Field
 
     public Door door;
-    private int mFirstOpenDoor;
 
     #endregion
 
@@ -22,15 +21,18 @@ public class DoorInside : MonoBehaviour
     {
         if (collider.CompareTag(PLAYER_TAG))
         {
-            if (mFirstOpenDoor == 0 && door.EnemyCount > 0)
+            if (door.DoorState == Door.State.Open && door.EnemyCount > 0 && door.Christen == false)
             {
                 door.Room.IsCreate = true;
-                mFirstOpenDoor++;
-
                 for (int i = 0; i < door.Room.DoorList.Count; i++)
                 {
-                    door.Room.DoorList[i].GetComponentInChildren<Door>().DoorClose();
+                    door.Room.DoorList[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
                 }
+            }
+
+            if (door.DoorState == Door.State.Close && door.Christen == true)
+            {
+                door.GetComponentInChildren<Door>().ChangeDoorState(Door.State.Open);
             }
         }
     }

@@ -6,14 +6,14 @@ public class TowerEnemy : MonoBehaviour
     #region Constant
 
     private const string TAG_TARGET = "Character";
-    private const string TAG_SPAWN = "Spawn";
+    private const string TAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
     #region Fields
 
     public TowerWeapon towerWeapon;
-    public Spawn spawn;
+    public GameManager GameManager;
 
     public bool inside;
     public bool isStandartTower;
@@ -26,7 +26,7 @@ public class TowerEnemy : MonoBehaviour
 
     private void Init()
     {
-        spawn = GameObject.FindWithTag(TAG_SPAWN).GetComponent<Spawn>();
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
     }
 
     #endregion
@@ -46,7 +46,7 @@ public class TowerEnemy : MonoBehaviour
 
             if (towerWeapon.isLinerenderer)
             {
-                spawn.CharacterList[0].SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
+                GameManager.Character.SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
             }
 
             if (isStandartTower && towerWeapon.CanAttack)
@@ -61,7 +61,7 @@ public class TowerEnemy : MonoBehaviour
         if (col.gameObject.gameObject.CompareTag(TAG_TARGET))
         {
             inside = false;
-            spawn.CharacterList[0].SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
+            GameManager.Character.SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
             StopAllCoroutines();
         }
     }
@@ -74,7 +74,7 @@ public class TowerEnemy : MonoBehaviour
     {
         while (true)
         {
-            if (spawn.CharacterList[0].isDead == false)
+            if (GameManager.Character.isDead == false)
             {
                 towerWeapon.Attack(true);
                 yield return new WaitForSeconds(1f);

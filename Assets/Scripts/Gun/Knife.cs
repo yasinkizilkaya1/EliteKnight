@@ -20,10 +20,14 @@ public class Knife : MonoBehaviour
 
     #endregion
 
+    public int test;
+
     #region Unity Methods
 
     private void Update()
     {
+        test = character.CharacterWay;
+
         if (custom != null && Attack != null)
         {
             custom.SetFloat("Legs", character.CharacterWay);

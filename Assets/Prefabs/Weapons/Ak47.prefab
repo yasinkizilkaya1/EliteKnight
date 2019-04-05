@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18d5cb366ec97f408d6a1a2abbfa385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mUIManager: {fileID: 0}
   character: {fileID: 0}
   weapon: {fileID: 11400000, guid: cf94d77db10e75a4e85c54d7ad67d701, type: 2}
   BarrelList:

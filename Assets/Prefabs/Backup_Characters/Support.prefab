@@ -116,14 +116,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1580405705202194}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 25, y: 25, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0}
   m_Children:
   - {fileID: 4098156589367482}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4889505658541876
 Transform:
   m_ObjectHideFlags: 1
@@ -292,7 +292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterData: {fileID: 0}
   gameManager: {fileID: 0}
-  gun: {fileID: 0}
+  UIManager: {fileID: 0}
+  Gun: {fileID: 0}
   knife: {fileID: 114505327535320368}
   CurrentHP: 0
   MaxHP: 0
@@ -311,8 +312,8 @@ MonoBehaviour:
   shooting: 0
   BodyObject: {fileID: 1074870930181420}
   RightWeaponObject: {fileID: 0}
-  RightGunObject: {fileID: 0}
-  WeaponList: []
+  Guns: []
+  SelectionWeaponId: 0
 --- !u!212 &212051075891304966
 SpriteRenderer:
   m_ObjectHideFlags: 1

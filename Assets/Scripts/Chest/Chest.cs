@@ -17,7 +17,6 @@ public class Chest : MonoBehaviour
     #region Fields
 
     public GameManager gameManager;
-    private CharacterData CharacterData;
     public ChestEntity chestEntity;
     public List<GameObject> ItemList;
 
@@ -30,7 +29,6 @@ public class Chest : MonoBehaviour
     public GameObject DefanceBarObject3;
     public GameObject DefanceBarObject4;
     public GameObject DefanceBarObject5;
-    public GameObject ItemObject;
 
     public int Health;
     public int Defence;
@@ -46,29 +44,6 @@ public class Chest : MonoBehaviour
 
     private void Update()
     {
-        switch (Health)
-        {
-            case 3:
-                HealthObjectsSetActive(true, true, true, true);
-                break;
-            case 2:
-                HealthObjectsSetActive(false, true, true, true);
-                break;
-            case 1:
-                HealthObjectsSetActive(false, false, true, true);
-                break;
-            case 0:
-                HealthObjectsSetActive(false, false, false, false);
-
-                if (chestEntity.ItemDrop)
-                {
-                    ItemObject = Instantiate(ItemList[Random.Range(0, ItemList.Count - 1)], ItemObject.transform);
-                }
-                HealthBarObject.SetActive(false);
-                Destroy(gameObject);
-                break;
-        }
-
         switch (Defence)
         {
             case 5:
@@ -88,6 +63,30 @@ public class Chest : MonoBehaviour
                 break;
             case 0:
                 ArmorObjectsSetActive(false, false, false, false, false, true);
+                break;
+        }
+
+        switch (Health)
+        {
+            case 3:
+                HealthObjectsSetActive(true, true, true, true);
+                break;
+            case 2:
+                HealthObjectsSetActive(false, true, true, true);
+                break;
+            case 1:
+                HealthObjectsSetActive(false, false, true, true);
+                break;
+            case 0:
+                HealthObjectsSetActive(false, false, false, false);
+
+                if (chestEntity.ItemDrop)
+                {
+                    Destroy(gameObject);
+                    HealthBarObject.SetActive(false);
+                    Instantiate(ItemList[Random.Range(0, ItemList.Count - 1)], transform.position, transform.rotation);
+                }
+
                 break;
         }
     }
@@ -114,7 +113,6 @@ public class Chest : MonoBehaviour
     private void Init()
     {
         gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        CharacterData = gameManager.CharacterData;
         name = chestEntity.Name;
         Defence = chestEntity.Defence;
         Health = chestEntity.Health;

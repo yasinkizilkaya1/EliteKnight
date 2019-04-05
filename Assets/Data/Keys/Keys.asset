@@ -8,14 +8,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196aab812c7fce543826bac0df5b71e4, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Keys
-  m_EditorClassIdentifier: 
-  Id: 1
-  Name: DefaultKeys
-  Up: W
-  Down: S
-  Left: A
-  Right: D
-  Run: LeftShift
-  Reload: R
+  m_EditorClassIdentifier: Assembly-CSharp::KeySettings
+  Keys:
+  - KeyType: 0
+    CurrentKey: 119
+    DefaultKey: 119
+  - KeyType: 1
+    CurrentKey: 115
+    DefaultKey: 115
+  - KeyType: 2
+    CurrentKey: 100
+    DefaultKey: 100
+  - KeyType: 3
+    CurrentKey: 97
+    DefaultKey: 97
+  - KeyType: 4
+    CurrentKey: 304
+    DefaultKey: 304
+  - KeyType: 5
+    CurrentKey: 114
+    DefaultKey: 114
+  - KeyType: 6
+    CurrentKey: 323
+    DefaultKey: 323

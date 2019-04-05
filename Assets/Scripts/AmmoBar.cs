@@ -17,7 +17,6 @@ public class AmmoBar : MonoBehaviour
     public GridLayoutGroup AmmoGridLayout;
 
     public UIManager UIManager;
-    public Spawn spawn;
     public Gun gun;
 
     public Image BarImage;
@@ -45,7 +44,7 @@ public class AmmoBar : MonoBehaviour
     {
         if (gun != null)
         {
-            ClipAmountText.text = spawn.CharacterList[0].Gun.SpareBulletCount.ToString();
+            ClipAmountText.text = UIManager.GameManager.Character.Gun.SpareBulletCount.ToString();
 
             if (gun.IsCanShoot == false && UIManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
             {
@@ -63,14 +62,14 @@ public class AmmoBar : MonoBehaviour
         }
         else
         {
-            gun = spawn.CharacterList[0].Gun;
+            gun =UIManager.GameManager.Character.Gun;
         }
 
-        if (spawn.CharacterList[0].IsNewGun)
+        if (UIManager.GameManager.Character.IsNewGun)
         {
-            gun = spawn.CharacterList[0].Gun;
+            gun = UIManager.GameManager.Character.Gun;
             AmmoBarInstantlyFilling();
-            spawn.CharacterList[0].IsNewGun = false;
+            UIManager.GameManager.Character.IsNewGun = false;
         }
     }
 
@@ -102,7 +101,7 @@ public class AmmoBar : MonoBehaviour
     private void AmmoBarInstantlyFilling()
     {
         AmmoBarDelete();
-        mAmmoCount = spawn.CharacterList[0].Gun.weapon.ClipCapacity;
+        mAmmoCount = UIManager.GameManager.Character.Gun.weapon.ClipCapacity;
         AmmoBarsCreate();
         AmmoBarsBackup();
     }
@@ -136,7 +135,7 @@ public class AmmoBar : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (spawn.CharacterList[0].Gun != null)
+        if (UIManager.GameManager.Character.Gun != null)
         {
             AmmoBarDelete();
             mAmmoCount = gun.weapon.ClipCapacity;

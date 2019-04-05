@@ -13,7 +13,7 @@ public class Gun : MonoBehaviour
 
     #region Fields
 
-    private UIManager mUIManager;
+    public UIManager mUIManager;
     public Character character;
     public Weapon weapon;
 
@@ -49,34 +49,9 @@ public class Gun : MonoBehaviour
 
     #region Public Method
 
-    public void Fire()
-    {
-        if (CurrentAmmo > 0 && IsCanShoot == true && weapon.IsAttak)
-        {
-            for (int i = BarrelList.Count - 1; i >= 0; i--)
-            {
-                CurrentAmmo--;
-                GameObject Bullet = ObjectPooler.SharedInstance.GetPooledObject("bullet");
-
-                if (Bullet != null)
-                {
-                    Bullet.transform.position = BarrelList[i].transform.position;
-                    Bullet.transform.rotation = BarrelList[i].transform.rotation;
-                    Bullet.SetActive(true);
-                    Bullet.GetComponent<Bullet>().weapon = gameObject.GetComponent<Gun>().weapon;
-                    mUIManager.ammoBar.BarImageList[CurrentAmmo].color = Color.grey;
-                }
-            }
-        }
-        else
-        {
-            IsCanShoot = false;
-        }
-    }
-
     public void ClipReload()
     {
-        if (Input.GetKeyDown(mUIManager.ReloadEnum) && mUIManager.GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(mUIManager.GameManager.Keys.Keys[5].CurrentKey) && mUIManager.GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             GunClipDrup();
             Instantiate(clipObject, transform.position, transform.rotation);
@@ -115,7 +90,6 @@ public class Gun : MonoBehaviour
         CurrentAmmo = weapon.ClipCapacity;
         Range = weapon.Range;
         mUIManager = GameObject.FindWithTag(TAG_UIMANAGER).GetComponent<UIManager>();
-        character = mUIManager.spawn.CharacterList[0];
     }
 
     private void WeaponReload()

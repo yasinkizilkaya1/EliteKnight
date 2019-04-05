@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GunSlot : MonoBehaviour
@@ -20,10 +21,7 @@ public class GunSlot : MonoBehaviour
     {
         mGameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
 
-        for (int index = 0; index < mGameManager.Spawn.CharacterList[0].Guns.Count; index++)
-        {
-            ItemAdd(mGameManager.Spawn.CharacterList[0].Guns[index].weapon);
-        }
+        StartCoroutine(GunSlotActive());
     }
 
     public void ItemAdd(Weapon item)
@@ -54,5 +52,18 @@ public class GunSlot : MonoBehaviour
             ItemImage[0].sprite = character.Gun.weapon.Icon;
             return;
         }
+    }
+
+    IEnumerator GunSlotActive()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        for (int index = 0; index < mGameManager.Character.Guns.Count; index++)
+        {
+            ItemAdd(mGameManager.Character.Guns[index].weapon);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        StopCoroutine(GunSlotActive());
     }
 }
