@@ -2,9 +2,9 @@
 
 public class FireWeapon : Command
 {
-    public override void Execute(Character character, Command command)
+    public override void Execute()
     {
-        Gun gun = character.Gun;
+        Gun gun = Character.Gun;
 
         if (gun.CurrentAmmo > 0 && gun.IsCanShoot == true && gun.weapon.IsAttak == true)
         {

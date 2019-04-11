@@ -2170,7 +2170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClipReloadToggle: {fileID: 2068727570}
-  StagePanelObject: {fileID: 0}
   PlayerItemPanelObject: {fileID: 1084462245}
   ClipObject: {fileID: 1474188531}
   LoadingPanelObject: {fileID: 1637755256}
@@ -3572,7 +3571,7 @@ MonoBehaviour:
   GunSlot: {fileID: 1559897238}
   isPause: 0
   isPlayerDead: 0
-  Keys: {fileID: 11400000, guid: 963d06d5d9408c34680881aa80c01c51, type: 2}
+  KeySettings: {fileID: 11400000, guid: 963d06d5d9408c34680881aa80c01c51, type: 2}
   keycaps: []
 --- !u!4 &936814212
 Transform:

@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public bool isPause;
     public bool isPlayerDead;
 
-    public KeySettings Keys;
+    public KeySettings KeySettings;
     public List<string> keycaps;
 
 
@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
             if (Character.CurrentHP == 0)
             {
                 isPlayerDead = true;
+                Character.isDead = true;
+                Destroy(this.gameObject);
                 StartCoroutine(UIManager.GameOver());
                 UIManager.HealthBarSlider.gameObject.SetActive(false);
             }
@@ -97,10 +99,10 @@ public class GameManager : MonoBehaviour
     {
         keycaps = new List<string>();
 
-        //for (int i = 0; i < Keys.Keys.Count; i++)
-        //{
-        //    keycaps.Add(Keys.Keys[i].CurrentKey.ToString());
-        //}
+        for (int i = 0; i < KeySettings.Keys.Count; i++)
+        {
+            keycaps.Add(KeySettings.Keys[i].CurrentKey.ToString());
+        }
 
         for (int i = 0; i < UIManager.Toggles.Count; i++)
         {
@@ -110,12 +112,12 @@ public class GameManager : MonoBehaviour
 
     private void KeysDefaultSetting()
     {
-        //Keys.KeysReset();
+        KeySettings.KeysReset();
 
-        //for (int i = 0; i < Keys.Keys.Count; i++)
-        //{
-        //    UIManager.ButtonTexts[i].text = Keys.Keys[i].CurrentKey.ToString();
-        //}
+        for (int i = 0; i < KeySettings.Keys.Count; i++)
+        {
+            UIManager.ButtonTexts[i].text = KeySettings.Keys[i].CurrentKey.ToString();
+        }
     }
 
     #endregion
@@ -178,14 +180,14 @@ public class GameManager : MonoBehaviour
 
         if (Savingkeys == keycaps.Count - 1)
         {
-            //for (int i = 0; i < Keys.Keys.Count; i++)
-            //{
-            //    Keys.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
-            //}
+            for (int i = 0; i < KeySettings.Keys.Count; i++)
+            {
+                KeySettings.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
+            }
         }
         else
         {
-            //Keys.KeysReset();
+            KeySettings.KeysReset();
         }
     }
 

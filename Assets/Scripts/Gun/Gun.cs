@@ -14,6 +14,7 @@ public class Gun : MonoBehaviour
     #region Fields
 
     public UIManager mUIManager;
+    private GameManager GameManager;
     public Character character;
     public Weapon weapon;
 
@@ -51,7 +52,7 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(mUIManager.GameManager.Keys.Keys[5].CurrentKey) && mUIManager.GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(GameManager.KeySettings.Keys[5].CurrentKey) && GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             GunClipDrup();
             Instantiate(clipObject, transform.position, transform.rotation);
@@ -90,6 +91,7 @@ public class Gun : MonoBehaviour
         CurrentAmmo = weapon.ClipCapacity;
         Range = weapon.Range;
         mUIManager = GameObject.FindWithTag(TAG_UIMANAGER).GetComponent<UIManager>();
+        GameManager = mUIManager.GameManager;
     }
 
     private void WeaponReload()
@@ -130,7 +132,7 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < CurrentAmmo; i++)
         {
-            character.UIManager.ammoBar.BarImageList[i].color = Color.grey;
+            mUIManager.ammoBar.BarImageList[i].color = Color.grey;
         }
     }
 

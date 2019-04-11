@@ -7,7 +7,6 @@ public class Character : MonoBehaviour
 
     private const string CARD_DATA_BILL = ".asset";
     private const string CARD_DATA_PATH = "Assets/Data/Characters/";
-    private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_ITEM = "Item";
 
     #endregion
@@ -47,7 +46,11 @@ public class Character : MonoBehaviour
     private List<Key> Keys;
     public int SelectionWeaponId;
 
-    private CharacterCommand CharacterCommand;
+    private MoveForward MoveForward;
+    private MoveReserve MoveReserve;
+    private MoveRight MoveRight;
+    private MoveLeft MoveLeft;
+    private FireWeapon FireWeapon;
 
     #endregion
 
@@ -93,12 +96,6 @@ public class Character : MonoBehaviour
                 GunChange(Guns[SelectionWeaponId]);
             }
         }
-
-        if (CurrentHP == 0)
-        {
-            isDead = true;
-            Destroy(this.gameObject);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -116,8 +113,8 @@ public class Character : MonoBehaviour
 
     private void Init()
     {
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         UIManager = gameManager.UIManager;
+        Keys = gameManager.KeySettings.Keys;
 
         characterData = gameManager.CharacterData;
         name = characterData.Name;
@@ -131,37 +128,41 @@ public class Character : MonoBehaviour
         EnergyReload = characterData.EnergyReloadTime;
         mRunSpeed = characterData.RunSpeed;
         MaxDefance = characterData.Defence;
-        Keys = gameManager.Keys.Keys;
 
-        CharacterCommand = new CharacterCommand();
+        MoveForward = new MoveForward();
+        MoveReserve = new MoveReserve();
+        MoveRight = new MoveRight();
+        MoveLeft = new MoveLeft();
+        FireWeapon = new FireWeapon();
+        MoveForward.Character = this;
+        MoveReserve.Character = this;
+        MoveRight.Character = this;
+        MoveLeft.Character = this;
+        FireWeapon.Character = this;
     }
 
     private void Moving(GameManager GameManager)
     {
         if (GameManager.isPause == false)
         {
-            if (Input.GetKey(gameManager.Keys.Keys[0].CurrentKey))
+            if (Input.GetKey(Keys[0].CurrentKey))
             {
-                CharacterWay = 1;
-                CharacterCommand.SetCommand(new MoveForward(), this);
+                MoveForward.Execute();
             }
 
-            if (Input.GetKey(gameManager.Keys.Keys[1].CurrentKey))
+            if (Input.GetKey(Keys[1].CurrentKey))
             {
-                CharacterWay = 1;
-                CharacterCommand.SetCommand(new MoveReserve(), this);
+                MoveReserve.Execute();
             }
 
-            if (Input.GetKey(gameManager.Keys.Keys[2].CurrentKey))
+            if (Input.GetKey(Keys[2].CurrentKey))
             {
-                CharacterWay = 3;
-                CharacterCommand.SetCommand(new MoveRight(), this);
+                MoveRight.Execute();
             }
 
-            if (Input.GetKey(gameManager.Keys.Keys[3].CurrentKey))
+            if (Input.GetKey(Keys[3].CurrentKey))
             {
-                CharacterWay = 2;
-                CharacterCommand.SetCommand(new MoveLeft(), this);
+                MoveLeft.Execute();
             }
 
             if (Input.GetKey(Keys[0].CurrentKey) == false && Input.GetKey(Keys[1].CurrentKey) == false && Input.GetKey(Keys[2].CurrentKey) == false && Input.GetKey(Keys[3].CurrentKey) == false)
@@ -185,7 +186,7 @@ public class Character : MonoBehaviour
     {
         if (gameManager.isPause == false)
         {
-            if (Input.GetKey(gameManager.Keys.Keys[4].CurrentKey))
+            if (Input.GetKey(Keys[4].CurrentKey))
             {
                 if (Energy > 0)
                 {
@@ -232,7 +233,7 @@ public class Character : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(gameManager.Keys.Keys[6].CurrentKey) && gameManager.isPause == false)
+        if (Input.GetKeyDown(Keys[6].CurrentKey) && gameManager.isPause == false)
         {
             if (Gun == null && RightWeaponObject == null)
             {
@@ -240,10 +241,10 @@ public class Character : MonoBehaviour
             }
             else
             {
-                CharacterCommand.SetCommand(new FireWeapon(), this);
+                FireWeapon.Execute();
             }
         }
-        else if (Input.GetKeyDown(gameManager.Keys.Keys[6].CurrentKey) == false && Gun == null)
+        else if (Input.GetKeyDown(Keys[6].CurrentKey) == false && Gun == null)
         {
             knife.isattack = false;
         }
@@ -328,7 +329,7 @@ public class Character : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKey(gameManager.Keys.Keys[4].CurrentKey) == false && inside == false)
+            else if (Input.GetKey(gameManager.KeySettings.Keys[4].CurrentKey) == false && inside == false)
             {
                 Speed = characterData.Speed;
             }

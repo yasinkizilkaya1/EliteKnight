@@ -427,6 +427,7 @@ public class Map : MonoBehaviour
 
         GameObject Character = Instantiate(GameManager.CharacterData.GameObject, Rooms[spawnRoomId].transform) as GameObject;
         GameManager.Character = Character.GetComponent<Character>();
+        GameManager.Character.gameManager = GameManager;
         Character.transform.position = new Vector3(TransformX, TransformY, 1);
     }
 

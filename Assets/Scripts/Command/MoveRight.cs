@@ -2,8 +2,9 @@
 
 public class MoveRight : Command
 {
-    public override void Execute(Character character, Command command)
+    public override void Execute()
     {
-        character.transform.Translate(0, -character.Speed * Time.deltaTime, 0);
+        Character.transform.Translate(0, -Character.Speed * Time.deltaTime, 0);
+        Character.CharacterWay = 3;
     }
 }

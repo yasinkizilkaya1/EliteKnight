@@ -17,6 +17,7 @@ public class AmmoBar : MonoBehaviour
     public GridLayoutGroup AmmoGridLayout;
 
     public UIManager UIManager;
+    private GameManager GameManager;
     public Gun gun;
 
     public Image BarImage;
@@ -44,7 +45,7 @@ public class AmmoBar : MonoBehaviour
     {
         if (gun != null)
         {
-            ClipAmountText.text = UIManager.GameManager.Character.Gun.SpareBulletCount.ToString();
+            ClipAmountText.text = GameManager.Character.Gun.SpareBulletCount.ToString();
 
             if (gun.IsCanShoot == false && UIManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
             {
@@ -62,14 +63,14 @@ public class AmmoBar : MonoBehaviour
         }
         else
         {
-            gun =UIManager.GameManager.Character.Gun;
+            gun =GameManager.Character.Gun;
         }
 
-        if (UIManager.GameManager.Character.IsNewGun)
+        if (GameManager.Character.IsNewGun)
         {
-            gun = UIManager.GameManager.Character.Gun;
+            gun = GameManager.Character.Gun;
             AmmoBarInstantlyFilling();
-            UIManager.GameManager.Character.IsNewGun = false;
+            GameManager.Character.IsNewGun = false;
         }
     }
 
@@ -80,6 +81,7 @@ public class AmmoBar : MonoBehaviour
     private void Init()
     {
         StartCoroutine(Ammobar());
+        GameManager = UIManager.GameManager;
     }
 
     private void AmmoBarsCreate()
@@ -101,7 +103,7 @@ public class AmmoBar : MonoBehaviour
     private void AmmoBarInstantlyFilling()
     {
         AmmoBarDelete();
-        mAmmoCount = UIManager.GameManager.Character.Gun.weapon.ClipCapacity;
+        mAmmoCount = GameManager.Character.Gun.weapon.ClipCapacity;
         AmmoBarsCreate();
         AmmoBarsBackup();
     }
@@ -135,7 +137,7 @@ public class AmmoBar : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (UIManager.GameManager.Character.Gun != null)
+        if (GameManager.Character.Gun != null)
         {
             AmmoBarDelete();
             mAmmoCount = gun.weapon.ClipCapacity;

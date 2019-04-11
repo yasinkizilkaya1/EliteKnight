@@ -2,8 +2,9 @@
 
 public class MoveForward : Command
 {
-    public override void Execute(Character character, Command command)
+    public override void Execute()
     {
-        character.transform.Translate(character.Speed * Time.deltaTime, 0, 0);
+        Character.transform.Translate(Character.Speed * Time.deltaTime, 0, 0);
+        Character.CharacterWay = 1;
     }
 }

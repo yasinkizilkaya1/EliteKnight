@@ -41,7 +41,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Character != null)
+        if (GameManager.Character.isDead == false)
         {
             if (isEffectTowerBullet)
             {
