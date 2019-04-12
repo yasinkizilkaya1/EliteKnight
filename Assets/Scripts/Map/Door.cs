@@ -22,9 +22,8 @@ public class Door : MonoBehaviour
     public GameObject LeftDoor;
     public GameObject DoorLock;
 
-    public bool Christen;
-
-    public int EnemyCount;
+    public bool IsChristen;
+    public bool IsLock;
 
     public Animator DoorAnimator;
 
@@ -47,38 +46,23 @@ public class Door : MonoBehaviour
         Initialize();
     }
 
-    private void Update()
-    {
-        if (EnemyCount == 0)
-        {
-            for (int i = 0; i < Room.DoorList.Count; i++)
-            {
-                Room.DoorList[i].GetComponentInChildren<Door>().Christen = true;
-                Room.DoorList[i].GetComponentInChildren<Door>().DoorLock.SetActive(false);
-            }
-        }
-        else
-        {
-            EnemyCount = Room.EnemyCount;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(TAG_CHARCTER))
         {
-            if (DoorState == State.Close && Christen == true)
+            if (DoorState == State.Close && IsChristen == true && IsLock == false)
             {
                 ChangeDoorState(State.Open);
-                Christen = false;
+                IsChristen = false;
             }
 
-            if (DoorState == State.Open && EnemyCount > 0 && Christen == true)
+            if (DoorState == State.Open && Room.EnemyCount > 0 && IsChristen == true)
             {
                 for (int i = 0; i < Room.DoorList.Count; i++)
                 {
                     Room.DoorList[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
-                    Room.DoorList[i].GetComponentInChildren<Door>().Christen = false;
+                    Room.DoorList[i].GetComponentInChildren<Door>().IsChristen = false;
+                    Room.DoorList[i].GetComponentInChildren<Door>().IsLock = true;
                 }
                 Room.IsCreate = true;
             }
@@ -94,8 +78,8 @@ public class Door : MonoBehaviour
         mRightDoorCollider = RightDoor.GetComponent<Collider2D>();
         mLeftDoorCollider = LeftDoor.GetComponent<Collider2D>();
         DoorState = State.Close;
-        Christen = true;
-        EnemyCount = Room.EnemyCount;
+        IsChristen = true;
+        StartCoroutine(RoomDoorsLockOpen());
     }
 
     #endregion
@@ -122,6 +106,25 @@ public class Door : MonoBehaviour
         mLeftDoorCollider.enabled = isbool;
         mRightDoorCollider.enabled = isbool;
         DoorLock.SetActive(isbool);
+    }
+
+    IEnumerator RoomDoorsLockOpen()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            if (Room.EnemyCount == 0)
+            {
+                for (int i = 0; i < Room.DoorList.Count; i++)
+                {
+                    Room.DoorList[i].GetComponentInChildren<Door>().IsLock = false;
+                    Room.DoorList[i].GetComponentInChildren<Door>().IsChristen = true;
+                    Room.DoorList[i].GetComponentInChildren<Door>().DoorLock.SetActive(false);
+                }
+                StopCoroutine(RoomDoorsLockOpen());
+            }
+        }
     }
 
     #endregion

@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
     private GameManager GameManager;
     public Character character;
     public Weapon weapon;
+    private KeySettings KeySettings;
 
     public List<GameObject> BarrelList;
     public GameObject AmmoPrefabObject;
@@ -52,8 +53,9 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(GameManager.KeySettings.Keys[5].CurrentKey) && GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(KeySettings.Keys[5].CurrentKey) && GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
+            mUIManager.ammoBar.ReloadGUIObject.SetActive(true);
             GunClipDrup();
             Instantiate(clipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / weapon.ClipCapacity;
@@ -92,12 +94,15 @@ public class Gun : MonoBehaviour
         Range = weapon.Range;
         mUIManager = GameObject.FindWithTag(TAG_UIMANAGER).GetComponent<UIManager>();
         GameManager = mUIManager.GameManager;
+        KeySettings = GameManager.KeySettings;
+        mUIManager.ammoBar.ClipAmountText.text = SpareBulletCount.ToString();
     }
 
     private void WeaponReload()
     {
         if (mWeaponReload > 0 && isWeaponReload)
         {
+            mUIManager.ammoBar.ClipAmountText.text = SpareBulletCount.ToString();
             mWeaponReload -= Time.deltaTime;
             CurrentAmmo = 0;
             IsCanShoot = false;
@@ -124,6 +129,7 @@ public class Gun : MonoBehaviour
                 }
 
                 mWeaponReload = weapon.ReloadTime;
+                mUIManager.ammoBar.ReloadGUIObject.SetActive(false);
             }
         }
     }

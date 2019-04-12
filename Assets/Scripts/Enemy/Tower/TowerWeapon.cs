@@ -51,11 +51,6 @@ public class TowerWeapon : MonoBehaviour
         Initialize();
     }
 
-    private void Awake()
-    {
-        shootCoolDown = 0f;
-    }
-
     private void Update()
     {
         TowerMoving();
@@ -81,6 +76,7 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
+        shootCoolDown = 0f;
         GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = tower.Health;
         CurrentDefence = tower.Defence;
@@ -88,7 +84,11 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerMoving()
     {
-        if (GameManager.Character.isDead == false && towerEnemy.inside)
+        if (GameManager.Character.isDead == false && towerEnemy.inside && lineRenderer == null)
+        {
+            Moving();
+        }
+        else if (GameManager.Character.isDead == false && lineRenderer != null)
         {
             Moving();
         }

@@ -16,8 +16,8 @@ public class Character : MonoBehaviour
     public CharacterData characterData;
     public GameManager gameManager;
     public UIManager UIManager;
-    public Gun Gun;
     public Knife knife;
+    public Gun Gun;
 
     public int CurrentHP;
     public int MaxHP;
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
                 {
                     SelectionWeaponId = 0;
                 }
-                GunChange(Guns[SelectionWeaponId]);
+                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId]);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0f && Guns.Count > 1)
             {
@@ -93,7 +93,7 @@ public class Character : MonoBehaviour
                 {
                     SelectionWeaponId = Guns.Count - 1;
                 }
-                GunChange(Guns[SelectionWeaponId]);
+                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId]);
             }
         }
     }
@@ -103,7 +103,7 @@ public class Character : MonoBehaviour
         if (collider.CompareTag(TAG_ITEM))
         {
             Destroy(collider.gameObject);
-            GunAdd(collider.GetComponent<Gun>().weapon);
+            gameManager.GunSlot.GunAdd(collider.GetComponent<Gun>().weapon, RightWeaponObject);
         }
     }
 
@@ -253,27 +253,6 @@ public class Character : MonoBehaviour
     #endregion
 
     #region Public Method
-
-    public void GunAdd(Weapon weapon)
-    {
-        Gun NewGun = Instantiate(weapon.ItemObject, RightWeaponObject.transform).GetComponent<Gun>() as Gun;
-        NewGun.transform.localScale = new Vector3(10, 10, 1);
-        NewGun.gameObject.SetActive(false);
-        Guns.Add(NewGun);
-    }
-
-    public void GunChange(Gun gun)
-    {
-        if (Gun != gun && Gun.isWeaponReload == false)
-        {
-            IsNewGun = true;
-            Gun.gameObject.SetActive(false);
-            Gun = gun;
-            gun.gameObject.SetActive(true);
-            gameManager.GunSlot.ItemImage[0].sprite = gun.weapon.Icon;
-            gameManager.GunSlot.Items[0] = Gun.weapon;
-        }
-    }
 
     public void HealthDisCount(int value)
     {

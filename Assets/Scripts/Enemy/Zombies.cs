@@ -13,9 +13,6 @@ public class Zombies : MonoBehaviour
 
     #region Fields
 
-    private bool mIsHit;
-    private bool mIsZombie;
-
     public GameManager GameManager;
     public Zombie zombie;
 
@@ -38,6 +35,8 @@ public class Zombies : MonoBehaviour
     public float shootcoolDown;
 
     private bool mIsAttack;
+    private bool mIsHit;
+    private bool mIsZombie;
 
     private RaycastHit2D mRaycastHit2D;
 
@@ -143,7 +142,7 @@ public class Zombies : MonoBehaviour
         if (attack)
         {
             shootcoolDown = zombie.ShootingRate;
-            GameManager.Character.HealthDisCount(GameManager.Character.Power);
+            GameManager.Character.HealthDisCount(zombie.AttackPower);
         }
     }
 

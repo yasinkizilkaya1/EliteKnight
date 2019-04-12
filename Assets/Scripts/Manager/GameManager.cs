@@ -55,23 +55,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Character != null)
+        if (Character.CurrentHP == 0)
         {
-            if (Character.CurrentHP == 0)
-            {
-                isPlayerDead = true;
-                Character.isDead = true;
-                Destroy(this.gameObject);
-                StartCoroutine(UIManager.GameOver());
-                UIManager.HealthBarSlider.gameObject.SetActive(false);
-            }
-            else
-            {
-                UIManager.HealthBarSlider.value = Character.CurrentHP;
-                UIManager.ArmorBarSlider.value = Character.CurrentDefence;
-                UIManager.EnergyBarSlider.value = Character.Energy;
-                StartCoroutine(UIManager.SetActiveBars());
-            }
+            isPlayerDead = true;
+            Character.isDead = true;
+            Destroy(Character.gameObject);
+            StartCoroutine(UIManager.GameOver());
+            UIManager.HealthBarSlider.gameObject.SetActive(false);
+        }
+        else
+        {
+            UIManager.HealthBarSlider.value = Character.CurrentHP;
+            UIManager.ArmorBarSlider.value = Character.CurrentDefence;
+            UIManager.EnergyBarSlider.value = Character.Energy;
+            StartCoroutine(UIManager.SetActiveBars());
         }
     }
 

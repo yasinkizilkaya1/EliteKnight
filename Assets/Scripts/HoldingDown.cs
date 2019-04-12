@@ -32,7 +32,7 @@ public class HoldingDown : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         else if (HoldingTime <= 0 && gameManager.GunSlot.Items[0] != null)
         {
-            gameManager.GunSlot.ItemDrop(gameManager.Character);
+            gameManager.GunSlot.GunDrop(gameManager.Character);
             HoldingTime = HoldingDownTime;
         }
     }

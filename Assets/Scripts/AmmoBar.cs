@@ -43,27 +43,13 @@ public class AmmoBar : MonoBehaviour
 
     private void Update()
     {
-        if (gun != null)
+        if (gun != null && UIManager.AutoClipReloadToggle.isOn)
         {
-            ClipAmountText.text = GameManager.Character.Gun.SpareBulletCount.ToString();
-
-            if (gun.IsCanShoot == false && UIManager.AutoClipReloadToggle.isOn == false && gun.isWeaponReload == false)
-            {
-                ReloadGUIObject.SetActive(true);
-            }
-            else
-            {
-                ReloadGUIObject.SetActive(false);
-            }
-
-            if (UIManager.AutoClipReloadToggle.isOn)
-            {
-                gun.AutoWeaponReload();
-            }
+            gun.AutoWeaponReload();
         }
         else
         {
-            gun =GameManager.Character.Gun;
+            gun = GameManager.Character.Gun;
         }
 
         if (GameManager.Character.IsNewGun)
@@ -87,7 +73,7 @@ public class AmmoBar : MonoBehaviour
     private void AmmoBarsCreate()
     {
         mAmmoBarWidth = AMMO_BAR_BACKGROUND_WIDTH / mAmmoCount;
-        mAmmoBarGap =(float)AMMO_BAR_BACKGROUND_GAP / (mAmmoCount - 1);
+        mAmmoBarGap = (float)AMMO_BAR_BACKGROUND_GAP / (mAmmoCount - 1);
 
         AmmoGridLayout.cellSize = new Vector2(mAmmoBarWidth, 80);
         AmmoGridLayout.spacing = new Vector2(mAmmoBarGap, 0);

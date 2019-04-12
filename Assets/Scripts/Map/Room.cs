@@ -162,7 +162,6 @@ public class Room : MonoBehaviour
                 RoomObject.transform.position = new Vector3(vector3.x + size.x + number + 0.5f, vector3.y + Location + 0.5f, 2);
                 RoomObject.transform.Rotate(0, 0, -90);
                 RoomObject.GetComponent<Door>().Room = gameObject.GetComponent<Room>();
-                RoomObject.GetComponent<Door>().EnemyCount = EnemyCount;
             }
             else
             {
@@ -175,7 +174,6 @@ public class Room : MonoBehaviour
                 RoomObject = Instantiate(Door, transform);
                 RoomObject.transform.position = new Vector3(vector3.x + Location + 0.5f, vector3.y + size.y + number + 0.5f, 2);
                 RoomObject.GetComponent<Door>().Room = gameObject.GetComponent<Room>();
-                RoomObject.GetComponent<Door>().EnemyCount = EnemyCount;
 
             }
 

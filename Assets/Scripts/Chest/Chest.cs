@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
@@ -86,7 +85,6 @@ public class Chest : MonoBehaviour
                     HealthBarObject.SetActive(false);
                     Instantiate(ItemList[Random.Range(0, ItemList.Count - 1)], transform.position, transform.rotation);
                 }
-
                 break;
         }
     }
