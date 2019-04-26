@@ -219,7 +219,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006153226, y: -0.0020512342}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -230,7 +230,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.202799, y: 0.7087548}
+  m_Size: {x: 3.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!61 &61241941024833726
 BoxCollider2D:
@@ -244,7 +244,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006153226, y: -0.0020512342}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -255,7 +255,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.202799, y: 0.7087548}
+  m_Size: {x: 3.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!68 &68437509812757600
 EdgeCollider2D:
@@ -269,13 +269,15 @@ EdgeCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 4.15}
+  m_Offset: {x: 0, y: 3.5}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -2.3941584, y: -2.741888}
-  - {x: -1.3800558, y: -1.8835984}
-  - {x: 1.4237031, y: -1.8989719}
-  - {x: 2.235208, y: -2.808112}
+  - {x: -2.4299622, y: -2.9707985}
+  - {x: -2.4458923, y: -1.9535141}
+  - {x: -1.4416199, y: -0.9308624}
+  - {x: 1.5401306, y: -0.9426079}
+  - {x: 2.550476, y: -1.9535141}
+  - {x: 2.5578003, y: -2.9359398}
 --- !u!68 &68807900945973378
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -291,10 +293,12 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -2.049765, y: -0.9801862}
-  - {x: -1.3800558, y: -1.8835984}
-  - {x: 1.4237031, y: -1.8989719}
-  - {x: 2.2087164, y: -0.95369756}
+  - {x: -2.4765015, y: -0.4654274}
+  - {x: -2.437378, y: -1.4262352}
+  - {x: -1.4302673, y: -2.4183617}
+  - {x: 1.5697327, y: -2.429985}
+  - {x: 2.5731506, y: -1.4341736}
+  - {x: 2.569458, y: -0.43056488}
 --- !u!95 &95170597095851066
 Animator:
   serializedVersion: 3
@@ -325,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 114677565664201690}
+  Collider2D: {fileID: 68437509812757600}
 --- !u!114 &114677565664201690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -337,11 +342,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Room: {fileID: 0}
+  DoorInside: {fileID: 114132032209898790}
+  Collider2D: {fileID: 68807900945973378}
+  DoorState: 0
   RightDoor: {fileID: 1072493754716926}
   LeftDoor: {fileID: 1084858886739738}
   DoorLock: {fileID: 1990294421048830}
   IsLock: 0
-  EnemyCount: 0
   DoorAnimator: {fileID: 95170597095851066}
 --- !u!212 &212045691231343686
 SpriteRenderer:

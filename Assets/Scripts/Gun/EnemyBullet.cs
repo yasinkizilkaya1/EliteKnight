@@ -23,7 +23,7 @@ public class EnemyBullet : MonoBehaviour
     private GameManager GameManager;
 
     public GameObject bulletObject;
-    public List<GameObject> BarrelList;
+    public List<GameObject> Barrels;
     public GameObject StandartTowerBulletObject;
 
     public int EffectTowerBulletPower;
@@ -71,10 +71,10 @@ public class EnemyBullet : MonoBehaviour
         {
             if (isEffectTowerBullet)
             {
-                for (int i = 0; i < BarrelList.Count; i++)
+                for (int i = 0; i < Barrels.Count; i++)
                 {
-                   GameObject bullet= Instantiate(bulletObject, BarrelList[i].transform.position, Quaternion.identity);
-                    bullet.transform.rotation = BarrelList[i].transform.rotation;
+                   GameObject bullet= Instantiate(bulletObject, Barrels[i].transform.position, Quaternion.identity);
+                    bullet.transform.rotation = Barrels[i].transform.rotation;
                 }
                 Destroy(gameObject);
             }

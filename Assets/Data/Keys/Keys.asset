@@ -33,3 +33,6 @@ MonoBehaviour:
   - KeyType: 6
     CurrentKey: 323
     DefaultKey: 323
+  - KeyType: 7
+    CurrentKey: 101
+    DefaultKey: 101

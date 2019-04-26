@@ -8,12 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66b121968f1e36f418de07ef146d06fa, type: 3}
-  m_Name: Defence
+  m_Script: {fileID: 11500000, guid: e28c16c498afe7b45aa76a754d265143, type: 3}
+  m_Name: SpaceShip
   m_EditorClassIdentifier: 
-  Id: 2
-  Name: Defence
-  Clip: 0
-  Health: 0
-  Defence: 1
-  type: 0
+  Id: 1
+  Name: SpaceShip
+  Health: 500
+  MaxHealth: 500
+  AttackTime: 5
+  shootcoolDown: 0.5

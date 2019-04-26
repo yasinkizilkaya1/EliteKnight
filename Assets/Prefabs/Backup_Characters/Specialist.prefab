@@ -541,8 +541,8 @@ MonoBehaviour:
   characterData: {fileID: 0}
   gameManager: {fileID: 0}
   UIManager: {fileID: 0}
-  Gun: {fileID: 114566776366071854}
   knife: {fileID: 0}
+  Gun: {fileID: 114566776366071854}
   CurrentHP: 0
   MaxHP: 0
   CurrentDefence: 0
@@ -575,9 +575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mUIManager: {fileID: 0}
-  character: {fileID: 0}
+  character: {fileID: 114222291157477898}
   weapon: {fileID: 0}
-  BarrelList:
+  Barrels:
   - {fileID: 1025658585341884}
   AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
     type: 2}

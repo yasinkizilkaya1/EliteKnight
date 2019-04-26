@@ -363,7 +363,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910738471475324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.6, y: 10.9, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 4942262136240288}
@@ -418,7 +418,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233594230424754}
   m_LocalRotation: {x: 0, y: 0, z: -0.026176924, w: 0.99965733}
-  m_LocalPosition: {x: 10, y: 16.7, z: 1}
+  m_LocalPosition: {x: 7, y: 25, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4406422367637930}
@@ -597,8 +597,8 @@ MonoBehaviour:
   characterData: {fileID: 0}
   gameManager: {fileID: 0}
   UIManager: {fileID: 0}
-  Gun: {fileID: 114208238460994302}
   knife: {fileID: 0}
+  Gun: {fileID: 114208238460994302}
   CurrentHP: 0
   MaxHP: 0
   CurrentDefence: 0
@@ -633,12 +633,12 @@ MonoBehaviour:
   mUIManager: {fileID: 0}
   character: {fileID: 114044195529235078}
   weapon: {fileID: 11400000, guid: bd540ca409180f9499f554539e54f4c9, type: 2}
-  BarrelList:
+  Barrels:
   - {fileID: 1261225848421174}
   AmmoPrefabObject: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
     type: 2}
   clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
-  SpareBulletCount: 995
+  SpareBulletCount: 0
   CurrentAmmo: 0
   isWeaponReload: 0
   IsCanShoot: 0

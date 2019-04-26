@@ -1,10 +1,14 @@
-﻿public class CharacterFeature : Item
+﻿using UnityEngine;
+
+[CreateAssetMenuAttribute(fileName = "New CharacterFeatureItem", menuName = "Data/CharacterFeatureItem")]
+public class CharacterFeature : Item
 {
     public int Health;
     public int Defence;
     public int Speed;
     public int Energy;
     public int EnergyIncreaseAmmaunt;
+    public int Ammo;
 
     public override void Use(Character character)
     {
@@ -12,5 +16,7 @@
         character.CurrentDefence += Defence;
         character.Speed += Speed;
         character.Energy += Energy;
+        character.Gun.SpareBulletCount += Ammo;
+        character.UIManager.ammoBar.ClipAmountText.text = character.Gun.SpareBulletCount.ToString();
     }
 }

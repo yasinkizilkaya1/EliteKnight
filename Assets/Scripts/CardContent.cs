@@ -8,8 +8,8 @@ public class CardContent : MonoBehaviour
 
     public GameObject cardPrefabObject;
 
-    public List<CharacterData> CharacterList;
-    public List<Toggle> ToggleList;
+    public List<CharacterData> Characters;
+    public List<Toggle> Toggles;
 
     public ToggleGroup ToggleGroup;
 
@@ -28,15 +28,15 @@ public class CardContent : MonoBehaviour
 
     public void Initialize()
     {
-        ToggleList = new List<Toggle>();
+        Toggles = new List<Toggle>();
 
-        for (int i = 0; i < CharacterList.Count; i++)
+        for (int i = 0; i < Characters.Count; i++)
         {
             GameObject card = Instantiate(cardPrefabObject, transform);
-            card.GetComponent<Card>().UpdateData(CharacterList[i]);
+            card.GetComponent<Card>().UpdateData(Characters[i]);
             Toggle toggle = card.GetComponent<Toggle>();
             toggle.group = ToggleGroup;
-            ToggleList.Add(toggle);
+            Toggles.Add(toggle);
         }
     }
 

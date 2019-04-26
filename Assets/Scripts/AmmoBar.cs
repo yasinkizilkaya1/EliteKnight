@@ -17,12 +17,13 @@ public class AmmoBar : MonoBehaviour
     public GridLayoutGroup AmmoGridLayout;
 
     public UIManager UIManager;
-    private GameManager GameManager;
+    public GameManager GameManager;
+    private Character Character;
     public Gun gun;
 
     public Image BarImage;
-    public List<Image> BarImageList;
-    public List<GameObject> BarImageListObject;
+    public List<Image> BarImages;
+    public List<GameObject> BarImageObjects;
     public GameObject ReloadGUIObject;
 
     public Text ClipAmountText;
@@ -52,7 +53,7 @@ public class AmmoBar : MonoBehaviour
             gun = GameManager.Character.Gun;
         }
 
-        if (GameManager.Character.IsNewGun)
+        if (Character.IsNewGun)
         {
             gun = GameManager.Character.Gun;
             AmmoBarInstantlyFilling();
@@ -66,8 +67,8 @@ public class AmmoBar : MonoBehaviour
 
     private void Init()
     {
+        Character = GameManager.Character;
         StartCoroutine(Ammobar());
-        GameManager = UIManager.GameManager;
     }
 
     private void AmmoBarsCreate()
@@ -81,8 +82,8 @@ public class AmmoBar : MonoBehaviour
         for (int i = 0; i < mAmmoCount; i++)
         {
             Image Bar = Instantiate(BarImage, transform);
-            BarImageListObject.Add(Bar.gameObject);
-            BarImageList.Add(Bar);
+            BarImageObjects.Add(Bar.gameObject);
+            BarImages.Add(Bar);
         }
     }
 
@@ -90,6 +91,7 @@ public class AmmoBar : MonoBehaviour
     {
         AmmoBarDelete();
         mAmmoCount = GameManager.Character.Gun.weapon.ClipCapacity;
+        ClipAmountText.text = GameManager.Character.Gun.SpareBulletCount.ToString();
         AmmoBarsCreate();
         AmmoBarsBackup();
     }
@@ -98,10 +100,10 @@ public class AmmoBar : MonoBehaviour
     {
         for (int i = 0; i <= mAmmoCount - 1; i++)
         {
-            Destroy(BarImageListObject[i]);
+            Destroy(BarImageObjects[i]);
         }
-        BarImageList.Clear();
-        BarImageListObject.Clear();
+        BarImages.Clear();
+        BarImageObjects.Clear();
     }
 
     private void AmmoBarsBackup()
@@ -110,7 +112,7 @@ public class AmmoBar : MonoBehaviour
         {
             for (int i = mAmmoCount - 1; i >= gun.CurrentAmmo; i--)
             {
-                BarImageList[i].color = Color.grey;
+                BarImages[i].color = Color.grey;
             }
         }
     }

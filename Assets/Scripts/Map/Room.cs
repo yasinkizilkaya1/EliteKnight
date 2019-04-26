@@ -24,8 +24,8 @@ public class Room : MonoBehaviour
 
     public room room;
 
-    public List<GameObject> DoorList;
-    public List<GameObject> EnemyList;
+    public List<GameObject> Doors;
+    public List<GameObject> Enemys;
 
     public GameObject ChestObject;
     public GameObject Door;
@@ -44,8 +44,6 @@ public class Room : MonoBehaviour
     public int ChestCount;
     public int BoxCount;
 
-    public bool IsCreate;
-
     public int UpDoorCount;
     public int DownDoorCount;
     public int RightDoorCount;
@@ -58,17 +56,20 @@ public class Room : MonoBehaviour
     public List<int> DoorRightPlace;
     public List<int> DoorLeftPlace;
 
+    public bool IsEnemyCreate;
+
     #endregion
 
     #region Property
 
-    enum EnemyType
+    enum Type
     {
         Zombie,
         PursueEnemy,
         TowerExplod,
         TowerModerator,
-        TowerStandart
+        TowerStandart,
+        Chest
     }
 
     #endregion
@@ -78,11 +79,6 @@ public class Room : MonoBehaviour
     private void Start()
     {
         Init();
-    }
-
-    private void OnGUI()
-    {
-        EnemysCreate();
     }
 
     #endregion
@@ -101,6 +97,7 @@ public class Room : MonoBehaviour
         tileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
         PlaceCreate();
+        StartCoroutine(ObjeCreate());
     }
 
     private void PlaceCreate()
@@ -177,7 +174,7 @@ public class Room : MonoBehaviour
 
             }
 
-            DoorList.Add(RoomObject);
+            Doors.Add(RoomObject);
         }
     }
 
@@ -211,23 +208,19 @@ public class Room : MonoBehaviour
         tilemap.SetTiles(positions, tilebase);
     }
 
-    public void EnemysCreate()
+    public void ObjectsCreate()
     {
-        if (IsCreate == true)
-        {
-            ObjeCreate(ZombieCount, EnemyList[0], EnemyType.Zombie);
-            ObjeCreate(PursueEnemyCount, EnemyList[1], EnemyType.PursueEnemy);
-            ObjeCreate(TowerExplodCount, EnemyList[2], EnemyType.TowerExplod);
-            ObjeCreate(TowerModeratorCount, EnemyList[3], EnemyType.TowerModerator);
-            ObjeCreate(TowerStandartCount, EnemyList[4], EnemyType.TowerStandart);
-            ObjeCreate(ChestCount, ChestObject);
-            IsCreate = false;
-        }
+        ObjeCreate(ZombieCount, Enemys[0], Type.Zombie);
+        ObjeCreate(PursueEnemyCount, Enemys[1], Type.PursueEnemy);
+        ObjeCreate(TowerExplodCount, Enemys[2], Type.TowerExplod);
+        ObjeCreate(TowerModeratorCount, Enemys[3], Type.TowerModerator);
+        ObjeCreate(TowerStandartCount, Enemys[4], Type.TowerStandart);
+        ObjeCreate(ChestCount, ChestObject, Type.Chest);
     }
 
-    private void ObjeCreate(int finshValue, GameObject Object, EnemyType enemyType)
+    private void ObjeCreate(int finshValue, GameObject Object, Type enemyType)
     {
-        GameObject roomObject = gameObject;
+        GameObject roomObject = this.gameObject;
 
         for (int i = 0; i < finshValue; i++)
         {
@@ -236,33 +229,24 @@ public class Room : MonoBehaviour
 
             switch (enemyType)
             {
-                case EnemyType.Zombie:
+                case Type.Zombie:
                     roomObject.GetComponentInChildren<Zombies>().RoomEqual(gameObject);
                     break;
-                case EnemyType.PursueEnemy:
+                case Type.PursueEnemy:
                     roomObject.GetComponentInChildren<WarriorEnemy>().RoomEqual(gameObject);
                     break;
-                case EnemyType.TowerExplod:
+                case Type.TowerExplod:
                     roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
                     break;
-                case EnemyType.TowerModerator:
+                case Type.TowerModerator:
                     roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
                     break;
-                case EnemyType.TowerStandart:
+                case Type.TowerStandart:
                     roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
+                    break;
+                case Type.Chest:
                     break;
             }
-        }
-    }
-
-    private void ObjeCreate(int finshValue, GameObject Object)
-    {
-        GameObject roomObject = gameObject;
-
-        for (int i = 0; i < finshValue; i++)
-        {
-            roomObject = Instantiate(Object, transform);
-            roomObject.transform.position = RandomLocationFind(4);
         }
     }
 
@@ -293,6 +277,25 @@ public class Room : MonoBehaviour
         DownDoorCount = down;
         RightDoorCount = right;
         LeftDoorCount = left;
+    }
+
+    #endregion
+
+    #region IEnumerators
+
+    IEnumerator ObjeCreate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (IsEnemyCreate == true)
+            {
+                yield return new WaitForSeconds(0.2f);
+                IsEnemyCreate = false;
+                ObjectsCreate();
+                StopCoroutine(ObjeCreate());
+            }
+        }
     }
 
     #endregion

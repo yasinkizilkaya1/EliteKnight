@@ -51,11 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e063bd5c3d24d1a4d9ec1faed4bac55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemapGround: {fileID: 0}
-  tilemapWall: {fileID: 0}
+  tileMapGround: {fileID: 0}
+  tileMapWall: {fileID: 0}
   room: {fileID: 11400000, guid: 4661bdfbd165cc141925ee4e89f5bf70, type: 2}
-  DoorList: []
-  EnemyList:
+  Doors: []
+  Enemys:
   - {fileID: 1689897180856074, guid: 78becc8d44161ee48ae293b884307db3, type: 2}
   - {fileID: 1519125531596516, guid: ec43ebbf348fb27499a05eda47448a58, type: 2}
   - {fileID: 1230982751642756, guid: 2eade1b923d7f764181d49060a39b351, type: 2}
@@ -72,7 +72,6 @@ MonoBehaviour:
   TowerStandartCount: 1
   ChestCount: 0
   BoxCount: 0
-  IsCreate: 0
   UpDoorCount: 0
   DownDoorCount: 0
   RightDoorCount: 0
@@ -83,3 +82,4 @@ MonoBehaviour:
   DoorRightLeftPlace: 
   DoorRightPlace: 
   DoorLeftPlace: 
+  IsEnemyCreate: 0

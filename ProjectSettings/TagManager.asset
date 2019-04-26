@@ -25,6 +25,9 @@ TagManager:
   - Undefined
   - Need_To_Reload_GUI
   - LobbyManager
+  - EnemyRocket
+  - EnemyBullet
+  - EnemySpawnBullet
   layers:
   - Default
   - TransparentFX

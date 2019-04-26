@@ -6,7 +6,7 @@ public abstract class Item : ScriptableObject
     public string Name;
     public Sprite Icon;
     public int StackSize;
-    public GameObject ItemObject;
+    public int MaxStackSize;
 
     public abstract void Use(Character character);
 }

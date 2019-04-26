@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4297433906594458}
   - component: {fileID: 212878876059730720}
   - component: {fileID: 58270224218242804}
+  - component: {fileID: 114235031602272564}
   m_Layer: 0
   m_Name: Defence
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 1483938171499488}
   m_LocalRotation: {x: 0, y: -0, z: -0.00000005960463, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -56,6 +57,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.09}
   serializedVersion: 2
   m_Radius: 0.92
+--- !u!114 &114235031602272564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483938171499488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d06de3dfa4d974ea4ef298214301bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: 0f8c15dd6fb2042418ad2cd2a4e883f0, type: 2}
 --- !u!212 &212878876059730720
 SpriteRenderer:
   m_ObjectHideFlags: 1

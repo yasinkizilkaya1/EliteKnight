@@ -127,12 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef73800131ca564daa860c79dca4575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawn: {fileID: 0}
   TargetTransform: {fileID: 0}
   isEffectTowerBullet: 0
   isBullet: 1
   bulletObject: {fileID: 0}
-  BarrelList: []
+  Barrels: []
   StandartTowerBulletObject: {fileID: 0}
   EffectTowerBulletPower: 8
   NormalBulletPower: 1
@@ -4720,9 +4719,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -482149633
-  m_SortingLayer: 7
-  m_SortingOrder: 550
+  m_SortingLayerID: 1593063413
+  m_SortingLayer: 6
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300010, guid: 57f9bb8758844974dbf4c796e0530bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     public GameObject LoadingSliderObject;
     public GameObject AutoReloadObject;
     public GameObject GunSlotObject;
+    public GameObject PanelClip;
+    public GameObject PanelRight;
 
     public Text LoadingText;
     public GameManager GameManager;
@@ -107,6 +109,8 @@ public class UIManager : MonoBehaviour
     {
         LoadingPanelObject.SetActive(true);
         LoadingSliderObject.SetActive(false);
+        PanelClip.SetActive(false);
+        PanelRight.SetActive(false);
         LoadingText.text = "GAME OVER";
         LoadingText.fontSize = 60;
         yield return new WaitForSeconds(3f);

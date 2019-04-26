@@ -8,18 +8,18 @@ public class FireWeapon : Command
 
         if (gun.CurrentAmmo > 0 && gun.IsCanShoot == true && gun.weapon.IsAttak == true)
         {
-            for (int i = gun.BarrelList.Count - 1; i >= 0; i--)
+            for (int i = gun.Barrels.Count - 1; i >= 0; i--)
             {
                 gun.CurrentAmmo--;
                 GameObject Bullet = ObjectPooler.SharedInstance.GetPooledObject("bullet");
 
                 if (Bullet != null)
                 {
-                    Bullet.transform.position = gun.BarrelList[i].transform.position;
-                    Bullet.transform.rotation = gun.BarrelList[i].transform.rotation;
+                    Bullet.transform.position = gun.Barrels[i].transform.position;
+                    Bullet.transform.rotation = gun.Barrels[i].transform.rotation;
                     Bullet.SetActive(true);
                     Bullet.GetComponent<Bullet>().weapon = gun.gameObject.GetComponent<Gun>().weapon;
-                    gun.mUIManager.ammoBar.BarImageList[gun.CurrentAmmo].color = Color.grey;
+                    gun.mUIManager.ammoBar.BarImages[gun.CurrentAmmo].color = Color.grey;
                 }
             }
         }

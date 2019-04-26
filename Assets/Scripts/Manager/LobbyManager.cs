@@ -10,23 +10,23 @@ public class LobbyManager : MonoBehaviour
 
     public void OnPlayButtonClicked()
     {
-        for (int i = 0; i < CardContent.ToggleList.Count; i++)
+        for (int i = 0; i < CardContent.Toggles.Count; i++)
         {
-            if (CardContent.ToggleList[i].isOn)
+            if (CardContent.Toggles[i].isOn)
             {
-                CharacterData.Id = CardContent.CharacterList[i].Id;
-                CharacterData.Name = CardContent.CharacterList[i].Name;
-                CharacterData.Health = CardContent.CharacterList[i].Health;
-                CharacterData.MaxHealth = CardContent.CharacterList[i].MaxHealth;
-                CharacterData.Defence = CardContent.CharacterList[i].Defence;
-                CharacterData.Energy = CardContent.CharacterList[i].Energy;
-                CharacterData.MaxEnergy = CardContent.CharacterList[i].MaxEnergy;
-                CharacterData.Power = CardContent.CharacterList[i].Power;
-                CharacterData.Speed = CardContent.CharacterList[i].Speed;
-                CharacterData.RunSpeed = CardContent.CharacterList[i].RunSpeed;
-                CharacterData.EnergyReloadTime = CardContent.CharacterList[i].EnergyReloadTime;
-                CharacterData.EnergyIncreaseAmmount = CardContent.CharacterList[i].EnergyIncreaseAmmount;
-                CharacterData.GameObject = CardContent.CharacterList[i].GameObject;
+                CharacterData.Id = CardContent.Characters[i].Id;
+                CharacterData.Name = CardContent.Characters[i].Name;
+                CharacterData.Health = CardContent.Characters[i].Health;
+                CharacterData.MaxHealth = CardContent.Characters[i].MaxHealth;
+                CharacterData.Defence = CardContent.Characters[i].Defence;
+                CharacterData.Energy = CardContent.Characters[i].Energy;
+                CharacterData.MaxEnergy = CardContent.Characters[i].MaxEnergy;
+                CharacterData.Power = CardContent.Characters[i].Power;
+                CharacterData.Speed = CardContent.Characters[i].Speed;
+                CharacterData.RunSpeed = CardContent.Characters[i].RunSpeed;
+                CharacterData.EnergyReloadTime = CardContent.Characters[i].EnergyReloadTime;
+                CharacterData.EnergyIncreaseAmmount = CardContent.Characters[i].EnergyIncreaseAmmount;
+                CharacterData.GameObject = CardContent.Characters[i].GameObject;
                 SceneManager.LoadScene(TAG_STAGE);
             }
         }

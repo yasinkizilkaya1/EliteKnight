@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DoorInside : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class DoorInside : MonoBehaviour
     #region Field
 
     public Door door;
+    public Collider2D Collider2D;
 
     #endregion
 
@@ -19,21 +19,23 @@ public class DoorInside : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag(PLAYER_TAG))
+        if (collider.gameObject.CompareTag(Door.TAG_CHARCTER))
         {
-            if (door.DoorState == Door.State.Open && door.Room.EnemyCount > 0 && door.IsChristen == false)
+            if (door.DoorState == Door.State.Close && door.IsLock == false)
             {
-                door.Room.IsCreate = true;
-                for (int i = 0; i < door.Room.DoorList.Count; i++)
-                {
-                    door.Room.DoorList[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
-                    door.Room.DoorList[i].GetComponentInChildren<Door>().IsLock = false;
-                }
+                door.ChangeDoorState(Door.State.Open);
+                Collider2D.enabled = false;
             }
-
-            if (door.DoorState == Door.State.Close && door.IsChristen == true && door.IsLock == false)
+            else if (door.DoorState == Door.State.Open && door.Room.EnemyCount > 0)
             {
-                door.GetComponentInChildren<Door>().ChangeDoorState(Door.State.Open);
+                for (int i = 0; i < door.Room.Doors.Count; i++)
+                {
+                    door.Room.Doors[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
+                    door.Room.Doors[i].GetComponentInChildren<Door>().IsLock = true;
+                }
+                Collider2D.enabled = true;
+                door.Collider2D.enabled = false;
+                door.Room.IsEnemyCreate = true;
             }
         }
     }

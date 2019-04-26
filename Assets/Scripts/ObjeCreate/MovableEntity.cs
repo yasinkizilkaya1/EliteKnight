@@ -1,4 +1,4 @@
-﻿public class MoveableEntity : DamageableEntity
+﻿public class MoveableEntity : FencibleEntity
 {
     public int Speed;
 }

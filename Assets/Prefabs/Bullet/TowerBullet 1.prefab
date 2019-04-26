@@ -353,21 +353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef73800131ca564daa860c79dca4575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawn: {fileID: 0}
   TargetTransform: {fileID: 0}
   isEffectTowerBullet: 1
   isBullet: 0
   bulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
-  BarrelList:
-  - {fileID: 1849688335819738}
-  - {fileID: 1661464943599208}
-  - {fileID: 1453656093593302}
-  - {fileID: 1862299300896080}
-  - {fileID: 1921552198210890}
-  - {fileID: 1819539659130658}
-  - {fileID: 1735722563420998}
-  - {fileID: 1443057231804648}
+  Barrels: []
   StandartTowerBulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
   EffectTowerBulletPower: 8

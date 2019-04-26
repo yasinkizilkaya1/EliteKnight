@@ -17,7 +17,8 @@ public class Chest : MonoBehaviour
 
     public GameManager gameManager;
     public ChestEntity chestEntity;
-    public List<GameObject> ItemList;
+    public List<GameObject> ItemObjects;
+    public List<Item> Items;
 
     public GameObject HealthBarObject;
     public GameObject HealthBarObject1;
@@ -81,9 +82,10 @@ public class Chest : MonoBehaviour
 
                 if (chestEntity.ItemDrop)
                 {
-                    Destroy(gameObject);
                     HealthBarObject.SetActive(false);
-                    Instantiate(ItemList[Random.Range(0, ItemList.Count - 1)], transform.position, transform.rotation);
+                    Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
+                    gameManager.Chests.Remove(this);
+                    Destroy(gameObject);
                 }
                 break;
         }
@@ -114,17 +116,19 @@ public class Chest : MonoBehaviour
         name = chestEntity.Name;
         Defence = chestEntity.Defence;
         Health = chestEntity.Health;
+        gameManager.Chests.Add(this);
+        CharacterHavingGunsUnload();
 
         if (gameManager.CharacterData.Name == TAG_SUPPORT)
         {
-            ItemList.Remove(ItemList[4]);
-            ItemList.Remove(ItemList[3]);
-            ItemList.Remove(ItemList[2]);
+            ItemObjects.Remove(ItemObjects[4]);
+            ItemObjects.Remove(ItemObjects[3]);
+            ItemObjects.Remove(ItemObjects[2]);
         }
         else if (gameManager.CharacterData.Name == TAG_SPEALİST)
         {
-            ItemList.Remove(ItemList[4]);
-            ItemList.Remove(ItemList[3]);
+            ItemObjects.Remove(ItemObjects[4]);
+            ItemObjects.Remove(ItemObjects[3]);
         }
     }
 
@@ -178,6 +182,21 @@ public class Chest : MonoBehaviour
             if (remainingDamage != 0)
             {
                 Health -= remainingDamage;
+            }
+        }
+    }
+
+    public void CharacterHavingGunsUnload()
+    {
+        foreach (Gun gun in gameManager.Character.Guns)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Id == gun.weapon.Id)
+                {
+                    Items.Remove(Items[i]);
+                    ItemObjects.Remove(ItemObjects[i]);
+                }
             }
         }
     }

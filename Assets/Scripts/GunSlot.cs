@@ -21,6 +21,7 @@ public class GunSlot : MonoBehaviour
     public Item[] Items;
 
     private List<Gun> mGuns;
+    private Transform Blank;
 
     #endregion
 
@@ -39,7 +40,6 @@ public class GunSlot : MonoBehaviour
     {
         mGameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         mCharacter = mGameManager.Character;
-
         StartCoroutine(GunSlotActive());
     }
 
@@ -61,40 +61,27 @@ public class GunSlot : MonoBehaviour
         }
     }
 
-    public void GunAdd(Weapon weapon, GameObject RightWeaponObject)
+    public void GunAdd(GameObject gunObject, GameObject rightWeaponObject)
     {
-        bool isSameGunHolder = false;
         mGuns = mCharacter.Guns;
-
-        foreach (Gun gun in mGuns)
-        {
-            if (weapon.Id == gun.weapon.Id)
-            {
-                gun.SpareBulletCount += weapon.TotalBullet;
-                isSameGunHolder = true;
-            }
-        }
-
-        if (isSameGunHolder == false)
-        {
-            Gun NewGun = Instantiate(weapon.ItemObject, RightWeaponObject.transform).GetComponent<Gun>() as Gun;
-            NewGun.transform.localScale = new Vector3(10, 10, 1);
-            NewGun.gameObject.SetActive(false);
-            mGuns.Add(NewGun);
-        }
+        gunObject.transform.SetParent(rightWeaponObject.transform, false);
+        gunObject.transform.position = mGuns[0].transform.position;
+        gunObject.transform.rotation = mGuns[0].transform.rotation;
+        gunObject.transform.localScale = mGuns[0].transform.localScale;
+        gunObject.gameObject.SetActive(false);
+        mGuns.Add(gunObject.GetComponent<Gun>());
     }
 
-    public void GunChange(Gun gun)
+    public void GunChange(Gun gun, Character character)
     {
-        if (mCharacter.Gun != gun && mCharacter.Gun.isWeaponReload == false)
+        if (character.Gun != gun && character.Gun.isWeaponReload == false)
         {
-            mGameManager.UIManager.ammoBar.ClipAmountText.text = gun.SpareBulletCount.ToString();
-            mGameManager.Character.IsNewGun = true;
-            mCharacter.Gun.gameObject.SetActive(false);
-            mCharacter.Gun = gun;
+            character.IsNewGun = true;
+            character.Gun.gameObject.SetActive(false);
+            character.Gun = gun;
             gun.gameObject.SetActive(true);
             ItemImage[0].sprite = gun.weapon.Icon;
-            Items[0] = mCharacter.Gun.weapon;
+            Items[0] = character.Gun.weapon;
         }
     }
 
@@ -102,15 +89,20 @@ public class GunSlot : MonoBehaviour
     {
         if (character.Gun != null && character.Guns.Count > 1)
         {
-            GameObject weapon = Instantiate(character.Gun.gameObject, new Vector3(character.transform.position.x + 2, character.transform.position.y, 1), Quaternion.identity);
-            weapon.transform.localScale = new Vector3(0.1f, 0.1f, 1);
-            Destroy(character.Gun.gameObject);
-            character.Guns.Remove(character.Gun);
-            character.Gun = character.Guns[character.Guns.Count - 1];
-            character.IsNewGun = true;
-            character.Guns[character.Guns.Count - 1].gameObject.SetActive(true);
-            ItemImage[0].sprite = character.Gun.weapon.Icon;
-            return;
+            foreach (Gun gun in character.Guns)
+            {
+                if (gun == character.Gun)
+                {
+                    gun.transform.parent = Blank;
+                    gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
+                    character.Guns.Remove(character.Gun);
+                    character.Gun = character.Guns[character.Guns.Count - 1];
+                    character.IsNewGun = true;
+                    character.Gun.gameObject.SetActive(true);
+                    ItemImage[0].sprite = character.Gun.weapon.Icon;
+                    return;
+                }
+            }
         }
     }
 

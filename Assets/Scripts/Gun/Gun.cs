@@ -14,12 +14,12 @@ public class Gun : MonoBehaviour
     #region Fields
 
     public UIManager mUIManager;
-    private GameManager GameManager;
     public Character character;
     public Weapon weapon;
-    private KeySettings KeySettings;
+    private GameManager mGameManager;
+    private KeySettings mKeySettings;
 
-    public List<GameObject> BarrelList;
+    public List<GameObject> Barrels;
     public GameObject AmmoPrefabObject;
     public GameObject clipObject;
 
@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(KeySettings.Keys[5].CurrentKey) && GameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
+        if (Input.GetKeyDown(mKeySettings.Keys[5].CurrentKey) && mGameManager.isPause == false && isWeaponReload == false && CurrentAmmo != weapon.ClipCapacity && SpareBulletCount > 0 && weapon.IsAttak)
         {
             mUIManager.ammoBar.ReloadGUIObject.SetActive(true);
             GunClipDrup();
@@ -87,22 +87,32 @@ public class Gun : MonoBehaviour
 
     private void Init()
     {
+        if (SpareBulletCount == 0)
+        {
+            SpareBulletCount = weapon.TotalBullet;
+        }
+        else
+        {
+            if (CurrentAmmo != weapon.ClipCapacity)
+            {
+                SpareBulletCount -= CurrentAmmo;
+            }
+        }
+
         IsCanShoot = true;
         isWeaponReload = false;
-        mWeaponReload = weapon.ReloadTime;
         CurrentAmmo = weapon.ClipCapacity;
+        mWeaponReload = weapon.ReloadTime;
         Range = weapon.Range;
         mUIManager = GameObject.FindWithTag(TAG_UIMANAGER).GetComponent<UIManager>();
-        GameManager = mUIManager.GameManager;
-        KeySettings = GameManager.KeySettings;
-        mUIManager.ammoBar.ClipAmountText.text = SpareBulletCount.ToString();
+        mGameManager = mUIManager.GameManager;
+        mKeySettings = mGameManager.KeySettings;
     }
 
     private void WeaponReload()
     {
         if (mWeaponReload > 0 && isWeaponReload)
         {
-            mUIManager.ammoBar.ClipAmountText.text = SpareBulletCount.ToString();
             mWeaponReload -= Time.deltaTime;
             CurrentAmmo = 0;
             IsCanShoot = false;
@@ -130,6 +140,7 @@ public class Gun : MonoBehaviour
 
                 mWeaponReload = weapon.ReloadTime;
                 mUIManager.ammoBar.ReloadGUIObject.SetActive(false);
+                mUIManager.ammoBar.ClipAmountText.text = SpareBulletCount.ToString();
             }
         }
     }
@@ -138,7 +149,7 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < CurrentAmmo; i++)
         {
-            mUIManager.ammoBar.BarImageList[i].color = Color.grey;
+            mUIManager.ammoBar.BarImages[i].color = Color.grey;
         }
     }
 
@@ -155,7 +166,7 @@ public class Gun : MonoBehaviour
 
             if (CurrentAmmo <= weapon.ClipCapacity)
             {
-                mUIManager.ammoBar.BarImageList[CurrentAmmo - 1].color = Color.black;
+                mUIManager.ammoBar.BarImages[CurrentAmmo - 1].color = Color.black;
             }
         }
     }

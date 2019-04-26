@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4636775749863508}
   - component: {fileID: 212987669557264292}
   - component: {fileID: 68476703295979024}
+  - component: {fileID: 114576071559858170}
   m_Layer: 0
   m_Name: Clip
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,6 +98,18 @@ EdgeCollider2D:
   - {x: 1.6475677, y: 0.17681143}
   - {x: 1.6674807, y: -2.0038602}
   - {x: -0.55839515, y: -2.046585}
+--- !u!114 &114576071559858170
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1693196134185144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d06de3dfa4d974ea4ef298214301bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: 196994067ce11894d9dcc811086268ac, type: 2}
 --- !u!212 &212093902037859788
 SpriteRenderer:
   m_ObjectHideFlags: 1

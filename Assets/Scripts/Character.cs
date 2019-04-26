@@ -43,14 +43,14 @@ public class Character : MonoBehaviour
     public GameObject BodyObject;
     public GameObject RightWeaponObject;
     public List<Gun> Guns;
-    private List<Key> Keys;
+    private List<Key> mKeys;
     public int SelectionWeaponId;
 
-    private MoveForward MoveForward;
-    private MoveReserve MoveReserve;
-    private MoveRight MoveRight;
-    private MoveLeft MoveLeft;
-    private FireWeapon FireWeapon;
+    private MoveForward mMoveForward;
+    private MoveReserve mMoveReserve;
+    private MoveRight mMoveRight;
+    private MoveLeft mMoveLeft;
+    private FireWeapon mFireWeapon;
 
     #endregion
 
@@ -69,7 +69,7 @@ public class Character : MonoBehaviour
             Run(gameManager);
             CharacterTurn(gameManager);
             Attack();
-
+            InventoryOpenAndClose();
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f && Guns.Count > 1)
             {
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
                 {
                     SelectionWeaponId = 0;
                 }
-                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId]);
+                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0f && Guns.Count > 1)
             {
@@ -93,7 +93,7 @@ public class Character : MonoBehaviour
                 {
                     SelectionWeaponId = Guns.Count - 1;
                 }
-                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId]);
+                gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
             }
         }
     }
@@ -102,8 +102,16 @@ public class Character : MonoBehaviour
     {
         if (collider.CompareTag(TAG_ITEM))
         {
-            Destroy(collider.gameObject);
-            gameManager.GunSlot.GunAdd(collider.GetComponent<Gun>().weapon, RightWeaponObject);
+            if (collider.GetComponent<Gun>())
+            {
+                gameManager.IsUpdateChests = true;
+                gameManager.GunSlot.GunAdd(collider.gameObject, RightWeaponObject);
+            }
+            else
+            {
+                gameManager.Inventory.ItemAdd(collider.GetComponent<ItemData>().Item);
+                Destroy(collider.gameObject);
+            }
         }
     }
 
@@ -114,8 +122,9 @@ public class Character : MonoBehaviour
     private void Init()
     {
         UIManager = gameManager.UIManager;
-        Keys = gameManager.KeySettings.Keys;
+        mKeys = gameManager.KeySettings.Keys;
 
+        IsNewGun = true;
         characterData = gameManager.CharacterData;
         name = characterData.Name;
         CurrentHP = characterData.Health;
@@ -129,43 +138,43 @@ public class Character : MonoBehaviour
         mRunSpeed = characterData.RunSpeed;
         MaxDefance = characterData.Defence;
 
-        MoveForward = new MoveForward();
-        MoveReserve = new MoveReserve();
-        MoveRight = new MoveRight();
-        MoveLeft = new MoveLeft();
-        FireWeapon = new FireWeapon();
-        MoveForward.Character = this;
-        MoveReserve.Character = this;
-        MoveRight.Character = this;
-        MoveLeft.Character = this;
-        FireWeapon.Character = this;
+        mMoveForward = new MoveForward();
+        mMoveReserve = new MoveReserve();
+        mMoveRight = new MoveRight();
+        mMoveLeft = new MoveLeft();
+        mFireWeapon = new FireWeapon();
+        mMoveForward.Character = this;
+        mMoveReserve.Character = this;
+        mMoveRight.Character = this;
+        mMoveLeft.Character = this;
+        mFireWeapon.Character = this;
     }
 
     private void Moving(GameManager GameManager)
     {
         if (GameManager.isPause == false)
         {
-            if (Input.GetKey(Keys[0].CurrentKey))
+            if (Input.GetKey(mKeys[0].CurrentKey))
             {
-                MoveForward.Execute();
+                mMoveForward.Execute();
             }
 
-            if (Input.GetKey(Keys[1].CurrentKey))
+            if (Input.GetKey(mKeys[1].CurrentKey))
             {
-                MoveReserve.Execute();
+                mMoveReserve.Execute();
             }
 
-            if (Input.GetKey(Keys[2].CurrentKey))
+            if (Input.GetKey(mKeys[2].CurrentKey))
             {
-                MoveRight.Execute();
+                mMoveRight.Execute();
             }
 
-            if (Input.GetKey(Keys[3].CurrentKey))
+            if (Input.GetKey(mKeys[3].CurrentKey))
             {
-                MoveLeft.Execute();
+                mMoveLeft.Execute();
             }
 
-            if (Input.GetKey(Keys[0].CurrentKey) == false && Input.GetKey(Keys[1].CurrentKey) == false && Input.GetKey(Keys[2].CurrentKey) == false && Input.GetKey(Keys[3].CurrentKey) == false)
+            if (Input.GetKey(mKeys[0].CurrentKey) == false && Input.GetKey(mKeys[1].CurrentKey) == false && Input.GetKey(mKeys[2].CurrentKey) == false && Input.GetKey(mKeys[3].CurrentKey) == false)
             {
                 CharacterWay = 0;
             }
@@ -186,7 +195,7 @@ public class Character : MonoBehaviour
     {
         if (gameManager.isPause == false)
         {
-            if (Input.GetKey(Keys[4].CurrentKey))
+            if (Input.GetKey(mKeys[4].CurrentKey))
             {
                 if (Energy > 0)
                 {
@@ -233,7 +242,7 @@ public class Character : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(Keys[6].CurrentKey) && gameManager.isPause == false)
+        if (Input.GetKeyDown(mKeys[6].CurrentKey) && gameManager.isPause == false)
         {
             if (Gun == null && RightWeaponObject == null)
             {
@@ -241,12 +250,29 @@ public class Character : MonoBehaviour
             }
             else
             {
-                FireWeapon.Execute();
+                mFireWeapon.Execute();
             }
         }
-        else if (Input.GetKeyDown(Keys[6].CurrentKey) == false && Gun == null)
+        else if (Input.GetKeyDown(mKeys[6].CurrentKey) == false && Gun == null)
         {
             knife.isattack = false;
+        }
+    }
+
+    private void InventoryOpenAndClose()
+    {
+        if (Input.GetKeyDown(mKeys[7].CurrentKey))
+        {
+            if (gameManager.Inventory.gameObject.activeInHierarchy == true)
+            {
+                gameManager.Inventory.gameObject.SetActive(false);
+                gameManager.GameSetting(GameManager.GameSettings.Continue);
+            }
+            else
+            {
+                gameManager.Inventory.gameObject.SetActive(true);
+                gameManager.GameSetting(GameManager.GameSettings.Stop);
+            }
         }
     }
 

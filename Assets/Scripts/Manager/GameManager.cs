@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    #region Enums
+
+    public enum GameSettings
+    {
+        Continue,
+        Stop
+    }
+
+    #endregion
+
     #region Constants
 
     public const string TAG_LOBBY = "Lobby";
@@ -22,13 +33,21 @@ public class GameManager : MonoBehaviour
     public CharacterData CharacterData;
     public Character Character;
     public GunSlot GunSlot;
+    public Inventory Inventory;
+    public Map Map;
 
     public bool isPause;
     public bool isPlayerDead;
+    private bool mIsKeyChange;
+    public bool IsUpdateChests;
 
     public KeySettings KeySettings;
     public List<string> keycaps;
 
+    private Toggle mCurrentSelectedToggle;
+    private Text mCurrentSelectedText;
+
+    public List<Chest> Chests;
 
     #endregion
 
@@ -39,31 +58,32 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
-    private void OnGUI()
-    {
-        if (isPause == true)
-        {
-            for (int i = 0; i < UIManager.ButtonTexts.Count; i++)
-            {
-                if (UIManager.Toggles[i].isOn == true)
-                {
-                    KeysChange(i);
-                }
-            }
-        }
-    }
-
     private void Update()
     {
-        if (Character.CurrentHP == 0)
+        if (IsUpdateChests && Chests.Count > 0)
+        {
+            foreach (Chest chest in Chests)
+            {
+                chest.CharacterHavingGunsUnload();
+            }
+            IsUpdateChests = false;
+        }
+
+        if (mIsKeyChange && mCurrentSelectedToggle.isOn && mCurrentSelectedToggle != null)
+        {
+            KeysChange();
+        }
+
+        if (Map.İsCharacterCreate == true && Character.CurrentHP == 0)
         {
             isPlayerDead = true;
             Character.isDead = true;
             Destroy(Character.gameObject);
             StartCoroutine(UIManager.GameOver());
             UIManager.HealthBarSlider.gameObject.SetActive(false);
+            Map.İsCharacterCreate = false;
         }
-        else
+        else if (Map.İsCharacterCreate == true)
         {
             UIManager.HealthBarSlider.value = Character.CurrentHP;
             UIManager.ArmorBarSlider.value = Character.CurrentDefence;
@@ -82,13 +102,44 @@ public class GameManager : MonoBehaviour
         KeysLoad();
     }
 
-    private void KeysChange(int id)
+    private void KeysChange()
     {
-        Event e = Event.current;
-
-        if (e.isKey)
+        foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
         {
-            UIManager.ButtonTexts[id].text = e.keyCode.ToString();
+            if (Input.GetKeyDown(key))
+            {
+                mCurrentSelectedText.text = key.ToString();
+                mIsKeyChange = false;
+            }
+        }
+    }
+
+    private void KeysSave()
+    {
+        int Savingkeys = 0;
+
+        for (int x = 0; x < keycaps.Count; x++)
+        {
+            for (int y = 0; y < keycaps.Count; y++)
+            {
+                if (keycaps[x] == UIManager.ButtonTexts[y].text)
+                {
+                    Savingkeys++;
+                }
+            }
+        }
+
+        if (Savingkeys == keycaps.Count - 1)
+        {
+            for (int i = 0; i < KeySettings.Keys.Count; i++)
+            {
+                KeySettings.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
+            }
+        }
+        else
+        {
+            KeySettings.KeysReset();
+            KeysDefaultSetting();
         }
     }
 
@@ -99,11 +150,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < KeySettings.Keys.Count; i++)
         {
             keycaps.Add(KeySettings.Keys[i].CurrentKey.ToString());
-        }
-
-        for (int i = 0; i < UIManager.Toggles.Count; i++)
-        {
-            keycaps.Add(UIManager.ButtonTexts[i].text);
+            UIManager.ButtonTexts[i].text = KeySettings.Keys[i].CurrentKey.ToString();
         }
     }
 
@@ -114,6 +161,28 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < KeySettings.Keys.Count; i++)
         {
             UIManager.ButtonTexts[i].text = KeySettings.Keys[i].CurrentKey.ToString();
+        }
+    }
+
+    #endregion
+
+    #region Public MEthods
+
+    public void GameSetting(GameSettings gameSettings)
+    {
+        switch (gameSettings)
+        {
+            case GameSettings.Continue:
+                Time.timeScale = 1;
+                isPause = false;
+                break;
+            case GameSettings.Stop:
+                Time.timeScale = 0;
+                isPause = true;
+                break;
+            default:
+                Debug.Log("GameSetting value be on the way from");
+                break;
         }
     }
 
@@ -162,29 +231,20 @@ public class GameManager : MonoBehaviour
 
     public void OnSetSaveKeysButtonClicked()
     {
-        int Savingkeys = 0;
+        KeysSave();
+    }
 
-        for (int x = 0; x < keycaps.Count; x++)
-        {
-            for (int y = 0; y < keycaps.Count; y++)
-            {
-                if (keycaps[x] == UIManager.ButtonTexts[y].text)
-                {
-                    Savingkeys++;
-                }
-            }
-        }
+    public void OnSetControlKeyChangeButtonClicked(Toggle toggle)
+    {
+        mIsKeyChange = true;
 
-        if (Savingkeys == keycaps.Count - 1)
+        for (int i = 0; i < UIManager.Toggles.Count; i++)
         {
-            for (int i = 0; i < KeySettings.Keys.Count; i++)
+            if (UIManager.Toggles[i] == toggle)
             {
-                KeySettings.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
+                mCurrentSelectedToggle = toggle;
+                mCurrentSelectedText = UIManager.ButtonTexts[i];
             }
-        }
-        else
-        {
-            KeySettings.KeysReset();
         }
     }
 

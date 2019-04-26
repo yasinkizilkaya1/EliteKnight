@@ -401,9 +401,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   chestEntity: {fileID: 11400000, guid: ae48bbc1cad2db444922d7932ca5f5af, type: 2}
-  ItemList:
-  - {fileID: 1411510944606112, guid: 3597263db4c72c14983886924169448b, type: 2}
-  - {fileID: 1160372663281466, guid: 10ef91f99ac71a34b92adccf1213c0bf, type: 2}
+  ItemObjects:
+  - {fileID: 1177416201596478, guid: e87f0e46bb1fd704bb11814febd15d7f, type: 2}
+  - {fileID: 1411510944606112, guid: a86c9b7e8582bf748baa070c09b0c5fc, type: 2}
+  - {fileID: 1160372663281466, guid: cf2510b605f7277418c91e2dccf7e6b6, type: 2}
+  - {fileID: 1693196134185144, guid: df0d061a8267af1419cee59c0593cfa8, type: 2}
+  - {fileID: 1483938171499488, guid: 855799a55becdfb4aacbd8f18ddecccf, type: 2}
+  - {fileID: 1141160525594600, guid: 2e10f3574da31fa4db124f061b1c7167, type: 2}
+  Items:
+  - {fileID: 11400000, guid: bd540ca409180f9499f554539e54f4c9, type: 2}
+  - {fileID: 11400000, guid: cf94d77db10e75a4e85c54d7ad67d701, type: 2}
+  - {fileID: 11400000, guid: 05ad6f60f9df11e43a0b7b62adf1b47c, type: 2}
+  - {fileID: 11400000, guid: 196994067ce11894d9dcc811086268ac, type: 2}
+  - {fileID: 11400000, guid: 0f8c15dd6fb2042418ad2cd2a4e883f0, type: 2}
+  - {fileID: 11400000, guid: d9f9c10a78e1c7146a951d1ea4feb6d8, type: 2}
   HealthBarObject: {fileID: 1406443294525294}
   HealthBarObject1: {fileID: 1596513021331134}
   HealthBarObject2: {fileID: 1323716316627460}
