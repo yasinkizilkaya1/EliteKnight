@@ -13,6 +13,15 @@ public class DoorInside : MonoBehaviour
 
     #region Unity Method
 
+    private void Update()
+    {
+        if (IsLogin)
+        {
+            Door.Collider2D.enabled = true;
+            IsLogin = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag(Door.mTAG_CHARCTER))

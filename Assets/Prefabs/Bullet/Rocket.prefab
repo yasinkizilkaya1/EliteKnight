@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 4932748612475738}
   - component: {fileID: 58693379594666160}
   - component: {fileID: 50657242957512482}
-  - component: {fileID: 70001826398956250}
   - component: {fileID: 114938689671081750}
   m_Layer: 0
   m_Name: Rocket
@@ -108,21 +107,6 @@ CircleCollider2D:
   m_Offset: {x: -0.26966286, y: 0}
   serializedVersion: 2
   m_Radius: 0.1217289
---- !u!70 &70001826398956250
-CapsuleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599695050195096}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.061213262, y: -0.0000000072971886}
-  m_Size: {x: 0.6828502, y: 0.2600012}
-  m_Direction: 1
 --- !u!114 &114938689671081750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,14 +119,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
-  Room: {fileID: 0}
   Enemys:
   - {fileID: 1689897180856074, guid: 78becc8d44161ee48ae293b884307db3, type: 2}
   - {fileID: 1519125531596516, guid: ec43ebbf348fb27499a05eda47448a58, type: 2}
+  SpaceShip: {fileID: 0}
   Bullet: {fileID: 11400000, guid: c70e7bb760cd7944e92fdbc06112e337, type: 2}
   Power: 0
   Speed: 0
   DropTime: 0
+  IsEnemyCreate: 0
 --- !u!212 &212098590766380694
 SpriteRenderer:
   m_ObjectHideFlags: 1

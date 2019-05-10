@@ -16,10 +16,9 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 5128416d67b5c3b4a9bed07c2f472586, type: 3}
   StackSize: 1
   MaxStackSize: 1
-  UseObject: {fileID: 1141160525594600, guid: 2e10f3574da31fa4db124f061b1c7167, type: 2}
-  DropObject: {fileID: 1141160525594600, guid: 2e10f3574da31fa4db124f061b1c7167, type: 2}
-  Health: 1
+  Health: 5
   Defence: 0
   Speed: 0
   Energy: 0
   EnergyIncreaseAmmaunt: 0
+  Ammo: 0

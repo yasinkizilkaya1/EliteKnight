@@ -53,12 +53,6 @@ public class Door : MonoBehaviour
             DoorInside.Collider2D.enabled = true;
             IsLogin = false;
         }
-
-        if (DoorInside.IsLogin)
-        {
-            Collider2D.enabled = true;
-            DoorInside.IsLogin = false;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
