@@ -5,7 +5,7 @@ public class Door : MonoBehaviour
 {
     #region Constants
 
-    public const string TAG_CHARCTER = "Character";
+    public const string mTAG_CHARCTER = "Character";
 
     #endregion
 
@@ -13,20 +13,19 @@ public class Door : MonoBehaviour
 
     public Room Room;
     public DoorInside DoorInside;
+    public Animator DoorAnimator;
 
-    private Collider2D mLeftDoorCollider;
-    private Collider2D mRightDoorCollider;
+    public Collider2D LeftDoorCollider;
+    public Collider2D RightDoorCollider;
     public Collider2D Collider2D;
 
     public State DoorState;
 
-    public GameObject RightDoor;
-    public GameObject LeftDoor;
     public GameObject DoorLock;
 
     public bool IsLock;
-
-    public Animator DoorAnimator;
+    public bool IsRoomLogin;
+    public bool IsLogin;
 
     #endregion
 
@@ -47,14 +46,33 @@ public class Door : MonoBehaviour
         Initialize();
     }
 
+    private void Update()
+    {
+        if (IsLogin)
+        {
+            DoorInside.Collider2D.enabled = true;
+            IsLogin = false;
+        }
+
+        if (DoorInside.IsLogin)
+        {
+            Collider2D.enabled = true;
+            DoorInside.IsLogin = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(TAG_CHARCTER))
+        if (collision.gameObject.CompareTag(mTAG_CHARCTER))
         {
+            IsRoomLogin = true;
+
             if (DoorState == State.Close && IsLock == false)
             {
+                IsLogin = true;
                 ChangeDoorState(State.Open);
                 Collider2D.enabled = false;
+                DoorInside.Collider2D.enabled = true;
             }
             else if (DoorState == State.Open && Room.EnemyCount > 0)
             {
@@ -64,8 +82,8 @@ public class Door : MonoBehaviour
 
                 for (int i = 0; i < Room.Doors.Count; i++)
                 {
-                    Room.Doors[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
-                    Room.Doors[i].GetComponentInChildren<Door>().IsLock = true;
+                    Room.Doors[i].ChangeDoorState(Door.State.Close);
+                    Room.Doors[i].IsLock = true;
                 }
             }
         }
@@ -77,10 +95,7 @@ public class Door : MonoBehaviour
 
     private void Initialize()
     {
-        mRightDoorCollider = RightDoor.GetComponent<Collider2D>();
-        mLeftDoorCollider = LeftDoor.GetComponent<Collider2D>();
         DoorState = State.Close;
-        StartCoroutine(RoomDoorsLockOpen());
     }
 
     #endregion
@@ -103,28 +118,12 @@ public class Door : MonoBehaviour
         DoorAnimator.SetBool("IsOpen", !isbool);
         float time = state == State.Open ? 0.9f : 0.1f;
         yield return new WaitForSeconds(time);
-        mLeftDoorCollider.enabled = isbool;
-        mRightDoorCollider.enabled = isbool;
+        LeftDoorCollider.enabled = isbool;
+        RightDoorCollider.enabled = isbool;
         DoorLock.SetActive(isbool);
         DoorState = state;
-    }
-
-    IEnumerator RoomDoorsLockOpen()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.5f);
-
-            if (Room.EnemyCount == 0)
-            {
-                for (int i = 0; i < Room.Doors.Count; i++)
-                {
-                    Room.Doors[i].GetComponentInChildren<Door>().IsLock = false;
-                    Room.Doors[i].GetComponentInChildren<Door>().DoorLock.SetActive(false);
-                }
-                StopCoroutine(RoomDoorsLockOpen());
-            }
-        }
+        LeftDoorCollider.gameObject.SetActive(isbool);
+        RightDoorCollider.gameObject.SetActive(isbool);
     }
 
     #endregion

@@ -137,17 +137,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mUIManager: {fileID: 0}
-  character: {fileID: 0}
-  weapon: {fileID: 11400000, guid: 05ad6f60f9df11e43a0b7b62adf1b47c, type: 2}
-  BarrelList:
+  Character: {fileID: 0}
+  Weapon: {fileID: 11400000, guid: 05ad6f60f9df11e43a0b7b62adf1b47c, type: 2}
+  Barrels:
   - {fileID: 1161348355316454}
   - {fileID: 1885450695893104}
   AmmoPrefabObject: {fileID: 1278051057937664, guid: 496f9b10625e6cc469ae2ef7ed69b13d,
     type: 2}
-  clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
+  ClipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
   SpareBulletCount: 120
   CurrentAmmo: 0
-  isWeaponReload: 0
+  IsWeaponReload: 0
   IsCanShoot: 0
   Range: 0
 --- !u!212 &212138993205904838

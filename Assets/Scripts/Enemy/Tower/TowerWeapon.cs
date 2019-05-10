@@ -4,31 +4,31 @@ public class TowerWeapon : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
     #region Fields
 
-    private GameManager GameManager;
+    private GameManager mGameManager;
 
-    public LineRenderer lineRenderer;
-    public TowerEnemy towerEnemy;
-    public Tower tower;
+    public LineRenderer LineRenderer;
+    public TowerEnemy TowerEnemy;
+    public Tower Tower;
 
-    public Transform shotPrefabTransform;
+    public Transform ShotPrefabTransform;
     public Transform OriginTransform;
 
-    public GameObject RoomObject;
+    public Room Room;
     public GameObject TowerObject;
     public GameObject BarrelObject;
 
-    public float shootCoolDown;
+    public float ShootCoolDown;
 
     public int CurrentHealth;
     public int CurrentDefence;
 
-    public bool isLinerenderer;
+    public bool IsLinerenderer;
 
     #endregion
 
@@ -38,7 +38,7 @@ public class TowerWeapon : MonoBehaviour
     {
         get
         {
-            return shootCoolDown <= 0f;
+            return ShootCoolDown <= 0f;
         }
     }
 
@@ -56,17 +56,21 @@ public class TowerWeapon : MonoBehaviour
         TowerMoving();
         TowerLinerender();
 
-        if (shootCoolDown > 0)
+        if (ShootCoolDown > 0)
         {
-            shootCoolDown -= Time.deltaTime;
+            ShootCoolDown -= Time.deltaTime;
         }
 
         if (CurrentHealth == 0)
         {
-            RoomObject.GetComponent<Room>().EnemyCount--;
-            towerEnemy.inside = false;
+            TowerEnemy.Inside = false;
             Destroy(gameObject);
-            GameManager.Character.DeadEnemyCount++;
+            mGameManager.Character.DeadEnemyCount++;
+
+            if (Room != null)
+            {
+                Room.EnemyCount--;
+            }
         }
     }
 
@@ -76,19 +80,19 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
-        shootCoolDown = 0f;
-        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        CurrentHealth = tower.Health;
-        CurrentDefence = tower.Defence;
+        ShootCoolDown = 0f;
+        mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        CurrentHealth = Tower.Health;
+        CurrentDefence = Tower.Defence;
     }
 
     private void TowerMoving()
     {
-        if (GameManager.Character.isDead == false && towerEnemy.inside && lineRenderer == null)
+        if (mGameManager.Character.isDead == false && TowerEnemy.Inside && LineRenderer == null)
         {
             Moving();
         }
-        else if (GameManager.Character.isDead == false && lineRenderer != null)
+        else if (mGameManager.Character.isDead == false && LineRenderer != null)
         {
             Moving();
         }
@@ -96,17 +100,17 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerLinerender()
     {
-        if (GameManager.Character.isDead == false && isLinerenderer == true && towerEnemy.inside)
+        if (mGameManager.Character.isDead == false && IsLinerenderer == true && TowerEnemy.Inside)
         {
-            lineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-            lineRenderer.SetPosition(1, new Vector3(GameManager.Character.transform.position.x, GameManager.Character.transform.position.y, 1));
+            LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
+            LineRenderer.SetPosition(1, new Vector3(mGameManager.Character.transform.position.x, mGameManager.Character.transform.position.y, 1));
         }
         else
         {
-            if (isLinerenderer == true)
+            if (IsLinerenderer == true)
             {
-                lineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-                lineRenderer.SetPosition(1, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
+                LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
+                LineRenderer.SetPosition(1, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
             }
         }
     }
@@ -114,7 +118,7 @@ public class TowerWeapon : MonoBehaviour
     private void Moving()
     {
         Transform shootTransformObject = TowerObject.transform;
-        shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
+        shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
 
         if (TowerObject.transform.rotation.z != shootTransformObject.rotation.z)
         {
@@ -134,16 +138,16 @@ public class TowerWeapon : MonoBehaviour
     {
         if (CanAttack)
         {
-            shootCoolDown = tower.AttackTime;
-            var shootTransformObject = Instantiate(shotPrefabTransform) as Transform;
+            ShootCoolDown = this.Tower.AttackTime;
+            var shootTransformObject = Instantiate(ShotPrefabTransform) as Transform;
             shootTransformObject.position = BarrelObject.transform.position;
-            shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
+            shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
         }
     }
 
-    public void RoomEqual(GameObject gameObject)
+    public void RoomEqual(Room room)
     {
-        RoomObject = gameObject;
+        Room = room;
     }
 
     public void HealtDisCount(int power)

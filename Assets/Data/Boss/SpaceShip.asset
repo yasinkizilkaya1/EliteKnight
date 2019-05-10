@@ -13,7 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: SpaceShip
-  Health: 500
-  MaxHealth: 500
-  AttackTime: 5
-  shootcoolDown: 0.5
+  Health: 75
+  MaxHealth: 75
+  WaitTime: 2.5
+  AttackTime: 4
+  ShootcoolDowns:
+  - 0.5
+  - 4
+  - 4
+  ShootAngle: 60

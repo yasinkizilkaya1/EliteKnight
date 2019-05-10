@@ -5,16 +5,16 @@ using UnityEngine;
 #if UNITY_EDITOR
 public class EnemyDesignerWindow : EditorWindow
 {
-    private Texture2D headerSectionTexture;
-    private Texture2D warriorSectionTexture;
+    private Texture2D mHeaderSectionTexture;
+    private Texture2D mWarriorSectionTexture;
 
-    private Color headerSectionColor = new Color(13f / 255f, 32f / 255f, 44f / 255f, 1f);
+    private Color mHeaderSectionColor = new Color(13f / 255f, 32f / 255f, 44f / 255f, 1f);
 
-    private Rect headerSection;
-    private Rect warriorSection;
+    private Rect mHeaderSection;
+    private Rect mWarriorSection;
 
-    private GUISkin skin;
-    private GUISkin skin2;
+    private GUISkin mSkin;
+    private GUISkin mSkin2;
 
     public static CharacterData asset;
     public static CharacterData CharacterData;
@@ -39,8 +39,8 @@ public class EnemyDesignerWindow : EditorWindow
         ID = TotalMapCount;
         InitTextures();
         InitData();
-        skin = Resources.Load<GUISkin>("GUISkin/EnemyDesignerSkin");
-        skin2 = Resources.Load<GUISkin>("GUISkin/EnemyDesignerSkin2");
+        mSkin = Resources.Load<GUISkin>("GUISkin/EnemyDesignerSkin");
+        mSkin2 = Resources.Load<GUISkin>("GUISkin/EnemyDesignerSkin2");
     }
 
     public static void InitData()
@@ -50,11 +50,11 @@ public class EnemyDesignerWindow : EditorWindow
 
     private void InitTextures()
     {
-        headerSectionTexture = new Texture2D(1, 1);
-        headerSectionTexture.SetPixel(0, 0, headerSectionColor);
-        headerSectionTexture.Apply();
+        mHeaderSectionTexture = new Texture2D(1, 1);
+        mHeaderSectionTexture.SetPixel(0, 0, mHeaderSectionColor);
+        mHeaderSectionTexture.Apply();
 
-        warriorSectionTexture = Resources.Load<Texture2D>("Icons/backgound_warrior_blue");
+        mWarriorSectionTexture = Resources.Load<Texture2D>("Icons/backgound_warrior_blue");
     }
 
     private void OnGUI()
@@ -66,24 +66,24 @@ public class EnemyDesignerWindow : EditorWindow
 
     private void DrawLayouts()
     {
-        headerSection.x = 0;
-        headerSection.y = 0;
-        headerSection.width = Screen.width;
-        headerSection.height = 50;
+        mHeaderSection.x = 0;
+        mHeaderSection.y = 0;
+        mHeaderSection.width = Screen.width;
+        mHeaderSection.height = 50;
 
-        warriorSection.x = 0;
-        warriorSection.y = 50;
-        warriorSection.width = Screen.width;
-        warriorSection.height = Screen.width - 50;
+        mWarriorSection.x = 0;
+        mWarriorSection.y = 50;
+        mWarriorSection.width = Screen.width;
+        mWarriorSection.height = Screen.width - 50;
 
-        GUI.DrawTexture(headerSection, headerSectionTexture);
-        GUI.DrawTexture(warriorSection, warriorSectionTexture);
+        GUI.DrawTexture(mHeaderSection, mHeaderSectionTexture);
+        GUI.DrawTexture(mWarriorSection, mWarriorSectionTexture);
     }
 
     private void DrawHeader()
     {
-        GUILayout.BeginArea(headerSection);
-        GUILayout.Label("Enemy Designer", skin.GetStyle("Header1"));
+        GUILayout.BeginArea(mHeaderSection);
+        GUILayout.Label("Enemy Designer", mSkin.GetStyle("Header1"));
         GUILayout.EndArea();
     }
 
@@ -91,37 +91,37 @@ public class EnemyDesignerWindow : EditorWindow
     {
         asset = ScriptableObject.CreateInstance<CharacterData>();
 
-        GUILayout.BeginArea(warriorSection);
+        GUILayout.BeginArea(mWarriorSection);
 
-        GUILayout.Label("       ", skin.GetStyle("Header1"));
+        GUILayout.Label("       ", mSkin.GetStyle("Header1"));
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Name", skin2.GetStyle("Header2"));
+        GUILayout.Label("Name", mSkin2.GetStyle("Header2"));
         charData.Name = EditorGUILayout.TextField(charData.Name);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Health", skin2.GetStyle("Header2"));
+        GUILayout.Label("Health", mSkin2.GetStyle("Header2"));
         charData.Health = EditorGUILayout.IntField(charData.Health);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Energy", skin2.GetStyle("Header2"));
+        GUILayout.Label("Energy", mSkin2.GetStyle("Header2"));
         charData.Energy = EditorGUILayout.IntField(charData.Energy);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Power", skin2.GetStyle("Header2"));
+        GUILayout.Label("Power", mSkin2.GetStyle("Header2"));
         charData.Power = EditorGUILayout.IntField(charData.Power);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Defance", skin2.GetStyle("Header2"));
+        GUILayout.Label("Defance", mSkin2.GetStyle("Header2"));
         charData.Defence = EditorGUILayout.IntField(charData.Defence);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Speed", skin2.GetStyle("Header2"));
+        GUILayout.Label("Speed", mSkin2.GetStyle("Header2"));
         charData.Speed = EditorGUILayout.IntField(charData.Speed);
         EditorGUILayout.EndHorizontal();
 

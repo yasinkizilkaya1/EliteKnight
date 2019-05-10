@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: BossBullet
   IsFollow: 0
   IsExplode: 0
+  IsEnemyCreate: 0
   Power: 1
-  Speed: 10
+  Speed: 12

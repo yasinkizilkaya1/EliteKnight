@@ -5,10 +5,11 @@ public class BossBullet : MonoBehaviour
 {
     #region Contants
 
-    private const string TAG_BULLET = "bullet";
-    private const string TAG_CHARACTER = "Character";
-    private const string TAG_CHEST = "chest";
-    private const string TAG_WALL = "wall";
+    private const string mTAG_BULLET = "bullet";
+    private const string mTAG_CHARACTER = "Character";
+    private const string mTAG_CHEST = "chest";
+    private const string mTAG_WALL = "wall";
+    private const string mTAG_ENEMY = "Enemy";
 
     #endregion
 
@@ -17,26 +18,41 @@ public class BossBullet : MonoBehaviour
     public GameManager GameManager;
 
     public List<GameObject> Enemys;
+    public SpaceShip SpaceShip;
 
     public bullet Bullet;
     public int Power;
     public int Speed;
     public float DropTime;
+    public bool IsEnemyCreate;
 
     #endregion
 
     #region Unity Methods
 
-    private void Start()
+    private void OnEnable()
     {
         Initialize();
     }
 
     private void Update()
     {
+        if (SpaceShip == null)
+        {
+            this.gameObject.SetActive(false);
+        }
+
         if (Bullet.IsEnemyCreate)
         {
-            EnemyCreate(Enemys[RandomValueEqual(0, Enemys.Count - 1)]);
+            if (DropTime < 0f)
+            {
+                EnemyCreate(Enemys[RandomValueEqual(0, Enemys.Count - 1)]);
+            }
+            else
+            {
+                DropTime -= Time.deltaTime;
+                transform.Translate(Vector2.right * -DropTime * Time.deltaTime);
+            }
         }
         else
         {
@@ -49,26 +65,32 @@ public class BossBullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider2D)
+    private void OnTriggerStay2D(Collider2D collider2D)
     {
-        //Debug.Log(collider2D.tag);
-
-        if (collider2D.CompareTag(TAG_WALL))
+        if (collider2D.CompareTag(mTAG_WALL) || collider2D.CompareTag(mTAG_CHEST))
         {
-            this.gameObject.SetActive(false);
+            if (IsEnemyCreate)
+            {
+                transform.Rotate(0f, 0f, 10f);
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+            }
         }
-        else if (collider2D.CompareTag(TAG_CHEST))
-        {
-            this.gameObject.SetActive(false);
-        }
-        else if (collider2D.CompareTag(TAG_CHARACTER))
+        else if (collider2D.CompareTag(mTAG_CHARACTER) && IsEnemyCreate == false)
         {
             GameManager.Character.HealthDisCount(Power);
             this.gameObject.SetActive(false);
         }
-        else if (collider2D.CompareTag(TAG_BULLET))
+        else if (collider2D.CompareTag(mTAG_BULLET) && Bullet.IsExplode == true)
         {
             this.gameObject.SetActive(false);
+        }
+        else if (collider2D.CompareTag(mTAG_ENEMY) && IsEnemyCreate)
+        {
+            transform.Rotate(0f, 0f, 10f);
+            DropTime = 6;
         }
     }
 
@@ -78,28 +100,30 @@ public class BossBullet : MonoBehaviour
 
     private void Initialize()
     {
+        IsEnemyCreate = Bullet.IsEnemyCreate;
         Power = Bullet.Power;
         Speed = Bullet.Speed;
-        DropTime = RandomValueEqual(8, 16);
+        DropTime = RandomValueEqual(6, 10);
     }
 
     private void Aim(GameObject TurnedObject)
     {
-        TurnedObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, TurnedObject.transform);
+        if (GameManager.Character != null)
+        {
+            TurnedObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, TurnedObject.transform);
+        }
+        else
+        {
+            TurnedObject.transform.Rotate(0, 0, 5);
+        }
     }
 
     private void EnemyCreate(GameObject Enemy)
     {
-        if (DropTime > 0)
-        {
-            DropTime -= Time.deltaTime;
-            transform.Translate(Vector2.right * -DropTime * Time.deltaTime);
-        }
-        else
-        {
-            Instantiate(Enemy);
-            Bullet.IsEnemyCreate = false;
-        }
+        GameObject enemy = Instantiate(Enemy, transform.position, transform.rotation);
+        SpaceShip.Enemys.Add(enemy);
+        this.gameObject.SetActive(false);
+        IsEnemyCreate = false;
     }
 
     private int RandomValueEqual(int minValue, int maxValue)

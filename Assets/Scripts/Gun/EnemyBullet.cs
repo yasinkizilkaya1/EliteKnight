@@ -5,11 +5,11 @@ public class EnemyBullet : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_CHARACTER = "Character";
-    private const string TAG_WALL = "wall";
-    private const string TAG_CHEST = "chest";
-    private const int VELOCIDADE = 10;
+    private const string mTAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_CHARACTER = "Character";
+    private const string mTAG_WALL = "wall";
+    private const string mTAG_CHEST = "chest";
+    private const int mVELOCIDADE = 10;
 
     #endregion
 
@@ -17,12 +17,12 @@ public class EnemyBullet : MonoBehaviour
 
     public Transform TargetTransform;
 
-    public bool isEffectTowerBullet;
-    public bool isBullet;
+    public bool IsEffectTowerBullet;
+    public bool IsBullet;
 
-    private GameManager GameManager;
+    private GameManager mGameManager;
 
-    public GameObject bulletObject;
+    public GameObject BulletObject;
     public List<GameObject> Barrels;
     public GameObject StandartTowerBulletObject;
 
@@ -41,61 +41,53 @@ public class EnemyBullet : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Character.isDead == false)
+        if (mGameManager.Character.isDead == false)
         {
-            if (isEffectTowerBullet)
+            if (IsEffectTowerBullet)
             {
                 Destroy(gameObject, 3);
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
+                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
             }
-            else if (isBullet && GameManager.Character.isDead == false)
+            else if (IsBullet && mGameManager.Character.isDead == false)
             {
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
+                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
             }
-            else if (isEffectTowerBullet == false && GameManager.Character.isDead == false)
+            else if (IsEffectTowerBullet == false && mGameManager.Character.isDead == false)
             {
-                transform.Translate(Vector2.right * -VELOCIDADE * Time.deltaTime);
+                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
                 StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
                 Destroy(gameObject, 1.5f);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.CompareTag(TAG_CHEST))
+        if (collider.CompareTag(mTAG_CHEST) || collider.CompareTag(mTAG_WALL))
         {
-            Destroy(gameObject);
-        }
-        else if (collider.CompareTag(TAG_WALL))
-        {
-            if (isEffectTowerBullet)
+            if (IsEffectTowerBullet)
             {
                 for (int i = 0; i < Barrels.Count; i++)
                 {
-                   GameObject bullet= Instantiate(bulletObject, Barrels[i].transform.position, Quaternion.identity);
-                    bullet.transform.rotation = Barrels[i].transform.rotation;
+                    GameObject bullet = Instantiate(BulletObject, Barrels[i].transform.position, Barrels[i].transform.rotation);
                 }
-                Destroy(gameObject);
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+
+            Destroy(gameObject);
         }
-        else if (collider.CompareTag(TAG_CHARACTER))
+        else if (collider.CompareTag(mTAG_CHARACTER))
         {
-            if (isEffectTowerBullet)
+            if (IsEffectTowerBullet)
             {
-                GameManager.Character.HealthDisCount(EffectTowerBulletPower);
+                mGameManager.Character.HealthDisCount(EffectTowerBulletPower);
             }
-            else if (isBullet)
+            else if (IsBullet)
             {
-                GameManager.Character.HealthDisCount(NormalBulletPower);
+                mGameManager.Character.HealthDisCount(NormalBulletPower);
             }
             else
             {
-                GameManager.Character.HealthDisCount(FollowBulletPower);
+                mGameManager.Character.HealthDisCount(FollowBulletPower);
             }
             Destroy(gameObject);
         }
@@ -107,8 +99,8 @@ public class EnemyBullet : MonoBehaviour
 
     private void Initialize()
     {
-        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        TargetTransform = GameManager.Character.transform;
+        mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        TargetTransform = mGameManager.Character.transform;
     }
 
     #endregion

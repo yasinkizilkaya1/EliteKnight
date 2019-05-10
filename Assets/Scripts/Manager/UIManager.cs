@@ -8,8 +8,8 @@ public class UIManager : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_SUPPORT = "Support";
-    private const int MAX_VALUE = 100;
+    private const string mTAG_SUPPORT = "Support";
+    private const int mMAX_VALUE = 100;
 
     #endregion
 
@@ -28,8 +28,9 @@ public class UIManager : MonoBehaviour
 
     public Text LoadingText;
     public GameManager GameManager;
-    public AmmoBar ammoBar;
-    public Slider slider;
+    public AmmoBar AmmoBar;
+    public Slider Slider;
+    public Animator AmmoBarAnimator;
 
     public List<Toggle> Toggles;
     public List<Text> ButtonTexts;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
     public Slider HealthBarSlider;
     public Slider ArmorBarSlider;
     public Slider EnergyBarSlider;
+    public Slider BossHealthBarSlider;
 
     public Map Map;
 
@@ -56,7 +58,7 @@ public class UIManager : MonoBehaviour
     private void Initialize()
     {
         StartCoroutine(Loading());
-        slider.maxValue = MAX_VALUE;
+        Slider.maxValue = mMAX_VALUE;
     }
 
     #endregion
@@ -69,18 +71,18 @@ public class UIManager : MonoBehaviour
 
         while (true)
         {
-            if (slider.value <= MAX_VALUE)
+            if (Slider.value <= mMAX_VALUE)
             {
                 yield return new WaitForSeconds(0.01f);
-                slider.value++;
+                Slider.value++;
 
-                if (slider.value == MAX_VALUE)
+                if (Slider.value == mMAX_VALUE)
                 {
                     GunSlotObject.SetActive(true);
                     LoadingPanelObject.SetActive(false);
                     PlayerItemPanelObject.SetActive(true);
 
-                    if (GameManager.CharacterData.Name == TAG_SUPPORT)
+                    if (GameManager.CharacterData.Name == mTAG_SUPPORT)
                     {
                         AutoReloadObject.SetActive(false);
                         ClipObject.SetActive(false);
@@ -93,8 +95,8 @@ public class UIManager : MonoBehaviour
 
                     if (GameManager.CharacterData != null && spawn == false)
                     {
-                        Map.CharacterSpawn();
                         StartCoroutine(Bars());
+                        Map.CharacterSpawn();
                         spawn = true;
                         StopCoroutine(Loading());
                     }

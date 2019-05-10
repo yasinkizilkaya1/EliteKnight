@@ -15,11 +15,10 @@ MonoBehaviour:
   Name: Shotgun
   Icon: {fileID: 21300014, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
-  UseObject: {fileID: 1160372663281466, guid: 10ef91f99ac71a34b92adccf1213c0bf, type: 2}
-  DropObject: {fileID: 1160372663281466, guid: cf2510b605f7277418c91e2dccf7e6b6, type: 2}
+  MaxStackSize: 0
   IsAttak: 1
   Power: 1
   ClipCapacity: 8
   TotalBullet: 220
-  Range: 0.6
+  Range: 0.8
   ReloadTime: 2.8

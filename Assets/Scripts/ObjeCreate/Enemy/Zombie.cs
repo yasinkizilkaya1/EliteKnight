@@ -5,4 +5,5 @@ public class Zombie : DetriMentalEntity
 {
     public float AttackRange;
     public float ShootingRate;
+    public float RotationSpeed;
 }

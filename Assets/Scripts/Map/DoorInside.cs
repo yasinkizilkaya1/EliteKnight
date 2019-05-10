@@ -2,16 +2,12 @@
 
 public class DoorInside : MonoBehaviour
 {
-    #region Constants
-
-    private const string PLAYER_TAG = "Character";
-
-    #endregion
-
     #region Field
 
-    public Door door;
+    public Door Door;
     public Collider2D Collider2D;
+
+    public bool IsLogin;
 
     #endregion
 
@@ -19,23 +15,28 @@ public class DoorInside : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(Door.TAG_CHARCTER))
+        if (collider.gameObject.CompareTag(Door.mTAG_CHARCTER))
         {
-            if (door.DoorState == Door.State.Close && door.IsLock == false)
+            Door.IsRoomLogin = true;
+
+            if (Door.DoorState == Door.State.Close && Door.IsLock == false)
             {
-                door.ChangeDoorState(Door.State.Open);
+                IsLogin=true;
+                Door.ChangeDoorState(Door.State.Open);
                 Collider2D.enabled = false;
+                Door.Collider2D.enabled = true;
             }
-            else if (door.DoorState == Door.State.Open && door.Room.EnemyCount > 0)
+            else if (Door.DoorState == Door.State.Open && Door.Room.EnemyCount > 0 )
             {
-                for (int i = 0; i < door.Room.Doors.Count; i++)
-                {
-                    door.Room.Doors[i].GetComponentInChildren<Door>().ChangeDoorState(Door.State.Close);
-                    door.Room.Doors[i].GetComponentInChildren<Door>().IsLock = true;
-                }
                 Collider2D.enabled = true;
-                door.Collider2D.enabled = false;
-                door.Room.IsEnemyCreate = true;
+                Door.Collider2D.enabled = true;
+                Door.Room.IsEnemyCreate = true;
+
+                for (int i = 0; i < Door.Room.Doors.Count; i++)
+                {
+                    Door.Room.Doors[i].ChangeDoorState(Door.State.Close);
+                    Door.Room.Doors[i].IsLock = true;
+                }
             }
         }
     }

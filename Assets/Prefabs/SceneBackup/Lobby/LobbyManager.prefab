@@ -52,4 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardContent: {fileID: 0}
-  CharacterData: {fileID: 11400000, guid: 8ce6525d2085ce54c83cba386437a563, type: 2}
+  CharacterData: {fileID: 11400000, guid: cbfa5de8b83eb1d49b06466bf79acf25, type: 2}

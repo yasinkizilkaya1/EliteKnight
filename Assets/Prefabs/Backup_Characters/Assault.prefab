@@ -609,16 +609,16 @@ MonoBehaviour:
   Energy: 0
   MaxDefance: 0
   DeadEnemyCount: 0
+  SelectionWeaponId: 0
   IsNewGun: 0
   isDead: 0
-  isTire: 0
+  IsTire: 0
   EnergyReload: 0
   shooting: 0
   BodyObject: {fileID: 1255463042874016}
   RightWeaponObject: {fileID: 1233594230424754}
   Guns:
   - {fileID: 114208238460994302}
-  SelectionWeaponId: 0
 --- !u!114 &114208238460994302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -631,16 +631,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mUIManager: {fileID: 0}
-  character: {fileID: 114044195529235078}
-  weapon: {fileID: 11400000, guid: bd540ca409180f9499f554539e54f4c9, type: 2}
+  Character: {fileID: 114044195529235078}
+  Weapon: {fileID: 11400000, guid: bd540ca409180f9499f554539e54f4c9, type: 2}
   Barrels:
   - {fileID: 1261225848421174}
   AmmoPrefabObject: {fileID: 1432971038763504, guid: a9f84ca455cfa9443a59a2abe80e0b27,
     type: 2}
-  clipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
+  ClipObject: {fileID: 1823967030371190, guid: ecc1b17e8ce32a647a856bec419c9b18, type: 2}
   SpareBulletCount: 0
   CurrentAmmo: 0
-  isWeaponReload: 0
+  IsWeaponReload: 0
   IsCanShoot: 0
   Range: 0
 --- !u!212 &212101566219055334

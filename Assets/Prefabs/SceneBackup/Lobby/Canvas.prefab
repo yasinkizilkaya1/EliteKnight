@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 222889003388243052}
   - component: {fileID: 114751389408199056}
   m_Layer: 0
-  m_Name: Text
+  m_Name: Text_ChracterSec
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,11 +237,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefabObject: {fileID: 1675761733805182, guid: b9f832e6c5539704cbf7bfa863351097,
     type: 2}
-  CharacterList:
-  - {fileID: 11400000, guid: 2763a8a14d680d041a23fd852248b668, type: 2}
-  - {fileID: 11400000, guid: 0b56ca1f610790b43b16e3c3a319a949, type: 2}
+  Characters:
+  - {fileID: 11400000, guid: d73278a8cc25297498f408f3e1518c19, type: 2}
+  - {fileID: 11400000, guid: 4803f577f19d875408c00e62466dc6dd, type: 2}
   - {fileID: 11400000, guid: b529bb9a602019849ad424ea8011e6b1, type: 2}
-  ToggleList: []
+  Toggles: []
   ToggleGroup: {fileID: 114628699971193148}
 --- !u!114 &114386038981917594
 MonoBehaviour:
@@ -377,18 +377,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 79fa6526b1a389e43be01f474d05831f, type: 3}
-    m_FontSize: 50
+    m_FontSize: 0
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Bir  Karakter  Kart\u0131  Sec"
+  m_Text: Bir  Karakter  Sec
 --- !u!114 &114764984362419950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -616,8 +616,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 493, y: 201}
+  m_AnchoredPosition: {x: 5, y: 1.9}
+  m_SizeDelta: {x: 622.8, y: 269.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224341809454645178
 RectTransform:
@@ -655,8 +655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -221}
-  m_SizeDelta: {x: 88.81006, y: 30}
+  m_AnchoredPosition: {x: 0, y: -211}
+  m_SizeDelta: {x: 136.8, y: 44.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224656085218238552
 RectTransform:
@@ -674,7 +674,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224714446026094260
 RectTransform:
@@ -691,10 +691,10 @@ RectTransform:
   m_Father: {fileID: 224341809454645178}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0082769, y: -0.5}
-  m_SizeDelta: {x: 1205.3, y: 679}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224861049290081216
 RectTransform:
@@ -712,8 +712,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 594.5, y: 247.8}
+  m_AnchoredPosition: {x: 0.0000016689, y: -17}
+  m_SizeDelta: {x: 594, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224996769999942114
 RectTransform:
@@ -730,6 +730,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 180}
-  m_SizeDelta: {x: 600, y: 70}
+  m_AnchoredPosition: {x: 2.6, y: 196.3}
+  m_SizeDelta: {x: 573.4, y: 54.3}
   m_Pivot: {x: 0.5, y: 0.5}

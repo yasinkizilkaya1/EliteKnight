@@ -5,18 +5,18 @@ public class TowerEnemy : MonoBehaviour
 {
     #region Constant
 
-    private const string TAG_TARGET = "Character";
-    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_TARGET = "Character";
+    private const string mTAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
     #region Fields
 
-    public TowerWeapon towerWeapon;
+    public TowerWeapon TowerWeapon;
     public GameManager GameManager;
 
-    public bool inside;
-    public bool isStandartTower;
+    public bool Inside;
+    public bool IsStandartTower;
 
     public int SlowPower;
 
@@ -26,7 +26,7 @@ public class TowerEnemy : MonoBehaviour
 
     private void Init()
     {
-        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
     }
 
     #endregion
@@ -40,16 +40,16 @@ public class TowerEnemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(TAG_TARGET))
+        if (collision.gameObject.CompareTag(mTAG_TARGET))
         {
-            inside = true;
+            Inside = true;
 
-            if (towerWeapon.isLinerenderer)
+            if (TowerWeapon.IsLinerenderer)
             {
-                GameManager.Character.SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
+                GameManager.Character.SlowDown(Inside, SlowPower, TowerWeapon.Tower.AttackTime);
             }
 
-            if (isStandartTower && towerWeapon.CanAttack)
+            if (IsStandartTower && TowerWeapon.CanAttack)
             {
                 StartCoroutine(Fire());
             }
@@ -58,10 +58,10 @@ public class TowerEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.gameObject.CompareTag(TAG_TARGET))
+        if (col.gameObject.gameObject.CompareTag(mTAG_TARGET))
         {
-            inside = false;
-            GameManager.Character.SlowDown(inside, SlowPower, towerWeapon.tower.AttackTime);
+            Inside = false;
+            GameManager.Character.SlowDown(Inside, SlowPower, TowerWeapon.Tower.AttackTime);
             StopAllCoroutines();
         }
     }
@@ -76,7 +76,7 @@ public class TowerEnemy : MonoBehaviour
         {
             if (GameManager.Character.isDead == false)
             {
-                towerWeapon.Attack(true);
+                TowerWeapon.Attack(true);
                 yield return new WaitForSeconds(1f);
             }
             else

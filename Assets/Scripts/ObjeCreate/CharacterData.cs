@@ -6,12 +6,11 @@ public class CharacterData : MoveableEntity
     public int Energy;
     public int MaxEnergy;
     public int EnergyIncreaseAmmount;
-    public float EnergyReloadTime;
     public int Power;
     public int RunSpeed;
     public GameObject GameObject;
 
-    public CharacterData(int id,string name,int health,int maxhealth,int speed,int defence,int energy,int maxenergy,int energyIncreaseAmmount,float energyReloadTime,int power,int runspeed)
+    public CharacterData(int id,string name,int health,int maxhealth,int speed,int defence,int energy,int maxenergy,int energyIncreaseAmmount,int power,int runspeed)
     {
         Id = id;
         Name = name;
@@ -22,7 +21,6 @@ public class CharacterData : MoveableEntity
         Energy = energy;
         MaxEnergy = maxhealth;
         EnergyIncreaseAmmount = energyIncreaseAmmount;
-        EnergyReloadTime = energyReloadTime;
         Power = power;
         RunSpeed = runspeed;
     }

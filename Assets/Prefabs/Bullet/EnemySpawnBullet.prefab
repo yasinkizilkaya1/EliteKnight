@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907498861755362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.128678, y: 0.84908104, z: -0.46258923}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4027979065652714}
@@ -101,12 +101,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: d9e487427f045bb408404f0815ae27be, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.00000011920929}
+  m_Offset: {x: 0, y: -0.0005493164}
   serializedVersion: 2
-  m_Radius: 0.14283133
+  m_Radius: 0.2312622
 --- !u!114 &114630580152354044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,10 +122,15 @@ MonoBehaviour:
   Enemys:
   - {fileID: 1689897180856074, guid: 78becc8d44161ee48ae293b884307db3, type: 2}
   - {fileID: 1519125531596516, guid: ec43ebbf348fb27499a05eda47448a58, type: 2}
+  - {fileID: 1230982751642756, guid: 2eade1b923d7f764181d49060a39b351, type: 2}
+  - {fileID: 1455966353729056, guid: 6d41544c894f25447a424f991c79baf8, type: 2}
+  - {fileID: 1184731335956724, guid: 0e76d0a6c5147f74091ce32a19956917, type: 2}
+  SpaceShip: {fileID: 0}
   Bullet: {fileID: 11400000, guid: f70d169590402634fb664794b11abdd3, type: 2}
   Power: 0
   Speed: 0
   DropTime: 0
+  IsEnemyCreate: 0
 --- !u!212 &212833578330306846
 SpriteRenderer:
   m_ObjectHideFlags: 1

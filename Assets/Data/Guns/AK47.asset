@@ -15,8 +15,7 @@ MonoBehaviour:
   Name: Ak47
   Icon: {fileID: 21300012, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
-  UseObject: {fileID: 1411510944606112, guid: 3597263db4c72c14983886924169448b, type: 2}
-  DropObject: {fileID: 1411510944606112, guid: a86c9b7e8582bf748baa070c09b0c5fc, type: 2}
+  MaxStackSize: 0
   IsAttak: 1
   Power: 1
   ClipCapacity: 10

@@ -36,12 +36,13 @@ public class GameManager : MonoBehaviour
     public Inventory Inventory;
     public Map Map;
 
-    public bool isPause;
-    public bool isPlayerDead;
+    public bool IsPause;
+    public bool IsPlayerDead;
+    public bool IsBossSpawn;
     private bool mIsKeyChange;
     public bool IsUpdateChests;
 
-    public KeySettings KeySettings;
+    public KeySetting KeySetting;
     public List<string> keycaps;
 
     private Toggle mCurrentSelectedToggle;
@@ -74,21 +75,26 @@ public class GameManager : MonoBehaviour
             KeysChange();
         }
 
-        if (Map.İsCharacterCreate == true && Character.CurrentHP == 0)
+        if (Map.IsCharacterCreate == true && Character.CurrentHP == 0)
         {
-            isPlayerDead = true;
+            IsPlayerDead = true;
             Character.isDead = true;
             Destroy(Character.gameObject);
             StartCoroutine(UIManager.GameOver());
             UIManager.HealthBarSlider.gameObject.SetActive(false);
-            Map.İsCharacterCreate = false;
+            Map.IsCharacterCreate = false;
         }
-        else if (Map.İsCharacterCreate == true)
+        else if (Map.IsCharacterCreate == true)
         {
             UIManager.HealthBarSlider.value = Character.CurrentHP;
             UIManager.ArmorBarSlider.value = Character.CurrentDefence;
             UIManager.EnergyBarSlider.value = Character.Energy;
             StartCoroutine(UIManager.SetActiveBars());
+
+            if (Character == null)
+            {
+                StartCoroutine(UIManager.GameOver());
+            }
         }
     }
 
@@ -98,6 +104,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        Chests = new List<Chest>();
         Time.timeScale = 1;
         KeysLoad();
     }
@@ -131,14 +138,13 @@ public class GameManager : MonoBehaviour
 
         if (Savingkeys == keycaps.Count - 1)
         {
-            for (int i = 0; i < KeySettings.Keys.Count; i++)
+            for (int i = 0; i < KeySetting.Keys.Count; i++)
             {
-                KeySettings.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
+                KeySetting.Keys[i].CurrentKey = (KeyCode)Enum.Parse(typeof(KeyCode), UIManager.ButtonTexts[i].text);
             }
         }
         else
         {
-            KeySettings.KeysReset();
             KeysDefaultSetting();
         }
     }
@@ -147,20 +153,20 @@ public class GameManager : MonoBehaviour
     {
         keycaps = new List<string>();
 
-        for (int i = 0; i < KeySettings.Keys.Count; i++)
+        for (int i = 0; i < KeySetting.Keys.Count; i++)
         {
-            keycaps.Add(KeySettings.Keys[i].CurrentKey.ToString());
-            UIManager.ButtonTexts[i].text = KeySettings.Keys[i].CurrentKey.ToString();
+            keycaps.Add(KeySetting.Keys[i].CurrentKey.ToString());
+            UIManager.ButtonTexts[i].text = KeySetting.Keys[i].CurrentKey.ToString();
         }
     }
 
     private void KeysDefaultSetting()
     {
-        KeySettings.KeysReset();
+        KeySetting.KeysReset();
 
-        for (int i = 0; i < KeySettings.Keys.Count; i++)
+        for (int i = 0; i < KeySetting.Keys.Count; i++)
         {
-            UIManager.ButtonTexts[i].text = KeySettings.Keys[i].CurrentKey.ToString();
+            UIManager.ButtonTexts[i].text = KeySetting.Keys[i].CurrentKey.ToString();
         }
     }
 
@@ -174,11 +180,11 @@ public class GameManager : MonoBehaviour
         {
             case GameSettings.Continue:
                 Time.timeScale = 1;
-                isPause = false;
+                IsPause = false;
                 break;
             case GameSettings.Stop:
                 Time.timeScale = 0;
-                isPause = true;
+                IsPause = true;
                 break;
             default:
                 Debug.Log("GameSetting value be on the way from");
@@ -194,7 +200,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         PauseMenuObject.SetActive(true);
-        isPause = true;
+        IsPause = true;
     }
 
     public void OnSetPlayButtonClicked()
@@ -205,7 +211,7 @@ public class GameManager : MonoBehaviour
         PanelPauseObject.SetActive(true);
         PanelClipObject.SetActive(true);
         UIManager.GunSlotObject.SetActive(true);
-        isPause = false;
+        IsPause = false;
     }
 
     public void OnSetLobyButtonClicked()
@@ -221,7 +227,7 @@ public class GameManager : MonoBehaviour
         UIManager.GunSlotObject.SetActive(false);
         PauseMenuObject.SetActive(false);
         PanelSettingObject.SetActive(true);
-        isPause = true;
+        IsPause = true;
     }
 
     public void OnSetDefaultKeysButtonClicked()

@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpaceShip : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_CHARACTER = "Character";
-    private const string TAG_ROCKET = "EnemyRocket";
-    private const string TAG_BULLET = "EnemyBullet";
-    private const string TAG_SPAWN_BULLET = "EnemySpawnBullet";
+    private const string mTAG_ROCKET = "EnemyRocket";
+    private const string mTAG_ENEMYBULLET = "EnemyBullet";
+    private const string mTAG_CHARACTER = "Character";
+    private const string mTAG_SPAWN_BULLET = "EnemySpawnBullet";
+    private const string mTAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
@@ -20,12 +22,20 @@ public class SpaceShip : MonoBehaviour
     public int CurrentHealth;
     public int MaxHealth;
     public float AttackTime;
-    private float MaxAttackTime;
-    public float shootcoolDown;
+    private float mMaxAttackTime;
+    public float ShootcoolDown;
+    public float ShootAngle;
+    private float mWaitTime;
+    private int mAttackId;
 
     public List<GameObject> Barrels;
+    public List<GameObject> Enemys;
+    public List<int> AttackIds;
 
     public GameManager GameManager;
+    public UIManager UIManager;
+    public Slider HealthSlider;
+    public Room Room;
 
     #endregion
 
@@ -35,7 +45,16 @@ public class SpaceShip : MonoBehaviour
     {
         get
         {
-            return shootcoolDown <= 0f;
+            return ShootcoolDown <= 0f;
+        }
+    }
+
+    public bool wait
+    {
+        get
+        {
+            return mWaitTime <= 0;
+
         }
     }
 
@@ -50,23 +69,26 @@ public class SpaceShip : MonoBehaviour
 
     private void Update()
     {
-        Aim(this.gameObject);
-
-        for (int i = 0; i < Barrels.Count; i++)
+        if (HealthSlider != null)
         {
-            Aim(Barrels[i]);
+            HealthSlider.value = CurrentHealth;
         }
 
-        Attack();
-
-        if (shootcoolDown > 0f)
+        if (GameManager.Character != null)
         {
-            shootcoolDown -= Time.deltaTime;
-        }
+            Aim(this.gameObject);
 
-        if (AttackTime > 0)
-        {
-            AttackTime -= Time.deltaTime;
+            Attack();
+
+            if (ShootcoolDown > 0f)
+            {
+                ShootcoolDown -= Time.deltaTime;
+            }
+
+            if (AttackTime > 0)
+            {
+                AttackTime -= Time.deltaTime;
+            }
         }
     }
 
@@ -76,10 +98,17 @@ public class SpaceShip : MonoBehaviour
 
     private void Initialize()
     {
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        UIManager = GameManager.UIManager;
+        GameManager.IsBossSpawn=true;
+        HealthSlider = UIManager.BossHealthBarSlider;
         CurrentHealth = BossData.Health;
         MaxHealth = BossData.MaxHealth;
         AttackTime = BossData.AttackTime;
-        MaxAttackTime = AttackTime;
+        mMaxAttackTime = AttackTime;
+        HealthSlider.value = CurrentHealth;
+        HealthSlider.maxValue = MaxHealth;
+        ShootAngle = BossData.ShootAngle / 2;
     }
 
     private void Aim(GameObject TurnedObject)
@@ -93,22 +122,72 @@ public class SpaceShip : MonoBehaviour
         {
             if (attack)
             {
-                for (int i = 0; i < 2; i++)
+                switch (mAttackId)
                 {
-                    ShotBullet(TAG_BULLET, Barrels[i]);
+                    case 0:
+                        Shoot(mTAG_ENEMYBULLET);
+                        ShootcoolDown = BossData.ShootcoolDowns[mAttackId];
+                        break;
+                    case 1:
+                        Shoot(mTAG_ROCKET);
+                        ShootcoolDown = BossData.ShootcoolDowns[mAttackId];
+                        break;
+                    default:
+                        foreach (GameObject barrel in Barrels)
+                        {
+                            BarrelAngleSetting(barrel);
+                            ShotBullet(mTAG_SPAWN_BULLET, barrel);
+                        }
+                        ShootcoolDown = BossData.ShootcoolDowns[mAttackId];
+                        break;
                 }
-                shootcoolDown = BossData.shootcoolDown;
             }
         }
         else
         {
-            for (int i = 3; i < 5; i++)
-            {
-                ShotBullet(TAG_ROCKET, Barrels[i]);
-            }
+            mWaitTime -= Time.deltaTime;
 
-            //ShotBullet(TAG_SPAWN_BULLET,Barrels[4]);
-            AttackTime = MaxAttackTime;
+            if (mWaitTime <= 0f)
+            {
+                if (AttackIds.Count > 2)
+                {
+                    int attackId = Random.Range(0, BossData.ShootcoolDowns.Count);
+                    mAttackId = attackId == AttackIds[AttackIds.Count - 1] ? Random.Range(0, BossData.ShootcoolDowns.Count) : attackId;
+                }
+                else
+                {
+                    mAttackId = Random.Range(0, BossData.ShootcoolDowns.Count);
+                }
+
+                AttackIds.Add(mAttackId);
+                AttackTime = mMaxAttackTime;
+                mWaitTime = BossData.WaitTime;
+            }
+        }
+    }
+
+    private void BarrelAngleSetting(GameObject barrel)
+    {
+        bool IsPositif = Random.value < 0.5 ? true : false;
+        float RandomAngle = Random.Range(0, ShootAngle / 2);
+        Aim(barrel);
+
+        if (IsPositif)
+        {
+            barrel.transform.Rotate(0, 0, barrel.transform.rotation.z + RandomAngle);
+        }
+        else
+        {
+            barrel.transform.Rotate(0, 0, barrel.transform.rotation.z - RandomAngle);
+        }
+    }
+
+    private void Shoot(string Tag)
+    {
+        foreach (GameObject barrel in Barrels)
+        {
+            BarrelAngleSetting(barrel);
+            ShotBullet(Tag, barrel);
         }
     }
 
@@ -122,7 +201,49 @@ public class SpaceShip : MonoBehaviour
             Bullet.transform.rotation = barrel.transform.rotation;
             Bullet.SetActive(true);
             Bullet.GetComponent<BossBullet>().GameManager = GameManager;
+            Bullet.GetComponent<BossBullet>().SpaceShip = this;
         }
+    }
+
+    private void Dead()
+    {
+        foreach (GameObject Object in Enemys)
+        {
+            Destroy(Object);
+        }
+
+        Room.EnemyCount--;
+        UIManager.BossHealthBarSlider.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+    }
+
+    #endregion
+
+    #region Public Method
+
+    public void DisHealth(int power)
+    {
+        if (CurrentHealth > 0)
+        {
+            if (power > CurrentHealth)
+            {
+                CurrentHealth = 0;
+                Dead();
+            }
+            else
+            {
+                CurrentHealth -= power;
+            }
+        }
+        else
+        {
+            Dead();
+        }
+    }
+
+    public void RoomEqual(Room room)
+    {
+        Room = room;
     }
 
     #endregion

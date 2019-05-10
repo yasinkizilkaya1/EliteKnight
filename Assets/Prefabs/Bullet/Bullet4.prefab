@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1465000266846998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.21318793, y: -0.27339077, z: 1.2374073}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4680231379744302}
@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetTransform: {fileID: 0}
-  isEffectTowerBullet: 0
-  isBullet: 1
-  bulletObject: {fileID: 0}
+  IsEffectTowerBullet: 0
+  IsBullet: 1
+  BulletObject: {fileID: 0}
   Barrels: []
   StandartTowerBulletObject: {fileID: 0}
   EffectTowerBulletPower: 8

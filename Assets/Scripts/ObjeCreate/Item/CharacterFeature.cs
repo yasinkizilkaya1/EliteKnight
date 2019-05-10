@@ -17,6 +17,6 @@ public class CharacterFeature : Item
         character.Speed += Speed;
         character.Energy += Energy;
         character.Gun.SpareBulletCount += Ammo;
-        character.UIManager.ammoBar.ClipAmountText.text = character.Gun.SpareBulletCount.ToString();
+        character.UIManager.AmmoBar.ClipAmountText.text = character.Gun.SpareBulletCount.ToString();
     }
 }

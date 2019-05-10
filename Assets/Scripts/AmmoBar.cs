@@ -7,8 +7,8 @@ public class AmmoBar : MonoBehaviour
 {
     #region Constants
 
-    private const int AMMO_BAR_BACKGROUND_WIDTH = 85;
-    private const int AMMO_BAR_BACKGROUND_GAP = 6;
+    private const int mAMMO_BAR_BACKGROUND_WIDTH = 85;
+    private const int mAMMO_BAR_BACKGROUND_GAP = 6;
 
     #endregion
 
@@ -19,12 +19,13 @@ public class AmmoBar : MonoBehaviour
     public UIManager UIManager;
     public GameManager GameManager;
     private Character Character;
-    public Gun gun;
+    public Gun Gun;
 
     public Image BarImage;
     public List<Image> BarImages;
     public List<GameObject> BarImageObjects;
     public GameObject ReloadGUIObject;
+    public Animator Animator;
 
     public Text ClipAmountText;
 
@@ -44,18 +45,18 @@ public class AmmoBar : MonoBehaviour
 
     private void Update()
     {
-        if (gun != null && UIManager.AutoClipReloadToggle.isOn)
+        if (Gun != null && UIManager.AutoClipReloadToggle.isOn)
         {
-            gun.AutoWeaponReload();
+            Gun.AutoWeaponReload();
         }
         else
         {
-            gun = GameManager.Character.Gun;
+            Gun = GameManager.Character.Gun;
         }
 
         if (Character.IsNewGun)
         {
-            gun = GameManager.Character.Gun;
+            Gun = GameManager.Character.Gun;
             AmmoBarInstantlyFilling();
             GameManager.Character.IsNewGun = false;
         }
@@ -67,14 +68,16 @@ public class AmmoBar : MonoBehaviour
 
     private void Init()
     {
+        BarImages = new List<Image>();
+        BarImageObjects = new List<GameObject>();
         Character = GameManager.Character;
         StartCoroutine(Ammobar());
     }
 
     private void AmmoBarsCreate()
     {
-        mAmmoBarWidth = AMMO_BAR_BACKGROUND_WIDTH / mAmmoCount;
-        mAmmoBarGap = (float)AMMO_BAR_BACKGROUND_GAP / (mAmmoCount - 1);
+        mAmmoBarWidth = mAMMO_BAR_BACKGROUND_WIDTH / mAmmoCount;
+        mAmmoBarGap = (float)mAMMO_BAR_BACKGROUND_GAP / (mAmmoCount - 1);
 
         AmmoGridLayout.cellSize = new Vector2(mAmmoBarWidth, 80);
         AmmoGridLayout.spacing = new Vector2(mAmmoBarGap, 0);
@@ -90,7 +93,7 @@ public class AmmoBar : MonoBehaviour
     private void AmmoBarInstantlyFilling()
     {
         AmmoBarDelete();
-        mAmmoCount = GameManager.Character.Gun.weapon.ClipCapacity;
+        mAmmoCount = GameManager.Character.Gun.Weapon.ClipCapacity;
         ClipAmountText.text = GameManager.Character.Gun.SpareBulletCount.ToString();
         AmmoBarsCreate();
         AmmoBarsBackup();
@@ -108,9 +111,9 @@ public class AmmoBar : MonoBehaviour
 
     private void AmmoBarsBackup()
     {
-        if (gun.CurrentAmmo != mAmmoCount)
+        if (Gun.CurrentAmmo != mAmmoCount)
         {
-            for (int i = mAmmoCount - 1; i >= gun.CurrentAmmo; i--)
+            for (int i = mAmmoCount - 1; i >= Gun.CurrentAmmo; i--)
             {
                 BarImages[i].color = Color.grey;
             }
@@ -128,7 +131,7 @@ public class AmmoBar : MonoBehaviour
         if (GameManager.Character.Gun != null)
         {
             AmmoBarDelete();
-            mAmmoCount = gun.weapon.ClipCapacity;
+            mAmmoCount = Gun.Weapon.ClipCapacity;
             AmmoBarsCreate();
         }
     }

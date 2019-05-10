@@ -5,18 +5,18 @@ using UnityEngine;
 [CustomEditor(typeof(GunSlot))]
 public class GunSlotEditor : Editor
 {
-    private const string inventoryPropItemImagesName = "ItemImage";
-    private const string inventoryRropItemsName = "Items";
+    private const string mInventoryPropItemImagesName = "ItemImage";
+    private const string mInventoryRropItemsName = "Items";
 
-    private bool[] showItemSlots;
+    private bool[] mShowItemSlots;
     private SerializedProperty mItemImagesProperty;
     private SerializedProperty mItemsProperty;
 
     private void OnEnable()
     {
-        showItemSlots = new bool[GunSlot.numItemSlot];
-        mItemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
-        mItemsProperty = serializedObject.FindProperty(inventoryRropItemsName);
+        mShowItemSlots = new bool[GunSlot.numItemSlot];
+        mItemImagesProperty = serializedObject.FindProperty(mInventoryPropItemImagesName);
+        mItemsProperty = serializedObject.FindProperty(mInventoryRropItemsName);
     }
 
     public override void OnInspectorGUI()
@@ -36,9 +36,9 @@ public class GunSlotEditor : Editor
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUI.indentLevel++;
 
-        showItemSlots[index] = EditorGUILayout.Foldout(showItemSlots[index], "Gun Slot");
+        mShowItemSlots[index] = EditorGUILayout.Foldout(mShowItemSlots[index], "Gun Slot");
 
-        if (showItemSlots[index])
+        if (mShowItemSlots[index])
         {
             EditorGUILayout.PropertyField(mItemImagesProperty.GetArrayElementAtIndex(index),new GUIContent("Icon"));
             EditorGUILayout.PropertyField(mItemsProperty.GetArrayElementAtIndex(index),new GUIContent("Item"));

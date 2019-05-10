@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
-    private const string TAG_STAGE = "Stage";
+    private const string mTAG_STAGE = "Stage";
 
     public CardContent CardContent;
     public CharacterData CharacterData;
@@ -24,10 +24,9 @@ public class LobbyManager : MonoBehaviour
                 CharacterData.Power = CardContent.Characters[i].Power;
                 CharacterData.Speed = CardContent.Characters[i].Speed;
                 CharacterData.RunSpeed = CardContent.Characters[i].RunSpeed;
-                CharacterData.EnergyReloadTime = CardContent.Characters[i].EnergyReloadTime;
                 CharacterData.EnergyIncreaseAmmount = CardContent.Characters[i].EnergyIncreaseAmmount;
                 CharacterData.GameObject = CardContent.Characters[i].GameObject;
-                SceneManager.LoadScene(TAG_STAGE);
+                SceneManager.LoadScene(mTAG_STAGE);
             }
         }
     }

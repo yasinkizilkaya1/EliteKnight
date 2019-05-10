@@ -20,3 +20,4 @@ MonoBehaviour:
   AttackPower: 1
   AttackRange: 0.75
   ShootingRate: 1
+  RotationSpeed: 300

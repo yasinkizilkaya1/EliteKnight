@@ -7,12 +7,12 @@ public class Map : MonoBehaviour
 {
     #region Constants
 
-    private const int MIN_VALUE = 25;
-    private const int MAX_VALUE = 50;
-    private const int PLACE_GAP = 30;
-    private const int MAP_PLACE_MINVALUE = 6;
-    private const int MAP_PLACE_MAXVALUE = 17;
-    private const int MAZE_WIDTH = 3;
+    private const int mMIN_VALUE = 30;
+    private const int mMAX_VALUE = 50;
+    private const int mPLACE_GAP = 30;
+    private const int mMAP_PLACE_MINVALUE = 4;
+    private const int mMAP_PLACE_MAXVALUE = 4;
+    private const int mMAZE_WIDTH = 3;
 
     #endregion
 
@@ -38,6 +38,7 @@ public class Map : MonoBehaviour
     private int mDownDoor;
     private int mRightDoor;
     private int mLeftDoor;
+    private int CharacterFoundRoomId;
 
     private int mTransformX;
     private int mTransformY;
@@ -55,7 +56,7 @@ public class Map : MonoBehaviour
     public Tile BridgeTile;
     public Tile BridgeWallTile;
 
-    public bool İsCharacterCreate;
+    public bool IsCharacterCreate;
 
     #endregion
 
@@ -74,7 +75,6 @@ public class Map : MonoBehaviour
     {
         mBridgeLocation = new List<Vector3Int>();
         mWallLocation = new List<Vector3Int>();
-        RoomCount = RandomValue(MAP_PLACE_MINVALUE, MAP_PLACE_MAXVALUE);
         PlacesFind();
         MapCreate();
     }
@@ -96,6 +96,7 @@ public class Map : MonoBehaviour
             GameObject Room = Instantiate(RoomObject, transform);
             Rooms.Add(Room);
             Room.transform.position = RoomCoordinates[i];
+            Room.GetComponent<Room>().UIManager = GameManager.UIManager;
             Room.GetComponent<Room>().MakeEqual(RoomSizes[i], RoomCoordinates[i], mUpDoor, mDownDoor, mRightDoor, mLeftDoor);
 
             if (i != RoomCount - 1)
@@ -107,10 +108,12 @@ public class Map : MonoBehaviour
 
     private void PlacesFind()
     {
+        RoomCount = RandomValue(mMAP_PLACE_MINVALUE, mMAP_PLACE_MAXVALUE);
+
         for (int i = 0; i < RoomCount; i++)
         {
-            mTransformX = RandomValue(MIN_VALUE, MAX_VALUE);
-            mTransformY = RandomValue(MIN_VALUE, MAX_VALUE);
+            mTransformX = RandomValue(mMIN_VALUE, mMAX_VALUE);
+            mTransformY = RandomValue(mMIN_VALUE, mMAX_VALUE);
             mVector2Int = new Vector2Int(mTransformX, mTransformY);
             RoomSizes.Add(mVector2Int);
             PlaceTransform(i, mTransformX, mTransformY);
@@ -136,7 +139,7 @@ public class Map : MonoBehaviour
             {
                 for (int x = 0; x < distanceY / 2; x++)
                 {
-                    for (int y = 0; y < MAZE_WIDTH; y++)
+                    for (int y = 0; y < mMAZE_WIDTH; y++)
                     {
                         mBridgeLocation.Add(new Vector3Int(FirstDoor.x + y - 1, FirstDoor.y + x, 1));
                         mBridgeLocation.Add(new Vector3Int(SecondDoor.x + y - 1, SecondDoor.y - x, 1));
@@ -163,7 +166,7 @@ public class Map : MonoBehaviour
                     mWallLocation.Add(new Vector3Int(FirstDoor.x + 2, FirstDoor.y + x, 1));
                     mWallLocation.Add(new Vector3Int(FirstDoor.x - 2, FirstDoor.y + x, 1));
 
-                    for (int y = 0; y < MAZE_WIDTH; y++)
+                    for (int y = 0; y < mMAZE_WIDTH; y++)
                     {
                         mBridgeLocation.Add(new Vector3Int(FirstDoor.x + y - 1, FirstDoor.y + x, 1));
                     }
@@ -190,7 +193,7 @@ public class Map : MonoBehaviour
             {
                 for (int x = 0; x < distanceX / 2; x++)
                 {
-                    for (int y = 0; y < MAZE_WIDTH; y++)
+                    for (int y = 0; y < mMAZE_WIDTH; y++)
                     {
                         mBridgeLocation.Add(new Vector3Int(FirstDoor.x + x, FirstDoor.y + y - 1, 1));
                         mBridgeLocation.Add(new Vector3Int(SecondDoor.x - x, SecondDoor.y + y - 1, 1));
@@ -204,7 +207,7 @@ public class Map : MonoBehaviour
                     int increase = FirstDoor.y > SecondDoor.y ? y * -1 : y;
                     int transformY = FirstDoor.y > SecondDoor.y ? FirstDoor.y + 1 : FirstDoor.y - 1;
 
-                    for (int x = 0; x < MAZE_WIDTH; x++)
+                    for (int x = 0; x < mMAZE_WIDTH; x++)
                     {
                         mBridgeLocation.Add(new Vector3Int(FirstDoor.x + distanceX / 2 + x - 2, transformY + increase, 1));
                     }
@@ -217,7 +220,7 @@ public class Map : MonoBehaviour
                     mWallLocation.Add(new Vector3Int(FirstDoor.x + x, FirstDoor.y + 2, 1));
                     mWallLocation.Add(new Vector3Int(FirstDoor.x + x, FirstDoor.y - 2, 1));
 
-                    for (int y = 0; y < MAZE_WIDTH; y++)
+                    for (int y = 0; y < mMAZE_WIDTH; y++)
                     {
                         mBridgeLocation.Add(new Vector3Int(FirstDoor.x + x, FirstDoor.y + y - 1, 1));
                     }
@@ -349,12 +352,12 @@ public class Map : MonoBehaviour
             if (ispositive)
             {
                 down++;
-                mRoomY += (transformY + PLACE_GAP) * up;
+                mRoomY += (transformY + mPLACE_GAP) * up;
             }
             else
             {
                 up++;
-                mRoomY -= (-transformY - PLACE_GAP) * down;
+                mRoomY -= (-transformY - mPLACE_GAP) * down;
             }
         }
         else
@@ -362,12 +365,12 @@ public class Map : MonoBehaviour
             if (ispositive)
             {
                 left++;
-                mRoomX += (transformX + PLACE_GAP) * right;
+                mRoomX += (transformX + mPLACE_GAP) * right;
             }
             else
             {
                 right++;
-                mRoomX -= (transformX + PLACE_GAP) * -left;
+                mRoomX -= (transformX + mPLACE_GAP) * -left;
             }
         }
 
@@ -393,19 +396,19 @@ public class Map : MonoBehaviour
 
         if (i == 0)
         {
-            mDownDoor = RoomCoordinates[i + 1].y < RoomCoordinates[i].y ? MAZE_WIDTH : 0;
-            mUpDoor = RoomCoordinates[i + 1].y > RoomCoordinates[i].y ? MAZE_WIDTH : 0;
-            mLeftDoor = RoomCoordinates[i + 1].x < RoomCoordinates[i].x ? MAZE_WIDTH : 0;
-            mRightDoor = RoomCoordinates[i + 1].x > RoomCoordinates[i].x ? MAZE_WIDTH : 0;
+            mDownDoor = RoomCoordinates[i + 1].y < RoomCoordinates[i].y ? mMAZE_WIDTH : 0;
+            mUpDoor = RoomCoordinates[i + 1].y > RoomCoordinates[i].y ? mMAZE_WIDTH : 0;
+            mLeftDoor = RoomCoordinates[i + 1].x < RoomCoordinates[i].x ? mMAZE_WIDTH : 0;
+            mRightDoor = RoomCoordinates[i + 1].x > RoomCoordinates[i].x ? mMAZE_WIDTH : 0;
         }
         else
         {
             mOldTransform = i == RoomCount - 1 ? RoomCoordinates[i - 1] : RoomCoordinates[i + 1];
 
-            mDownDoor = RoomCoordinates[i - 1].y < RoomCoordinates[i].y && RoomCoordinates[i - 1].y != RoomCoordinates[i].y ? MAZE_WIDTH : 0;
-            mUpDoor = mOldTransform.y > RoomCoordinates[i].y && mOldTransform.y != RoomCoordinates[i].y ? MAZE_WIDTH : 0;
-            mLeftDoor = RoomCoordinates[i - 1].x < RoomCoordinates[i].x && RoomCoordinates[i - 1].x != RoomCoordinates[i].x ? MAZE_WIDTH : 0;
-            mRightDoor = mOldTransform.x > RoomCoordinates[i].x && mOldTransform.x != RoomCoordinates[i].x ? MAZE_WIDTH : 0;
+            mDownDoor = RoomCoordinates[i - 1].y < RoomCoordinates[i].y && RoomCoordinates[i - 1].y != RoomCoordinates[i].y ? mMAZE_WIDTH : 0;
+            mUpDoor = mOldTransform.y > RoomCoordinates[i].y && mOldTransform.y != RoomCoordinates[i].y ? mMAZE_WIDTH : 0;
+            mLeftDoor = RoomCoordinates[i - 1].x < RoomCoordinates[i].x && RoomCoordinates[i - 1].x != RoomCoordinates[i].x ? mMAZE_WIDTH : 0;
+            mRightDoor = mOldTransform.x > RoomCoordinates[i].x && mOldTransform.x != RoomCoordinates[i].x ? mMAZE_WIDTH : 0;
         }
     }
 
@@ -421,17 +424,39 @@ public class Map : MonoBehaviour
 
     public void CharacterSpawn()
     {
-        int spawnRoomId = RandomValue(0, RoomCount);
-        Rooms[spawnRoomId].GetComponent<Room>().EnemyCount = 0;
+        CharacterFoundRoomId = RandomValue(0, RoomCount);
+        Rooms[CharacterFoundRoomId].GetComponent<Room>().EnemyCount = 0;
 
-        int TransformX = RoomCoordinates[spawnRoomId].x + RandomValue((RoomSizes[spawnRoomId].x / 2), RoomSizes[spawnRoomId].x);
-        int TransformY = RoomCoordinates[spawnRoomId].y + RandomValue((RoomSizes[spawnRoomId].y / 2), RoomSizes[spawnRoomId].y);
+        int TransformX = RoomCoordinates[CharacterFoundRoomId].x + RandomValue((RoomSizes[CharacterFoundRoomId].x / 2), RoomSizes[CharacterFoundRoomId].x);
+        int TransformY = RoomCoordinates[CharacterFoundRoomId].y + RandomValue((RoomSizes[CharacterFoundRoomId].y / 2), RoomSizes[CharacterFoundRoomId].y);
 
-        GameObject Character = Instantiate(GameManager.CharacterData.GameObject, Rooms[spawnRoomId].transform) as GameObject;
+        GameObject Character = Instantiate(GameManager.CharacterData.GameObject, Rooms[CharacterFoundRoomId].transform) as GameObject;
         GameManager.Character = Character.GetComponent<Character>();
         GameManager.Character.gameManager = GameManager;
         Character.transform.position = new Vector3(TransformX, TransformY, 1);
-        İsCharacterCreate = true;
+        IsCharacterCreate = true;
+
+        BossRoomFind();
+    }
+
+    public void BossRoomFind()
+    {
+        int BossRoomId = 0;
+        List<int> ArrayRoomId =new List<int>();
+
+        for (int value = 0; value < RoomCount; value++)
+        {
+            if (CharacterFoundRoomId != value)
+            {
+                ArrayRoomId.Add(value);
+            }
+        }
+
+        BossRoomId =ArrayRoomId[RandomValue(0, RoomCount - 1)];
+
+        Rooms[BossRoomId].GetComponent<Room>().EnemyCount = 1;
+        Rooms[BossRoomId].GetComponent<Room>().BossCount = 1;
+        Rooms[BossRoomId].GetComponent<Room>().ChestCount = 0;
     }
 
     #endregion

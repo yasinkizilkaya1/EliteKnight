@@ -6,7 +6,7 @@ public class FireWeapon : Command
     {
         Gun gun = Character.Gun;
 
-        if (gun.CurrentAmmo > 0 && gun.IsCanShoot == true && gun.weapon.IsAttak == true)
+        if (gun.CurrentAmmo > 0 && gun.IsCanShoot == true && gun.Weapon.IsAttak == true)
         {
             for (int i = gun.Barrels.Count - 1; i >= 0; i--)
             {
@@ -18,8 +18,8 @@ public class FireWeapon : Command
                     Bullet.transform.position = gun.Barrels[i].transform.position;
                     Bullet.transform.rotation = gun.Barrels[i].transform.rotation;
                     Bullet.SetActive(true);
-                    Bullet.GetComponent<Bullet>().weapon = gun.gameObject.GetComponent<Gun>().weapon;
-                    gun.mUIManager.ammoBar.BarImages[gun.CurrentAmmo].color = Color.grey;
+                    Bullet.GetComponent<Bullet>().Weapon = gun.gameObject.GetComponent<Gun>().Weapon;
+                    gun.mUIManager.AmmoBar.BarImages[gun.CurrentAmmo].color = Color.grey;
                 }
             }
         }

@@ -19,23 +19,26 @@ public class Room : MonoBehaviour
 
     private TileBase[] mTileWallArray;
     private TileBase[] mTileGroundArray;
-    public Tilemap tileMapGround;
-    public Tilemap tileMapWall;
+    public Tilemap TileMapGround;
+    public Tilemap TileMapWall;
 
+    public UIManager UIManager;
     public room room;
 
-    public List<GameObject> Doors;
+    public List<Door> Doors;
     public List<GameObject> Enemys;
 
     public GameObject ChestObject;
     public GameObject Door;
     private GameObject mObje;
 
-    private Vector2Int size;
+    public Vector2Int size;
     private Vector3Int vector3;
     private Vector3Int[] positions;
+    public Vector3 BossTransform;
 
     public int EnemyCount;
+    public int BossCount;
     public int ZombieCount;
     public int PursueEnemyCount;
     public int TowerExplodCount;
@@ -69,6 +72,7 @@ public class Room : MonoBehaviour
         TowerExplod,
         TowerModerator,
         TowerStandart,
+        Boss,
         Chest
     }
 
@@ -81,23 +85,34 @@ public class Room : MonoBehaviour
         Init();
     }
 
+    private void Update()
+    {
+        if (BossCount == 1 && BossTransform.x == 0 && BossTransform.y == 0 && BossTransform.z == 0)
+        {
+            foreach (Door door in Doors)
+            {
+                if (door.IsRoomLogin)
+                {
+                    BossLocationFind(door);
+                }
+            }
+        }
+    }
+
     #endregion
 
     #region Private Methods
 
     private void Init()
     {
-        ZombieCount = RandomValue(1, 8);
-        PursueEnemyCount = RandomValue(1, 8);
-        TowerExplodCount = RandomValue(0, 2);
-        TowerModeratorCount = RandomValue(0, 2);
-        TowerStandartCount = RandomValue(0, 2);
-        ChestCount = RandomValue(1, 2);
-        tileMapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
-        tileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
-        EnemyCount = ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
+        EnemyCountCalculate();
+        ChestCount = RandomValue(1, 4);
+        TileMapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
+        TileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         PlaceCreate();
         StartCoroutine(ObjeCreate());
+        StartCoroutine(DoorsLockOpen());
+        EnemyCount = BossCount + ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
     }
 
     private void PlaceCreate()
@@ -114,7 +129,7 @@ public class Room : MonoBehaviour
             {
                 Tile tile = x % 2 == 0 ? room.tileGround : room.tileGround2;
                 Vector3Int position = new Vector3Int(vector3.x + y, vector3.y + x, 1);
-                tileMapGround.SetTile(position, tile);
+                TileMapGround.SetTile(position, tile);
             }
         }
 
@@ -151,7 +166,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, mTileGroundArray, tileMapGround, room.tileGround);
+                    BorderDraw(x, vector3.x + size.x + number, vector3.y + Location + x - 1, mTileGroundArray, TileMapGround, room.tileGround);
                     DoorRightLeftPlace.Add(Location + x);
                 }
 
@@ -164,7 +179,7 @@ public class Room : MonoBehaviour
             {
                 for (int x = 0; x < DOOR_WIDHT; x++)
                 {
-                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, mTileGroundArray, tileMapGround, room.tileGround);
+                    BorderDraw(x, vector3.x + Location + x - 1, vector3.y + size.y + number, mTileGroundArray, TileMapGround, room.tileGround);
                     DoorUpDownPlace.Add(Location + x);
                 }
 
@@ -174,7 +189,7 @@ public class Room : MonoBehaviour
 
             }
 
-            Doors.Add(RoomObject);
+            Doors.Add(RoomObject.GetComponent<Door>());
         }
     }
 
@@ -191,11 +206,11 @@ public class Room : MonoBehaviour
             {
                 if (isupdown == false)
                 {
-                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, mTileWallArray, tileMapWall, room.tileWall);
+                    BorderDraw(i, vector3.x + transformY, vector3.y + i - 1, mTileWallArray, TileMapWall, room.tileWall);
                 }
                 else
                 {
-                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, mTileWallArray, tileMapWall, room.tileWall);
+                    BorderDraw(i, vector3.x + i - 1, vector3.y + transformY, mTileWallArray, TileMapWall, room.tileWall);
                 }
             }
         }
@@ -210,12 +225,42 @@ public class Room : MonoBehaviour
 
     public void ObjectsCreate()
     {
-        ObjeCreate(ZombieCount, Enemys[0], Type.Zombie);
-        ObjeCreate(PursueEnemyCount, Enemys[1], Type.PursueEnemy);
-        ObjeCreate(TowerExplodCount, Enemys[2], Type.TowerExplod);
-        ObjeCreate(TowerModeratorCount, Enemys[3], Type.TowerModerator);
-        ObjeCreate(TowerStandartCount, Enemys[4], Type.TowerStandart);
+        if (BossCount > 0)
+        {
+            ObjeCreate(BossCount, Enemys[5], Type.Boss);
+            UIManager.BossHealthBarSlider.gameObject.SetActive(true);
+        }
+        else
+        {
+            ObjeCreate(ZombieCount, Enemys[0], Type.Zombie);
+            ObjeCreate(PursueEnemyCount, Enemys[1], Type.PursueEnemy);
+            ObjeCreate(TowerExplodCount, Enemys[2], Type.TowerExplod);
+            ObjeCreate(TowerModeratorCount, Enemys[3], Type.TowerModerator);
+            ObjeCreate(TowerStandartCount, Enemys[4], Type.TowerStandart);
+        }
         ObjeCreate(ChestCount, ChestObject, Type.Chest);
+    }
+
+    private void EnemyCountCalculate()
+    {
+        int TowerCount = 0;
+        bool IsChallenge = 1 < RandomValue(1, 2) ? true : false;
+        EnemyCount = size.x / 3;
+
+        if (IsChallenge)
+        {
+            TowerExplodCount = RandomValue(0, 2);
+            TowerModeratorCount = RandomValue(0, 2);
+            TowerStandartCount = RandomValue(0, 2);
+            TowerCount = TowerExplodCount + TowerModeratorCount + TowerStandartCount;
+            ZombieCount = RandomValue(0, (EnemyCount - TowerCount) / 2);
+            PursueEnemyCount = RandomValue(0, (EnemyCount - (ZombieCount + TowerCount)) / 2);
+        }
+        else
+        {
+            ZombieCount = RandomValue(0, EnemyCount / 2);
+            PursueEnemyCount = RandomValue(0, (EnemyCount - ZombieCount) / 2);
+        }
     }
 
     private void ObjeCreate(int finshValue, GameObject Object, Type enemyType)
@@ -230,21 +275,25 @@ public class Room : MonoBehaviour
             switch (enemyType)
             {
                 case Type.Zombie:
-                    roomObject.GetComponentInChildren<Zombies>().RoomEqual(gameObject);
+                    roomObject.GetComponentInChildren<Zombies>().RoomEqual(this);
                     break;
                 case Type.PursueEnemy:
-                    roomObject.GetComponentInChildren<WarriorEnemy>().RoomEqual(gameObject);
+                    roomObject.GetComponentInChildren<WarriorEnemy>().RoomEqual(this);
                     break;
                 case Type.TowerExplod:
-                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
+                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this);
                     break;
                 case Type.TowerModerator:
-                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
+                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this);
                     break;
                 case Type.TowerStandart:
-                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(gameObject);
+                    roomObject.GetComponentInChildren<TowerWeapon>().RoomEqual(this);
                     break;
                 case Type.Chest:
+                    break;
+                case Type.Boss:
+                    roomObject.transform.position = BossTransform;
+                    roomObject.GetComponentInChildren<SpaceShip>().RoomEqual(this);
                     break;
             }
         }
@@ -257,6 +306,40 @@ public class Room : MonoBehaviour
 
         Vector3 location = new Vector3(transform.position.x + transformX, transform.position.y + transformY, 1);
         return location;
+    }
+
+    private void BossLocationFind(Door door)
+    {
+        float transformX = 0.0f;
+        float transformY = 0.0f;
+
+        if (size.x > size.y)
+        {
+            transformX = RoomDoorWhereFind(door, size.x);
+            transformY = size.y / 2;
+        }
+        else
+        {
+            transformX = size.x / 2;
+            transformY = RoomDoorWhereFind(door, size.y);
+        }
+
+        BossTransform = new Vector3(transform.position.x + transformX, transform.position.y + transformY, 1);
+    }
+
+    private float RoomDoorWhereFind(Door door, int value)
+    {
+        float Value = 0.0f;
+
+        if (door.transform.position.y > this.transform.position.y && door.transform.position.x > this.transform.position.x)
+        {
+            Value = value / 4;
+        }
+        else if (door.transform.position.y <= this.transform.position.y && door.transform.position.x > this.transform.position.x)
+        {
+            Value = value - (value / 4);
+        }
+        return Value;
     }
 
     private int RandomValue(int min, int max)
@@ -294,6 +377,23 @@ public class Room : MonoBehaviour
                 IsEnemyCreate = false;
                 ObjectsCreate();
                 StopCoroutine(ObjeCreate());
+            }
+        }
+    }
+
+    IEnumerator DoorsLockOpen()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (EnemyCount == 0)
+            {
+                foreach (Door door in Doors)
+                {
+                    door.IsLock = false;
+                    door.DoorLock.SetActive(false);
+                }
+                StopCoroutine(DoorsLockOpen());
             }
         }
     }

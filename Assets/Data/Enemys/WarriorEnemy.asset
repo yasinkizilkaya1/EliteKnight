@@ -19,5 +19,5 @@ MonoBehaviour:
   Speed: 5
   AttackPower: 1
   AttackTime: 0.75
-  Range: 200
+  Range: 300
   Distance: 5

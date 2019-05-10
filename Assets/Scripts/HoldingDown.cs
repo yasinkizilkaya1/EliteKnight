@@ -26,7 +26,7 @@ public class HoldingDown : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void Update()
     {
-        if (HoldingTime > 0 && IsHoldingDown && gameManager.Character.Guns.Count > 1 && gameManager.isPause == false)
+        if (HoldingTime > 0 && IsHoldingDown && gameManager.Character.Guns.Count > 1 && gameManager.IsPause == false)
         {
             HoldingTime -= 1;
         }

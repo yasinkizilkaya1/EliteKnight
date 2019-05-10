@@ -15,11 +15,10 @@ MonoBehaviour:
   Name: Pistol
   Icon: {fileID: 21300000, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
-  UseObject: {fileID: 1177416201596478, guid: b9a058c5a6b5f734aac615e669a72cb6, type: 2}
-  DropObject: {fileID: 1177416201596478, guid: e87f0e46bb1fd704bb11814febd15d7f, type: 2}
+  MaxStackSize: 0
   IsAttak: 1
   Power: 1
   ClipCapacity: 5
   TotalBullet: 995
-  Range: 0.8
+  Range: 1
   ReloadTime: 3

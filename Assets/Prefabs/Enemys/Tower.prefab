@@ -193,18 +193,18 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1230982751642756}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &58165755845148154
 CircleCollider2D:
@@ -247,10 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153811475bd2a1e44a274dcc21f970c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerWeapon: {fileID: 114481030299245790}
-  spawn: {fileID: 0}
-  inside: 0
-  isStandartTower: 1
+  TowerWeapon: {fileID: 114481030299245790}
+  GameManager: {fileID: 0}
+  Inside: 0
+  IsStandartTower: 1
   SlowPower: 1
 --- !u!114 &114481030299245790
 MonoBehaviour:
@@ -263,20 +263,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71592b6912314884e8b3598279622293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  towerEnemy: {fileID: 114305842053895080}
-  spawn: {fileID: 0}
-  tower: {fileID: 11400000, guid: 4ec1c4b1e38005441bf5daa78be155be, type: 2}
-  shotPrefabTransform: {fileID: 4188302573477616, guid: 4bed0f314812b1a4ba623d78325d5ed2,
+  LineRenderer: {fileID: 0}
+  TowerEnemy: {fileID: 114305842053895080}
+  Tower: {fileID: 11400000, guid: 2ad744a5f1ed69942b2305ad5b1565ab, type: 2}
+  ShotPrefabTransform: {fileID: 4720740865376638, guid: ad37c6966f29b1f428145591382b9138,
     type: 2}
   OriginTransform: {fileID: 4352658490205416}
-  RoomObject: {fileID: 0}
+  Room: {fileID: 0}
   TowerObject: {fileID: 1064757577607252}
   BarrelObject: {fileID: 1570966413706164}
-  shootCoolDown: 0
+  ShootCoolDown: 0
   CurrentHealth: 0
   CurrentDefence: 0
-  isLinerenderer: 0
+  IsLinerenderer: 0
 --- !u!212 &212085468333578508
 SpriteRenderer:
   m_ObjectHideFlags: 1

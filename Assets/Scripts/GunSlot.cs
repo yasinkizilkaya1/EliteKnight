@@ -7,7 +7,7 @@ public class GunSlot : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_GAMEMANAGER = "GameManager";
     public const int numItemSlot = 1;
 
     #endregion
@@ -21,7 +21,7 @@ public class GunSlot : MonoBehaviour
     public Item[] Items;
 
     private List<Gun> mGuns;
-    private Transform Blank;
+    private Transform mBlank;
 
     #endregion
 
@@ -38,7 +38,7 @@ public class GunSlot : MonoBehaviour
 
     private void Initialize()
     {
-        mGameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         mCharacter = mGameManager.Character;
         StartCoroutine(GunSlotActive());
     }
@@ -74,14 +74,14 @@ public class GunSlot : MonoBehaviour
 
     public void GunChange(Gun gun, Character character)
     {
-        if (character.Gun != gun && character.Gun.isWeaponReload == false)
+        if (character.Gun != gun && character.Gun.IsWeaponReload == false)
         {
             character.IsNewGun = true;
             character.Gun.gameObject.SetActive(false);
             character.Gun = gun;
             gun.gameObject.SetActive(true);
-            ItemImage[0].sprite = gun.weapon.Icon;
-            Items[0] = character.Gun.weapon;
+            ItemImage[0].sprite = gun.Weapon.Icon;
+            Items[0] = character.Gun.Weapon;
         }
     }
 
@@ -93,13 +93,13 @@ public class GunSlot : MonoBehaviour
             {
                 if (gun == character.Gun)
                 {
-                    gun.transform.parent = Blank;
+                    gun.transform.parent = mBlank;
                     gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
                     character.Guns.Remove(character.Gun);
                     character.Gun = character.Guns[character.Guns.Count - 1];
                     character.IsNewGun = true;
                     character.Gun.gameObject.SetActive(true);
-                    ItemImage[0].sprite = character.Gun.weapon.Icon;
+                    ItemImage[0].sprite = character.Gun.Weapon.Icon;
                     return;
                 }
             }
@@ -116,7 +116,7 @@ public class GunSlot : MonoBehaviour
 
         for (int index = 0; index < mGameManager.Character.Guns.Count; index++)
         {
-            ItemAdd(mGameManager.Character.Guns[index].weapon);
+            ItemAdd(mGameManager.Character.Guns[index].Weapon);
         }
 
         yield return new WaitForSeconds(0.1f);

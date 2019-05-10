@@ -107,9 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetTransform: {fileID: 0}
-  isEffectTowerBullet: 0
-  isBullet: 0
-  bulletObject: {fileID: 0}
+  IsEffectTowerBullet: 0
+  IsBullet: 0
+  BulletObject: {fileID: 1432971038763504}
   Barrels: []
   StandartTowerBulletObject: {fileID: 1432971038763504}
   EffectTowerBulletPower: 8

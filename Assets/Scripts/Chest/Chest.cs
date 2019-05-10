@@ -15,8 +15,8 @@ public class Chest : MonoBehaviour
 
     #region Fields
 
-    public GameManager gameManager;
-    public ChestEntity chestEntity;
+    public GameManager GameManager;
+    public ChestEntity ChestEntity;
     public List<GameObject> ItemObjects;
     public List<Item> Items;
 
@@ -80,11 +80,11 @@ public class Chest : MonoBehaviour
             case 0:
                 HealthObjectsSetActive(false, false, false, false);
 
-                if (chestEntity.ItemDrop)
+                if (ChestEntity.ItemDrop)
                 {
                     HealthBarObject.SetActive(false);
                     Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
-                    gameManager.Chests.Remove(this);
+                    GameManager.Chests.Remove(this);
                     Destroy(gameObject);
                 }
                 break;
@@ -112,20 +112,20 @@ public class Chest : MonoBehaviour
 
     private void Init()
     {
-        gameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
-        name = chestEntity.Name;
-        Defence = chestEntity.Defence;
-        Health = chestEntity.Health;
-        gameManager.Chests.Add(this);
+        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        name = ChestEntity.Name;
+        Defence = ChestEntity.Defence;
+        Health = ChestEntity.Health;
+        GameManager.Chests.Add(this);
         CharacterHavingGunsUnload();
 
-        if (gameManager.CharacterData.Name == TAG_SUPPORT)
+        if (GameManager.CharacterData.Name == TAG_SUPPORT)
         {
             ItemObjects.Remove(ItemObjects[4]);
             ItemObjects.Remove(ItemObjects[3]);
             ItemObjects.Remove(ItemObjects[2]);
         }
-        else if (gameManager.CharacterData.Name == TAG_SPEALİST)
+        else if (GameManager.CharacterData.Name == TAG_SPEALİST)
         {
             ItemObjects.Remove(ItemObjects[4]);
             ItemObjects.Remove(ItemObjects[3]);
@@ -188,11 +188,11 @@ public class Chest : MonoBehaviour
 
     public void CharacterHavingGunsUnload()
     {
-        foreach (Gun gun in gameManager.Character.Guns)
+        foreach (Gun gun in GameManager.Character.Guns)
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Id == gun.weapon.Id)
+                if (Items[i].Id == gun.Weapon.Id)
                 {
                     Items.Remove(Items[i]);
                     ItemObjects.Remove(ItemObjects[i]);

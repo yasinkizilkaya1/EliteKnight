@@ -13,14 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   Name: Assault
-  Health: 15
-  MaxHealth: 15
-  Defence: 30
-  Speed: 5
-  Energy: 1000
-  MaxEnergy: 1000
+  Health: 30
+  MaxHealth: 20
+  Defence: 10
+  Speed: 10
+  Energy: 200
+  MaxEnergy: 200
   EnergyIncreaseAmmount: 2
-  EnergyReloadTime: 2
   Power: 1
-  RunSpeed: 7
+  RunSpeed: 10
   GameObject: {fileID: 1397403166917626, guid: bde3020b06e776e4eb34288aa27aa6a4, type: 2}

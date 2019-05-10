@@ -4,35 +4,35 @@ public class Zombies : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_ENEMY = "Enemy";
-    private const string TAG_WALL = "wall";
-    private const float WALLRADIUS = 0.2f;
+    private const string mTAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_ENEMY = "Enemy";
+    private const string mTAG_WALL = "wall";
+    private const string mTAG_CHEST = "chest";
+    private const float mWALLRADIUS = 0.2f;
 
     #endregion
 
     #region Fields
 
     public GameManager GameManager;
-    public Zombie zombie;
+    public Zombie Zombie;
+    public Room Room;
 
     private int mCurrrentHealth;
     private int mCurrentDefance;
 
     public Transform Radar;
-    public Transform wallTransformObject;
-    public Transform zombieTransformObject;
-    public LayerMask isWall;
-    public LayerMask iszombie;
+    public Transform WallTransformObject;
+    public Transform ZombieTransformObject;
+    public LayerMask IsWall;
+    public LayerMask Iszombie;
     public LayerMask CharacterMask;
 
-    public GameObject RoomObject;
     public GameObject BodyObject;
-    public Animator animator;
+    public Animator Animator;
 
-    public float distance;
-    public float rotationSpeed;
-    public float shootcoolDown;
+    public float RotationSpeed;
+    public float ShootcoolDown;
 
     private bool mIsAttack;
     private bool mIsHit;
@@ -48,7 +48,7 @@ public class Zombies : MonoBehaviour
     {
         get
         {
-            return shootcoolDown <= 0;
+            return ShootcoolDown <= 0;
         }
     }
 
@@ -63,34 +63,44 @@ public class Zombies : MonoBehaviour
 
     private void Update()
     {
-        animator.SetBool("isAttack", attack);
+        Animator.SetBool("isAttack", attack);
 
         if (mCurrrentHealth == 0)
         {
             Destroy(BodyObject);
             GameManager.Character.DeadEnemyCount++;
-            RoomObject.GetComponent<Room>().EnemyCount--;
+
+            if (Room != null)
+            {
+                Room.EnemyCount--;
+            }
         }
 
-        if (shootcoolDown > 0f)
+        if (GameManager.Character != null)
         {
-            shootcoolDown -= Time.deltaTime;
-        }
+            if (ShootcoolDown > 0f)
+            {
+                ShootcoolDown -= Time.deltaTime;
+            }
 
-        if (mIsAttack && mIsZombie == false && mIsHit == false)
-        {
-            Following();
-        }
-        else
-        {
-            RaycasLine();
+            if (GameManager.Character != null)
+            {
+                if (mIsAttack && mIsZombie == false && mIsHit == false)
+                {
+                    Following();
+                }
+                else
+                {
+                    RaycasLine();
+                }
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        mIsHit = Physics2D.OverlapCircle(wallTransformObject.position, WALLRADIUS, isWall);
-        mIsZombie = Physics2D.OverlapCircle(zombieTransformObject.position, WALLRADIUS, iszombie);
+        mIsHit = Physics2D.OverlapCircle(WallTransformObject.position, mWALLRADIUS, IsWall);
+        mIsZombie = Physics2D.OverlapCircle(ZombieTransformObject.position, mWALLRADIUS, Iszombie);
     }
 
     #endregion
@@ -99,38 +109,48 @@ public class Zombies : MonoBehaviour
 
     private void Initialize()
     {
-        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
-        shootcoolDown = 0f;
-        mCurrrentHealth = zombie.Health;
-        mCurrentDefance = zombie.Defence;
+        ShootcoolDown = 0f;
+        mCurrrentHealth = Zombie.Health;
+        mCurrentDefance = Zombie.Defence;
+        RotationSpeed = Zombie.RotationSpeed;
     }
 
     private void RaycasLine()
     {
-        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, distance, CharacterMask);
-        Radar.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, CharacterMask);
 
         if (mRaycastHit2D.collider != null)
         {
-            if (!mRaycastHit2D.collider.CompareTag(TAG_WALL) || !mRaycastHit2D.collider.CompareTag(TAG_ENEMY))
+            if (mRaycastHit2D.collider.CompareTag(mTAG_WALL) || mRaycastHit2D.collider.CompareTag(mTAG_ENEMY) || mRaycastHit2D.collider.CompareTag(mTAG_CHEST))
+            {
+                mIsAttack = false;
+                Radar.Rotate(Vector3.forward * RotationSpeed * Time.deltaTime);
+                Debug.DrawLine(Radar.position, mRaycastHit2D.point, Color.red);
+            }
+            else
             {
                 mIsAttack = true;
                 Following();
             }
         }
+        else
+        {
+            mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, RotationSpeed);
+        }
     }
 
     private void Following()
     {
-        if (GameManager.isPlayerDead == false)
+        if (GameManager.IsPlayerDead == false)
         {
-            if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) > zombie.AttackRange)
+            if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) > Zombie.AttackRange)
             {
-                BodyObject.transform.Translate(Vector2.right * -zombie.Speed * Time.deltaTime);
+                BodyObject.transform.Translate(Vector2.right * -Zombie.Speed * Time.deltaTime);
                 BodyObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, BodyObject.transform);
             }
-            else if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) < zombie.AttackRange + 0.1f)
+            else if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) < Zombie.AttackRange + 0.1f)
             {
                 Attack();
             }
@@ -141,8 +161,8 @@ public class Zombies : MonoBehaviour
     {
         if (attack)
         {
-            shootcoolDown = zombie.ShootingRate;
-            GameManager.Character.HealthDisCount(zombie.AttackPower);
+            ShootcoolDown = Zombie.ShootingRate;
+            GameManager.Character.HealthDisCount(Zombie.AttackPower);
         }
     }
 
@@ -150,9 +170,9 @@ public class Zombies : MonoBehaviour
 
     #region Public Method
 
-    public void RoomEqual(GameObject gameObject)
+    public void RoomEqual(Room room)
     {
-        RoomObject = gameObject;
+        Room = room;
     }
 
     public void DisHealth(int power)

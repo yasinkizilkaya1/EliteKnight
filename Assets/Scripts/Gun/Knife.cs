@@ -4,19 +4,19 @@ public class Knife : MonoBehaviour
 {
     #region Constants
 
-    private const string TAG_ENEMY = "Enemy";
+    private const string mTAG_ENEMY = "Enemy";
 
     #endregion
 
     #region Fields
 
-    public bool isattack;
+    public bool IsAttack;
 
     public int Power;
 
     public Animator Attack;
-    public Animator custom;
-    public Character character;
+    public Animator Custom;
+    public Character Character;
 
     #endregion
 
@@ -26,18 +26,18 @@ public class Knife : MonoBehaviour
 
     private void Update()
     {
-        test = character.CharacterWay;
+        test = Character.CharacterWay;
 
-        if (custom != null && Attack != null)
+        if (Custom != null && Attack != null)
         {
-            custom.SetFloat("Legs", character.CharacterWay);
-            Attack.SetBool("attack", isattack);
+            Custom.SetFloat("Legs", Character.CharacterWay);
+            Attack.SetBool("attack", IsAttack);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag(TAG_ENEMY))
+        if (collider.CompareTag(mTAG_ENEMY))
         {
             if (collider.GetComponentInChildren<Zombies>())
             {

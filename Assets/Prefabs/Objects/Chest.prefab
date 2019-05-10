@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc73392fa48f78d439768b24586110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  chestEntity: {fileID: 11400000, guid: ae48bbc1cad2db444922d7932ca5f5af, type: 2}
+  GameManager: {fileID: 0}
+  ChestEntity: {fileID: 11400000, guid: ae48bbc1cad2db444922d7932ca5f5af, type: 2}
   ItemObjects:
   - {fileID: 1177416201596478, guid: e87f0e46bb1fd704bb11814febd15d7f, type: 2}
   - {fileID: 1411510944606112, guid: a86c9b7e8582bf748baa070c09b0c5fc, type: 2}

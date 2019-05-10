@@ -51,11 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1563d2ae8b5f3eb44be4a9095a8f741a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomSizeList: []
+  RoomSizes: []
   DoorLocation: []
-  RoomCoordinatesList: []
+  RoomCoordinates: []
+  GameManager: {fileID: 0}
   RoomObject: {fileID: 1055143785155314, guid: 6a04244491b16ef43af5705460a21c1c, type: 2}
-  RoomCoun: 0
+  Rooms: []
+  RoomCount: 0
   UpDoor: 
   DownDoor: 
   RightDoor: 
@@ -64,3 +66,4 @@ MonoBehaviour:
   BridgeWallTilemap: {fileID: 0}
   BridgeTile: {fileID: 11400000, guid: af3a8be0b8cfee54ca854c770b6b68e3, type: 2}
   BridgeWallTile: {fileID: 11400000, guid: 57f90b1db8892364189356599d6ad0a6, type: 2}
+  "\u0130sCharacterCreate": 0

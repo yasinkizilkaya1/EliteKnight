@@ -6,7 +6,7 @@ public class CardContent : MonoBehaviour
 {
     #region Fields
 
-    public GameObject cardPrefabObject;
+    public GameObject CardPrefabObject;
 
     public List<CharacterData> Characters;
     public List<Toggle> Toggles;
@@ -32,7 +32,7 @@ public class CardContent : MonoBehaviour
 
         for (int i = 0; i < Characters.Count; i++)
         {
-            GameObject card = Instantiate(cardPrefabObject, transform);
+            GameObject card = Instantiate(CardPrefabObject, transform);
             card.GetComponent<Card>().UpdateData(Characters[i]);
             Toggle toggle = card.GetComponent<Toggle>();
             toggle.group = ToggleGroup;

@@ -16,11 +16,10 @@ MonoBehaviour:
   Health: 20
   MaxHealth: 20
   Defence: 10
-  Speed: 5
-  Energy: 100
-  MaxEnergy: 100
+  Speed: 9
+  Energy: 250
+  MaxEnergy: 250
   EnergyIncreaseAmmount: 1
-  EnergyReloadTime: 3
   Power: 1
-  RunSpeed: 7
+  RunSpeed: 12
   GameObject: {fileID: 1580405705202194, guid: 58bef7701571d424590ea150b617d687, type: 2}

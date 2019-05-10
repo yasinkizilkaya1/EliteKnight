@@ -219,7 +219,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.00000025331974}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -230,7 +230,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 1.2}
+  m_Size: {x: 3.2, y: 0.7468872}
   m_EdgeRadius: 0
 --- !u!61 &61241941024833726
 BoxCollider2D:
@@ -244,7 +244,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.0040435195}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -255,7 +255,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 1.2}
+  m_Size: {x: 3.2, y: 0.73880005}
   m_EdgeRadius: 0
 --- !u!68 &68437509812757600
 EdgeCollider2D:
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e089ae810266e0749a741d31650178d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 114677565664201690}
+  Door: {fileID: 114677565664201690}
   Collider2D: {fileID: 68437509812757600}
 --- !u!114 &114677565664201690
 MonoBehaviour:
@@ -343,13 +343,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Room: {fileID: 0}
   DoorInside: {fileID: 114132032209898790}
+  DoorAnimator: {fileID: 95170597095851066}
+  LeftDoorCollider: {fileID: 61164077337734546}
+  RightDoorCollider: {fileID: 61241941024833726}
   Collider2D: {fileID: 68807900945973378}
   DoorState: 0
-  RightDoor: {fileID: 1072493754716926}
-  LeftDoor: {fileID: 1084858886739738}
   DoorLock: {fileID: 1990294421048830}
   IsLock: 0
-  DoorAnimator: {fileID: 95170597095851066}
 --- !u!212 &212045691231343686
 SpriteRenderer:
   m_ObjectHideFlags: 1

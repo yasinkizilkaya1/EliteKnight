@@ -5,9 +5,9 @@ public class Character : MonoBehaviour
 {
     #region Constants
 
-    private const string CARD_DATA_BILL = ".asset";
-    private const string CARD_DATA_PATH = "Assets/Data/Characters/";
-    private const string TAG_ITEM = "Item";
+    private const string mCARD_DATA_BILL = ".asset";
+    private const string mCARD_DATA_PATH = "Assets/Data/Characters/";
+    private const string mTAG_ITEM = "Item";
 
     #endregion
 
@@ -31,12 +31,12 @@ public class Character : MonoBehaviour
     public int DeadEnemyCount;
     private int mDefaultSpeed;
     private int mRunSpeed;
+    public int SelectionWeaponId;
 
     public bool IsNewGun;
     public bool isDead;
-    public bool isTire;
+    public bool IsTire;
 
-    public float EnergyReload;
     public float shooting;
 
     private Vector3 mMousePositionVector;
@@ -44,7 +44,6 @@ public class Character : MonoBehaviour
     public GameObject RightWeaponObject;
     public List<Gun> Guns;
     private List<Key> mKeys;
-    public int SelectionWeaponId;
 
     private MoveForward mMoveForward;
     private MoveReserve mMoveReserve;
@@ -70,6 +69,11 @@ public class Character : MonoBehaviour
             CharacterTurn(gameManager);
             Attack();
             InventoryOpenAndClose();
+
+            if (Gun.CurrentAmmo == 0)
+            {
+                UIManager.AmmoBar.Animator.SetBool("Shoot", Input.GetKeyDown(mKeys[6].CurrentKey));
+            }
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f && Guns.Count > 1)
             {
@@ -100,17 +104,18 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag(TAG_ITEM))
+        if (collider.CompareTag(mTAG_ITEM))
         {
             if (collider.GetComponent<Gun>())
             {
                 gameManager.IsUpdateChests = true;
                 gameManager.GunSlot.GunAdd(collider.gameObject, RightWeaponObject);
+                gameManager.Inventory.ItemAdd(collider.GetComponent<Gun>().Weapon, false);
             }
             else
             {
-                gameManager.Inventory.ItemAdd(collider.GetComponent<ItemData>().Item);
                 Destroy(collider.gameObject);
+                gameManager.Inventory.ItemAdd(collider.GetComponent<ItemData>().Item, true);
             }
         }
     }
@@ -122,7 +127,7 @@ public class Character : MonoBehaviour
     private void Init()
     {
         UIManager = gameManager.UIManager;
-        mKeys = gameManager.KeySettings.Keys;
+        mKeys = gameManager.KeySetting.Keys;
 
         IsNewGun = true;
         characterData = gameManager.CharacterData;
@@ -134,7 +139,6 @@ public class Character : MonoBehaviour
         Power = characterData.Power;
         Speed = characterData.Speed;
         mDefaultSpeed = characterData.Speed;
-        EnergyReload = characterData.EnergyReloadTime;
         mRunSpeed = characterData.RunSpeed;
         MaxDefance = characterData.Defence;
 
@@ -152,7 +156,7 @@ public class Character : MonoBehaviour
 
     private void Moving(GameManager GameManager)
     {
-        if (GameManager.isPause == false)
+        if (GameManager.IsPause == false)
         {
             if (Input.GetKey(mKeys[0].CurrentKey))
             {
@@ -174,7 +178,10 @@ public class Character : MonoBehaviour
                 mMoveLeft.Execute();
             }
 
-            if (Input.GetKey(mKeys[0].CurrentKey) == false && Input.GetKey(mKeys[1].CurrentKey) == false && Input.GetKey(mKeys[2].CurrentKey) == false && Input.GetKey(mKeys[3].CurrentKey) == false)
+            if (Input.GetKey(mKeys[0].CurrentKey) == false &&
+                Input.GetKey(mKeys[1].CurrentKey) == false &&
+                Input.GetKey(mKeys[2].CurrentKey) == false &&
+                Input.GetKey(mKeys[3].CurrentKey) == false)
             {
                 CharacterWay = 0;
             }
@@ -183,7 +190,7 @@ public class Character : MonoBehaviour
 
     private void CharacterTurn(GameManager gameManager)
     {
-        if (gameManager.isPause == false)
+        if (gameManager.IsPause == false)
         {
             mMousePositionVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mMousePositionVector.z = transform.position.z;
@@ -193,7 +200,7 @@ public class Character : MonoBehaviour
 
     private void Run(GameManager gameManager)
     {
-        if (gameManager.isPause == false)
+        if (gameManager.IsPause == false)
         {
             if (Input.GetKey(mKeys[4].CurrentKey))
             {
@@ -206,13 +213,8 @@ public class Character : MonoBehaviour
                 else
                 {
                     Speed = mDefaultSpeed;
-                    isTire = true;
-
-                    if (isTire == true && EnergyReload > 0)
-                    {
-                        EnergyReload -= Time.deltaTime;
-                        run = 0;
-                    }
+                    IsTire = true;
+                    run = 0;
                 }
             }
             else
@@ -220,21 +222,13 @@ public class Character : MonoBehaviour
                 Speed = mDefaultSpeed;
                 run = 0;
 
-                if (isTire == true && EnergyReload > 0)
+                if (characterData.MaxEnergy == Energy)
                 {
-                    EnergyReload -= Time.deltaTime;
-                    run = 0;
+                    IsTire = false;
                 }
-
-                if (EnergyReload <= 0.2 && characterData.MaxEnergy >= Energy)
+                else
                 {
                     Energy += characterData.EnergyIncreaseAmmount;
-
-                    if (characterData.MaxEnergy == Energy)
-                    {
-                        isTire = false;
-                        EnergyReload = characterData.EnergyReloadTime;
-                    }
                 }
             }
         }
@@ -242,11 +236,11 @@ public class Character : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(mKeys[6].CurrentKey) && gameManager.isPause == false)
+        if (Input.GetKeyDown(mKeys[6].CurrentKey) && gameManager.IsPause == false)
         {
             if (Gun == null && RightWeaponObject == null)
             {
-                knife.isattack = true;
+                knife.IsAttack = true;
             }
             else
             {
@@ -255,7 +249,7 @@ public class Character : MonoBehaviour
         }
         else if (Input.GetKeyDown(mKeys[6].CurrentKey) == false && Gun == null)
         {
-            knife.isattack = false;
+            knife.IsAttack = false;
         }
     }
 
@@ -334,7 +328,7 @@ public class Character : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKey(gameManager.KeySettings.Keys[4].CurrentKey) == false && inside == false)
+            else if (Input.GetKey(gameManager.KeySetting.Keys[4].CurrentKey) == false && inside == false)
             {
                 Speed = characterData.Speed;
             }

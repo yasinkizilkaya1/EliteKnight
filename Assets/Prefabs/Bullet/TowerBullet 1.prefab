@@ -180,7 +180,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1443057231804648}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 16, y: 12.45, z: 0}
+  m_LocalPosition: {x: 16, y: 12.4, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -193,7 +193,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819539659130658}
   m_LocalRotation: {x: 0, y: 0, z: -0.92387956, w: 0.38268343}
-  m_LocalPosition: {x: -8.99, y: -12.56, z: 0}
+  m_LocalPosition: {x: -9.2, y: -12.8, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -206,7 +206,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1921552198210890}
   m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 15.97, y: -12.52, z: 0}
+  m_LocalPosition: {x: 16.1, y: -12.6, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -219,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661464943599208}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -14.5, y: -0.009994507, z: 0}
+  m_LocalPosition: {x: -14.2, y: -0.009994507, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -232,7 +232,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1862299300896080}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.0913544, y: -17.469997, z: 0}
+  m_LocalPosition: {x: 3.1, y: -17.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -245,7 +245,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1735722563420998}
   m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
-  m_LocalPosition: {x: -8.97, y: 12.44, z: 0}
+  m_LocalPosition: {x: -9, y: 12.5, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -258,7 +258,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1453656093593302}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.1013489, y: 17.630005, z: 0}
+  m_LocalPosition: {x: 3.1, y: 17.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -306,7 +306,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849688335819738}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.091347, y: -0.009994507, z: 0}
+  m_LocalPosition: {x: 21, y: -0.009994507, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4720740865376638}
@@ -324,9 +324,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3.5, y: 0}
+  m_Offset: {x: 2.9631662, y: -0.13305664}
   serializedVersion: 2
-  m_Radius: 18
+  m_Radius: 28.162521
 --- !u!58 &58941724761181032
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -354,11 +354,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetTransform: {fileID: 0}
-  isEffectTowerBullet: 1
-  isBullet: 0
-  bulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
+  IsEffectTowerBullet: 1
+  IsBullet: 0
+  BulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
-  Barrels: []
+  Barrels:
+  - {fileID: 1849688335819738}
+  - {fileID: 1661464943599208}
+  - {fileID: 1453656093593302}
+  - {fileID: 1862299300896080}
+  - {fileID: 1921552198210890}
+  - {fileID: 1819539659130658}
+  - {fileID: 1735722563420998}
+  - {fileID: 1443057231804648}
   StandartTowerBulletObject: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
   EffectTowerBulletPower: 8

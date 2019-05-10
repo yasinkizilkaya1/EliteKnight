@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: EnemyRocket
   IsFollow: 1
   IsExplode: 1
+  IsEnemyCreate: 0
   Power: 3
-  Speed: 2
+  Speed: 10

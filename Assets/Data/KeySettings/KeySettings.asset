@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Keys
-  m_EditorClassIdentifier: Assembly-CSharp::KeySettings
+  m_Script: {fileID: 11500000, guid: 196aab812c7fce543826bac0df5b71e4, type: 3}
+  m_Name: KeySettings
+  m_EditorClassIdentifier: 
   Keys:
   - KeyType: 0
     CurrentKey: 119

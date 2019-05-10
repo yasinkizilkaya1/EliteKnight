@@ -4,16 +4,16 @@ public class WarriorEnemy : MonoBehaviour
 {
     #region Contants 
 
-    private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_ENEMY = "Enemy";
-    private const string TAG_CHEST = "chest";
-    private const string TAG_WALL = "wall";
+    private const string mTAG_GAMEMANAGER = "GameManager";
+    private const string mTAG_ENEMY = "Enemy";
+    private const string mTAG_CHEST = "chest";
+    private const string mTAG_WALL = "wall";
 
     #endregion
 
     #region Fields
 
-    public EnemyWarrior enemyWarrior;
+    public EnemyWarrior EnemyWarrior;
 
     public int CurrentHealth;
     public int CurrentDefence;
@@ -25,12 +25,12 @@ public class WarriorEnemy : MonoBehaviour
 
     public Transform Radar;
 
-    public GameObject RoomObject;
+    public Room Room;
     public GameObject GunObject;
     public GameObject BulletObjcet;
     public GameObject Body;
 
-    public RaycastHit2D raycastHit2D;
+    public RaycastHit2D RaycastHit2D;
 
     private bool mIsAim;
     private bool mIsTargetFind;
@@ -67,12 +67,17 @@ public class WarriorEnemy : MonoBehaviour
 
         if (CurrentHealth == 0)
         {
-            RoomObject.GetComponent<Room>().EnemyCount--;
             Destroy(gameObject);
             GameManager.Character.DeadEnemyCount++;
-        }              
-                       
-        if (GameManager.Character!= null)
+
+            if (Room != null)
+            {
+                Room.EnemyCount--;
+
+            }
+        }
+
+        if (GameManager.Character != null)
         {
             TargetFind();
 
@@ -96,14 +101,14 @@ public class WarriorEnemy : MonoBehaviour
 
     private void Init()
     {
-        GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         mShootCoolDown = 0f;
-        CurrentHealth = enemyWarrior.Health;
-        CurrentDefence = enemyWarrior.Defence;
-        mSpeed = enemyWarrior.Speed;
-        mRange = enemyWarrior.Range;
-        mDistance = enemyWarrior.Distance;
+        CurrentHealth = EnemyWarrior.Health;
+        CurrentDefence = EnemyWarrior.Defence;
+        mSpeed = EnemyWarrior.Speed;
+        mRange = EnemyWarrior.Range;
+        mDistance = EnemyWarrior.Distance;
     }
 
     private void Aim()
@@ -126,7 +131,7 @@ public class WarriorEnemy : MonoBehaviour
         if (CanAttack)
         {
             Aim();
-            mShootCoolDown = enemyWarrior.AttackTime;
+            mShootCoolDown = EnemyWarrior.AttackTime;
             Instantiate(BulletObjcet, GunObject.transform.position, GunObject.transform.rotation);
             Following();
         }
@@ -134,15 +139,15 @@ public class WarriorEnemy : MonoBehaviour
 
     private void TargetFind()
     {
-        raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
+        RaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
 
-        if (raycastHit2D.collider != null)
+        if (RaycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.CompareTag(TAG_WALL) || raycastHit2D.collider.CompareTag(TAG_ENEMY) || raycastHit2D.collider.CompareTag(TAG_CHEST))
+            if (RaycastHit2D.collider.CompareTag(mTAG_WALL) || RaycastHit2D.collider.CompareTag(mTAG_ENEMY) || RaycastHit2D.collider.CompareTag(mTAG_CHEST))
             {
                 mIsTargetFind = false;
                 Radar.Rotate(Vector3.forward * mRange * Time.deltaTime);
-                Debug.DrawLine(Radar.position, raycastHit2D.point, Color.red);
+                Debug.DrawLine(Radar.position, RaycastHit2D.point, Color.red);
             }
             else
             {
@@ -152,7 +157,7 @@ public class WarriorEnemy : MonoBehaviour
         }
         else
         {
-            raycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
+            RaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
         }
     }
 
@@ -203,9 +208,9 @@ public class WarriorEnemy : MonoBehaviour
         }
     }
 
-    public void RoomEqual(GameObject gameObject)
+    public void RoomEqual(Room room)
     {
-        RoomObject = gameObject;
+        Room = room;
     }
 
     #endregion
