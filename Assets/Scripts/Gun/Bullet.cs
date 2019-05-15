@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
 
     public int Speed;
     public float Range;
+    public SpriteRenderer SpriteRenderer;
 
     #endregion
 
@@ -73,6 +74,7 @@ public class Bullet : MonoBehaviour
     {
         if (Weapon != null)
         {
+            SpriteRenderer.sprite = Weapon.Bullet;
             Range = Weapon.Range;
         }
     }

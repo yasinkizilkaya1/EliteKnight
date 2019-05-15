@@ -15,11 +15,11 @@ public class FireWeapon : Command
 
                 if (Bullet != null)
                 {
+                    Bullet.GetComponent<Bullet>().Weapon = gun.gameObject.GetComponent<Gun>().Weapon;
+                    gun.mUIManager.AmmoBar.BarImages[gun.CurrentAmmo].color = Color.grey;
                     Bullet.transform.position = gun.Barrels[i].transform.position;
                     Bullet.transform.rotation = gun.Barrels[i].transform.rotation;
                     Bullet.SetActive(true);
-                    Bullet.GetComponent<Bullet>().Weapon = gun.gameObject.GetComponent<Gun>().Weapon;
-                    gun.mUIManager.AmmoBar.BarImages[gun.CurrentAmmo].color = Color.grey;
                 }
             }
         }

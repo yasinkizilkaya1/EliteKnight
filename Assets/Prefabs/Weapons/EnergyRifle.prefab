@@ -11,22 +11,6 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1480528054486784}
   m_IsPrefabParent: 1
---- !u!1 &1439289255841562
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4633321648305366}
-  - component: {fileID: 114684581738013382}
-  m_Layer: 0
-  m_Name: BulletPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1480528054486784
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4972420439453790}
   - component: {fileID: 212192605182219238}
+  - component: {fileID: 61531689636486416}
+  - component: {fileID: 114884052843659978}
   m_Layer: 0
   m_Name: EnergyRifle
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +37,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4838912963065956}
-  - component: {fileID: 114912877592020826}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -59,19 +44,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4633321648305366
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1439289255841562}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.077, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4972420439453790}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4838912963065956
 Transform:
   m_ObjectHideFlags: 1
@@ -79,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1954752798736720}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.016, y: 0.058, z: 0}
+  m_LocalPosition: {x: -0.02, y: 5.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4972420439453790}
@@ -96,54 +68,58 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4838912963065956}
-  - {fileID: 4633321648305366}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114684581738013382
+--- !u!61 &61531689636486416
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480528054486784}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.018874645, y: 1.0003338}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6, y: 14}
+    newSize: {x: 0.05, y: 0.1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.6788073, y: 10.640385}
+  m_EdgeRadius: 0
+--- !u!114 &114884052843659978
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1439289255841562}
+  m_GameObject: {fileID: 1480528054486784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
+  m_Script: {fileID: 11500000, guid: b18d5cb366ec97f408d6a1a2abbfa385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoPrefab: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6, type: 2}
-  clip: {fileID: 0}
-  MaxAmmo: 0
-  Ammo: 0
-  barrel: 0
-  BulletPos: 1
-  Bullet: 0
-  WeaponReloaded: 0
-  shoot: 0
-  weaponReload: 0
-  m_Velocidade: 8
---- !u!114 &114912877592020826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1954752798736720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a50bca171877e64f87b74828c4f3335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AmmoPrefab: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6, type: 2}
-  clip: {fileID: 0}
-  MaxAmmo: 0
-  Ammo: 0
-  barrel: 1
-  BulletPos: 0
-  Bullet: 0
-  WeaponReloaded: 0
-  shoot: 0
-  weaponReload: 0
-  m_Velocidade: 8
+  mUIManager: {fileID: 0}
+  Character: {fileID: 0}
+  Weapon: {fileID: 11400000, guid: 754e8b6c4a644604cbe35f1d484b27ec, type: 2}
+  Barrels:
+  - {fileID: 1954752798736720}
+  AmmoPrefabObject: {fileID: 1766454748759930, guid: e74b0e6acc86e7542b2a19038b4464a6,
+    type: 2}
+  ClipObject: {fileID: 1891685721829742, guid: 1978fc3035b1a95409e092c57389eb4d, type: 2}
+  SpareBulletCount: 0
+  CurrentAmmo: 0
+  IsWeaponReload: 0
+  IsCanShoot: 0
+  Range: 0
 --- !u!212 &212192605182219238
 SpriteRenderer:
   m_ObjectHideFlags: 1

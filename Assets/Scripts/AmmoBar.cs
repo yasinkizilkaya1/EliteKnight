@@ -24,7 +24,6 @@ public class AmmoBar : MonoBehaviour
     public Image BarImage;
     public List<Image> BarImages;
     public List<GameObject> BarImageObjects;
-    public GameObject ReloadGUIObject;
     public Animator Animator;
 
     public Text ClipAmountText;

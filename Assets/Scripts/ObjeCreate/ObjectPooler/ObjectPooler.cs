@@ -3,9 +3,20 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+    #region Constants 
+
     public static ObjectPooler SharedInstance;
+
+    #endregion
+
+    #region Fields
+
     public List<ObjectPoolItem> itemsToPool;
     public List<GameObject> pooledObjects;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Awake()
     {
@@ -20,12 +31,16 @@ public class ObjectPooler : MonoBehaviour
         {
             for (int i = 0; i < item.amountToPool; i++)
             {
-                GameObject obje = Instantiate(item.objectToPool,transform);
+                GameObject obje = Instantiate(item.objectToPool, transform);
                 obje.SetActive(false);
                 pooledObjects.Add(obje);
             }
         }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public GameObject GetPooledObject(string tag)
     {
@@ -41,7 +56,7 @@ public class ObjectPooler : MonoBehaviour
         {
             if (item.objectToPool.tag == tag && item.shouldExpand)
             {
-                GameObject obje = Instantiate(item.objectToPool,transform);
+                GameObject obje = Instantiate(item.objectToPool, transform);
                 obje.SetActive(false);
                 pooledObjects.Add(obje);
                 return obje;
@@ -50,4 +65,6 @@ public class ObjectPooler : MonoBehaviour
 
         return null;
     }
+
+    #endregion
 }

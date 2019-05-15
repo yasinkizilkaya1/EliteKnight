@@ -16,9 +16,11 @@ MonoBehaviour:
   Icon: {fileID: 21300014, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
   MaxStackSize: 0
-  IsAttak: 1
   Power: 1
   ClipCapacity: 8
   TotalBullet: 220
   Range: 0.8
   ReloadTime: 2.8
+  IsAutoReload: 0
+  IsAttak: 1
+  Bullet: {fileID: 21300020, guid: a3c410e137d1fdf4e95eb0690cc6a665, type: 3}

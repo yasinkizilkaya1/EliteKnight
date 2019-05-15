@@ -100,7 +100,7 @@ public class SpaceShip : MonoBehaviour
     {
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         UIManager = GameManager.UIManager;
-        GameManager.IsBossSpawn=true;
+        GameManager.IsBossSpawn = true;
         HealthSlider = UIManager.BossHealthBarSlider;
         CurrentHealth = BossData.Health;
         MaxHealth = BossData.MaxHealth;
@@ -214,6 +214,7 @@ public class SpaceShip : MonoBehaviour
 
         Room.EnemyCount--;
         UIManager.BossHealthBarSlider.gameObject.SetActive(false);
+        GameManager.IsBossSpawn = false;
         Destroy(this.gameObject);
     }
 
@@ -233,6 +234,11 @@ public class SpaceShip : MonoBehaviour
             else
             {
                 CurrentHealth -= power;
+
+                if (CurrentHealth == 0)
+                {
+                    Dead();
+                }
             }
         }
         else

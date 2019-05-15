@@ -22,4 +22,4 @@ MonoBehaviour:
   EnergyIncreaseAmmount: 1
   Power: 2
   RunSpeed: 10
-  GameObject: {fileID: 1737389855897982, guid: db7a2fc5cdbf5514bb5a2f305b814323, type: 2}
+  GameObject: {fileID: 1717809750695410, guid: 5640f00858b7bc44088ff11f4c3209da, type: 2}

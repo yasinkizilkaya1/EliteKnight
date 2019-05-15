@@ -68,7 +68,6 @@ public class GunSlot : MonoBehaviour
         gunObject.transform.position = mGuns[0].transform.position;
         gunObject.transform.rotation = mGuns[0].transform.rotation;
         gunObject.transform.localScale = mGuns[0].transform.localScale;
-        gunObject.gameObject.SetActive(false);
         mGuns.Add(gunObject.GetComponent<Gun>());
     }
 

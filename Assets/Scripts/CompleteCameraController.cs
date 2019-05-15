@@ -22,6 +22,10 @@ public class CompleteCameraController : MonoBehaviour
         {
             MainCamera.orthographicSize = 20;
         }
+        else
+        {
+            MainCamera.orthographicSize = 10;
+        }
     }
 
     #endregion

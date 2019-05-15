@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
 
     #region Private Methods
 
-    private void ItemEqual(Slot mSlot, Item item,bool isUse)
+    private void ItemEqual(Slot mSlot, Item item, bool isUse)
     {
         mSlot.Item = item;
         mSlot.Image.sprite = item.Icon;
@@ -27,14 +27,14 @@ public class Inventory : MonoBehaviour
 
     #region Public Methods
 
-    public void ItemAdd(Item item,bool isUse)
+    public void ItemAdd(Item item, bool isUse)
     {
         if (Slots.Count == 0)
         {
             Slot mSlot = Instantiate(Slot, Content.transform);
             mSlot.GameManager = GameManager;
             Slots.Add(mSlot);
-            ItemEqual(mSlot, item,isUse);
+            ItemEqual(mSlot, item, isUse);
             return;
         }
         else
@@ -43,7 +43,7 @@ public class Inventory : MonoBehaviour
             {
                 if (slot.IsFull == false)
                 {
-                    ItemEqual(slot, item,isUse);
+                    ItemEqual(slot, item, isUse);
                     return;
                 }
                 else
@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
                     Slot mSlot = Instantiate(Slot, Content.transform);
                     mSlot.GameManager = GameManager;
                     Slots.Add(mSlot);
-                    ItemEqual(mSlot, item,isUse);
+                    ItemEqual(mSlot, item, isUse);
                     return;
                 }
             }

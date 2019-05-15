@@ -9,18 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1283aeb897c025d438b37429a01ba309, type: 3}
-  m_Name: AK47
+  m_Name: Staff
   m_EditorClassIdentifier: 
-  Id: 1
-  Name: Ak47
-  Icon: {fileID: 21300012, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
+  Id: 3
+  Name: Staff
+  Icon: {fileID: 21300010, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
-  MaxStackSize: 0
+  MaxStackSize: 1
   Power: 1
-  ClipCapacity: 10
-  TotalBullet: 120
-  Range: 1.2
-  ReloadTime: 2.5
-  IsAutoReload: 0
+  ClipCapacity: 4
+  TotalBullet: 500
+  Range: 0.7
+  ReloadTime: 2
+  IsAutoReload: 1
   IsAttak: 1
-  Bullet: {fileID: 21300028, guid: a3c410e137d1fdf4e95eb0690cc6a665, type: 3}
+  Bullet: {fileID: 21300052, guid: a3c410e137d1fdf4e95eb0690cc6a665, type: 3}

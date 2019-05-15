@@ -20,7 +20,6 @@ public class Gun : MonoBehaviour
     private KeySetting mKeySetting;
 
     public List<GameObject> Barrels;
-    public GameObject AmmoPrefabObject;
     public GameObject ClipObject;
 
     public int SpareBulletCount;
@@ -55,7 +54,6 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetKeyDown(mKeySetting.Keys[5].CurrentKey) && mGameManager.IsPause == false && IsWeaponReload == false && CurrentAmmo != Weapon.ClipCapacity && SpareBulletCount > 0 && Weapon.IsAttak)
         {
-            mUIManager.AmmoBar.ReloadGUIObject.SetActive(true);
             GunClipDrup();
             Instantiate(ClipObject, transform.position, transform.rotation);
             mFillingAmount = (mWeaponReload - 0.4f) / Weapon.ClipCapacity;
@@ -140,7 +138,6 @@ public class Gun : MonoBehaviour
                 }
 
                 mWeaponReload = Weapon.ReloadTime;
-                mUIManager.AmmoBar.ReloadGUIObject.SetActive(false);
                 mUIManager.AmmoBar.ClipAmountText.text = SpareBulletCount.ToString();
             }
         }

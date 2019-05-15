@@ -108,6 +108,7 @@ public class Character : MonoBehaviour
         {
             if (collider.GetComponent<Gun>())
             {
+                collider.gameObject.SetActive(false);
                 gameManager.IsUpdateChests = true;
                 gameManager.GunSlot.GunAdd(collider.gameObject, RightWeaponObject);
                 gameManager.Inventory.ItemAdd(collider.GetComponent<Gun>().Weapon, false);
@@ -141,6 +142,7 @@ public class Character : MonoBehaviour
         mDefaultSpeed = characterData.Speed;
         mRunSpeed = characterData.RunSpeed;
         MaxDefance = characterData.Defence;
+        InventoryStandartGunAdd();
 
         mMoveForward = new MoveForward();
         mMoveReserve = new MoveReserve();
@@ -268,6 +270,11 @@ public class Character : MonoBehaviour
                 gameManager.GameSetting(GameManager.GameSettings.Stop);
             }
         }
+    }
+
+    private void InventoryStandartGunAdd()
+    {
+        gameManager.Inventory.ItemAdd(Gun.Weapon, false);
     }
 
     #endregion

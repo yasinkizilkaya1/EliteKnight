@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Public MEthods
+    #region Public Methods
 
     public void GameSetting(GameSettings gameSettings)
     {

@@ -7,7 +7,6 @@ public class Chest : MonoBehaviour
 
     private const string TAG_KNIFE = "knife";
     private const string TAG_SUPPORT = "Support";
-    private const string TAG_SPEALİST = "Spealist";
     private const string TAG_GAMEMANAGER = "GameManager";
     private const string TAG_BULLET = "bullet";
 
@@ -121,14 +120,13 @@ public class Chest : MonoBehaviour
 
         if (GameManager.CharacterData.Name == TAG_SUPPORT)
         {
-            ItemObjects.Remove(ItemObjects[4]);
-            ItemObjects.Remove(ItemObjects[3]);
-            ItemObjects.Remove(ItemObjects[2]);
-        }
-        else if (GameManager.CharacterData.Name == TAG_SPEALİST)
-        {
-            ItemObjects.Remove(ItemObjects[4]);
-            ItemObjects.Remove(ItemObjects[3]);
+            foreach(GameObject item in ItemObjects)
+            {
+                if(item.GetComponent<Gun>())
+                {
+                    ItemObjects.Remove(item);
+                }
+            }
         }
     }
 
