@@ -92,6 +92,14 @@ public class GunSlot : MonoBehaviour
             {
                 if (gun == character.Gun)
                 {
+                    for (int i = 0; i < mGameManager.Inventory.Slots.Count; i++)
+                    {
+                        if (mGameManager.Inventory.Slots[i].Item == character.Gun.Weapon)
+                        {
+                            Destroy(mGameManager.Inventory.Slots[i].gameObject);
+                            mGameManager.Inventory.Slots.Remove(mGameManager.Inventory.Slots[i]);
+                        }
+                    }
                     gun.transform.parent = mBlank;
                     gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
                     character.Guns.Remove(character.Gun);

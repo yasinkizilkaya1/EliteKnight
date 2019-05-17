@@ -274,11 +274,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5779647140a83cd4387cce87bb49ae6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isattack: 0
+  IsAttack: 0
   Power: 1
   Attack: {fileID: 95829996084634440}
-  custom: {fileID: 95266261106324590}
-  character: {fileID: 114670678802308486}
+  Custom: {fileID: 95266261106324590}
+  Character: {fileID: 114670678802308486}
 --- !u!114 &114670678802308486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,8 +293,8 @@ MonoBehaviour:
   characterData: {fileID: 0}
   gameManager: {fileID: 0}
   UIManager: {fileID: 0}
-  Gun: {fileID: 0}
   knife: {fileID: 114505327535320368}
+  Gun: {fileID: 0}
   CurrentHP: 0
   MaxHP: 0
   CurrentDefence: 0
@@ -305,15 +305,14 @@ MonoBehaviour:
   Energy: 0
   MaxDefance: 0
   DeadEnemyCount: 0
+  SelectionWeaponId: 0
   IsNewGun: 0
   isDead: 0
-  isTire: 0
-  EnergyReload: 0
+  IsTire: 0
   shooting: 0
   BodyObject: {fileID: 1074870930181420}
   RightWeaponObject: {fileID: 0}
   Guns: []
-  SelectionWeaponId: 0
 --- !u!212 &212051075891304966
 SpriteRenderer:
   m_ObjectHideFlags: 1

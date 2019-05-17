@@ -36,3 +36,6 @@ MonoBehaviour:
   - KeyType: 7
     CurrentKey: 101
     DefaultKey: 101
+  - KeyType: 8
+    CurrentKey: 27
+    DefaultKey: 27

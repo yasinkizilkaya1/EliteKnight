@@ -6,9 +6,7 @@ public class Chest : MonoBehaviour
     #region Constants
 
     private const string TAG_KNIFE = "knife";
-    private const string TAG_SUPPORT = "Support";
     private const string TAG_GAMEMANAGER = "GameManager";
-    private const string TAG_BULLET = "bullet";
 
     #endregion
 
@@ -16,20 +14,12 @@ public class Chest : MonoBehaviour
 
     public GameManager GameManager;
     public ChestEntity ChestEntity;
+
     public List<GameObject> ItemObjects;
-    public List<Item> Items;
+    public List<GameObject> HealthBars;
+    public List<GameObject> DefenceBars;
 
-    public GameObject HealthBarObject;
-    public GameObject HealthBarObject1;
-    public GameObject HealthBarObject2;
-    public GameObject HealthBarObject3;
-    public GameObject DefanceBarObject1;
-    public GameObject DefanceBarObject2;
-    public GameObject DefanceBarObject3;
-    public GameObject DefanceBarObject4;
-    public GameObject DefanceBarObject5;
-
-    public int Health;
+    public int CurrentHealth;
     public int Defence;
 
     #endregion
@@ -39,55 +29,6 @@ public class Chest : MonoBehaviour
     private void Start()
     {
         Init();
-    }
-
-    private void Update()
-    {
-        switch (Defence)
-        {
-            case 5:
-                ArmorObjectsSetActive(true, true, true, true, true, true);
-                break;
-            case 4:
-                ArmorObjectsSetActive(false, true, true, true, true, true);
-                break;
-            case 3:
-                ArmorObjectsSetActive(false, false, true, true, true, true);
-                break;
-            case 2:
-                ArmorObjectsSetActive(false, false, false, true, true, true);
-                break;
-            case 1:
-                ArmorObjectsSetActive(false, false, false, false, true, true);
-                break;
-            case 0:
-                ArmorObjectsSetActive(false, false, false, false, false, true);
-                break;
-        }
-
-        switch (Health)
-        {
-            case 3:
-                HealthObjectsSetActive(true, true, true, true);
-                break;
-            case 2:
-                HealthObjectsSetActive(false, true, true, true);
-                break;
-            case 1:
-                HealthObjectsSetActive(false, false, true, true);
-                break;
-            case 0:
-                HealthObjectsSetActive(false, false, false, false);
-
-                if (ChestEntity.ItemDrop)
-                {
-                    HealthBarObject.SetActive(false);
-                    Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
-                    GameManager.Chests.Remove(this);
-                    Destroy(gameObject);
-                }
-                break;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -100,7 +41,7 @@ public class Chest : MonoBehaviour
             }
             else if (Defence == 0)
             {
-                Health--;
+                CurrentHealth--;
             }
         }
     }
@@ -113,38 +54,38 @@ public class Chest : MonoBehaviour
     {
         GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         name = ChestEntity.Name;
+        CurrentHealth = ChestEntity.Health;
         Defence = ChestEntity.Defence;
-        Health = ChestEntity.Health;
         GameManager.Chests.Add(this);
         CharacterHavingGunsUnload();
 
-        if (GameManager.CharacterData.Name == TAG_SUPPORT)
+        if (GameManager.Character.knife != null && GameManager.Character.Gun == null)
         {
-            foreach(GameObject item in ItemObjects)
+            int Count = ItemObjects.Count;
+
+            for (int i = 0; i < Count; i++)
             {
-                if(item.GetComponent<Gun>())
+                if (ItemObjects[i].GetComponent<Gun>())
                 {
-                    ItemObjects.Remove(item);
+                    Count--;
+                    ItemObjects.RemoveAt(i);
+                    i--;
                 }
             }
         }
     }
 
-    private void HealthObjectsSetActive(bool istruefalse1, bool istruefalse2, bool istruefalse3, bool isdead)
+    private void ObjectsSetActive(int MaxValue, int value, List<GameObject> gameObjects)
     {
-        HealthBarObject.SetActive(isdead);
-        HealthBarObject3.SetActive(istruefalse1);
-        HealthBarObject2.SetActive(istruefalse2);
-        HealthBarObject1.SetActive(istruefalse3);
-    }
+        int Count = MaxValue - value;
 
-    private void ArmorObjectsSetActive(bool istruefalse1, bool istruefalse2, bool istruefalse3, bool istruefalse4, bool istruefalse5, bool isdead)
-    {
-        DefanceBarObject1.SetActive(istruefalse1);
-        DefanceBarObject2.SetActive(istruefalse2);
-        DefanceBarObject3.SetActive(istruefalse3);
-        DefanceBarObject4.SetActive(istruefalse4);
-        DefanceBarObject5.SetActive(istruefalse5);
+        if (Count != MaxValue)
+        {
+            for (int i = MaxValue - 1; i >= Count; i--)
+            {
+                gameObjects[i].SetActive(false);
+            }
+        }
     }
 
     #endregion
@@ -163,23 +104,32 @@ public class Chest : MonoBehaviour
             }
             else
             {
+                ObjectsSetActive(Defence, power, DefenceBars);
                 Defence -= power;
             }
         }
-        else if (Health > 0)
+        else if (CurrentHealth > 0)
         {
-            if (power > Health)
+            if (power > CurrentHealth)
             {
-                Health = 0;
+                CurrentHealth = 0;
             }
             else
             {
-                Health -= power;
+                ObjectsSetActive(CurrentHealth, power, HealthBars);
+                CurrentHealth -= power;
+
+                if (CurrentHealth == 0 && ChestEntity.ItemDrop)
+                {
+                    Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
+                    GameManager.Chests.Remove(this);
+                    Destroy(gameObject);
+                }
             }
 
             if (remainingDamage != 0)
             {
-                Health -= remainingDamage;
+                CurrentHealth -= remainingDamage;
             }
         }
     }
@@ -188,11 +138,10 @@ public class Chest : MonoBehaviour
     {
         foreach (Gun gun in GameManager.Character.Guns)
         {
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < ItemObjects.Count; i++)
             {
-                if (Items[i].Id == gun.Weapon.Id)
+                if (ItemObjects[i].GetComponent<Gun>() && ItemObjects[i].GetComponent<Gun>().Weapon.Id == gun.Weapon.Id)
                 {
-                    Items.Remove(Items[i]);
                     ItemObjects.Remove(ItemObjects[i]);
                 }
             }

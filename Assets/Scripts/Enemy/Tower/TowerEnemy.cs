@@ -22,15 +22,6 @@ public class TowerEnemy : MonoBehaviour
 
     #endregion
 
-    #region Private Method
-
-    private void Init()
-    {
-        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
-    }
-
-    #endregion
-
     #region Unity Methods
 
     private void Start()
@@ -43,16 +34,9 @@ public class TowerEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag(mTAG_TARGET))
         {
             Inside = true;
+            GameManager.Character.Speed = 2;
 
-            if (TowerWeapon.IsLinerenderer)
-            {
-                GameManager.Character.SlowDown(Inside, SlowPower, TowerWeapon.Tower.AttackTime);
-            }
-
-            if (IsStandartTower && TowerWeapon.CanAttack)
-            {
-                StartCoroutine(Fire());
-            }
+            StartCoroutine(Fire());
         }
     }
 
@@ -61,9 +45,18 @@ public class TowerEnemy : MonoBehaviour
         if (col.gameObject.gameObject.CompareTag(mTAG_TARGET))
         {
             Inside = false;
-            GameManager.Character.SlowDown(Inside, SlowPower, TowerWeapon.Tower.AttackTime);
+            GameManager.Character.Speed = GameManager.Character.characterData.Speed;
             StopAllCoroutines();
         }
+    }
+
+    #endregion
+
+    #region Private Method
+
+    private void Init()
+    {
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
     }
 
     #endregion
@@ -74,7 +67,7 @@ public class TowerEnemy : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.Character.isDead == false)
+            if (GameManager.Character.isDead == false && TowerWeapon.CanAttack)
             {
                 TowerWeapon.Attack(true);
                 yield return new WaitForSeconds(1f);

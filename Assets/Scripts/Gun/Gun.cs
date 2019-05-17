@@ -28,7 +28,6 @@ public class Gun : MonoBehaviour
     public bool IsWeaponReload;
     public bool IsCanShoot;
 
-    public float Range;
     private float mWeaponReload;
     private float mFillingAmount;
 
@@ -43,7 +42,17 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        ClipReload();
+        if (Input.GetKeyDown(mKeySetting.Keys[5].CurrentKey) && mGameManager.IsPause == false && IsWeaponReload == false && CurrentAmmo != Weapon.ClipCapacity && SpareBulletCount > 0 && Weapon.IsAttak)
+        {
+            ClipReload();
+        }
+        else
+        {
+            if (mWeaponReload > 0 && IsWeaponReload)
+            {
+                WeaponReload();
+            }
+        }
     }
 
     #endregion
@@ -52,16 +61,13 @@ public class Gun : MonoBehaviour
 
     public void ClipReload()
     {
-        if (Input.GetKeyDown(mKeySetting.Keys[5].CurrentKey) && mGameManager.IsPause == false && IsWeaponReload == false && CurrentAmmo != Weapon.ClipCapacity && SpareBulletCount > 0 && Weapon.IsAttak)
-        {
-            GunClipDrup();
-            Instantiate(ClipObject, transform.position, transform.rotation);
-            mFillingAmount = (mWeaponReload - 0.4f) / Weapon.ClipCapacity;
-            SpareBulletCount -= Weapon.ClipCapacity - CurrentAmmo;
-            IsWeaponReload = true;
-            WeaponReload();
-        }
-        else
+        GunClipDrup();
+        Instantiate(ClipObject, transform.position, transform.rotation);
+        mFillingAmount = (mWeaponReload - 0.4f) / Weapon.ClipCapacity;
+        SpareBulletCount -= Weapon.ClipCapacity - CurrentAmmo;
+        IsWeaponReload = true;
+
+        if (mWeaponReload > 0 && IsWeaponReload)
         {
             WeaponReload();
         }
@@ -75,7 +81,11 @@ public class Gun : MonoBehaviour
             mFillingAmount = (mWeaponReload - 0.4f) / Weapon.ClipCapacity;
             SpareBulletCount -= Weapon.ClipCapacity - CurrentAmmo;
             IsWeaponReload = true;
-            WeaponReload();
+
+            if (mWeaponReload > 0 && IsWeaponReload)
+            {
+                WeaponReload();
+            }
         }
     }
 
@@ -93,7 +103,6 @@ public class Gun : MonoBehaviour
         IsWeaponReload = false;
         CurrentAmmo = Weapon.ClipCapacity;
         mWeaponReload = Weapon.ReloadTime;
-        Range = Weapon.Range;
 
         if (SpareBulletCount == 0)
         {
@@ -110,36 +119,33 @@ public class Gun : MonoBehaviour
 
     private void WeaponReload()
     {
-        if (mWeaponReload > 0 && IsWeaponReload)
+        mWeaponReload -= Time.deltaTime;
+        CurrentAmmo = 0;
+        IsCanShoot = false;
+
+        if (mWeaponReload >= 0.2 && SpareBulletCount >= CurrentAmmo)
         {
-            mWeaponReload -= Time.deltaTime;
-            CurrentAmmo = 0;
-            IsCanShoot = false;
+            StartCoroutine(BulletReloadEnum());
+        }
 
-            if (mWeaponReload >= 0.2 && SpareBulletCount >= CurrentAmmo)
+        if (mWeaponReload <= 0.2)
+        {
+            IsCanShoot = true;
+            IsWeaponReload = false;
+            StopAllCoroutines();
+
+            if (SpareBulletCount < Weapon.ClipCapacity)
             {
-                StartCoroutine(BulletReloadEnum());
+                CurrentAmmo = SpareBulletCount;
+                SpareBulletCount = 0;
+            }
+            else
+            {
+                CurrentAmmo = Weapon.ClipCapacity;
             }
 
-            if (mWeaponReload <= 0.2)
-            {
-                IsCanShoot = true;
-                IsWeaponReload = false;
-                StopAllCoroutines();
-
-                if (SpareBulletCount < Weapon.ClipCapacity)
-                {
-                    CurrentAmmo = SpareBulletCount;
-                    SpareBulletCount = 0;
-                }
-                else
-                {
-                    CurrentAmmo = Weapon.ClipCapacity;
-                }
-
-                mWeaponReload = Weapon.ReloadTime;
-                mUIManager.AmmoBar.ClipAmountText.text = SpareBulletCount.ToString();
-            }
+            mWeaponReload = Weapon.ReloadTime;
+            mUIManager.AmmoBar.ClipAmountText.text = SpareBulletCount.ToString();
         }
     }
 

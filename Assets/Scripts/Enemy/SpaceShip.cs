@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,6 +88,14 @@ public class SpaceShip : MonoBehaviour
             {
                 AttackTime -= Time.deltaTime;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if(collider2D.CompareTag("knife"))
+        {
+            DisHealth(1);
         }
     }
 

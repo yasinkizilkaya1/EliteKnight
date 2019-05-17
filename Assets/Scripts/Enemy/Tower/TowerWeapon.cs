@@ -80,7 +80,7 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
-        ShootCoolDown = 0f;
+        ShootCoolDown = this.Tower.AttackTime;
         mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = Tower.Health;
         CurrentDefence = Tower.Defence;
@@ -139,9 +139,17 @@ public class TowerWeapon : MonoBehaviour
         if (CanAttack)
         {
             ShootCoolDown = this.Tower.AttackTime;
-            var shootTransformObject = Instantiate(ShotPrefabTransform) as Transform;
-            shootTransformObject.position = BarrelObject.transform.position;
-            shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
+
+            if (IsLinerenderer)
+            {
+                mGameManager.Character.HealthDisCount(TowerEnemy.SlowPower);
+            }
+            else
+            {
+                var shootTransformObject = Instantiate(ShotPrefabTransform) as Transform;
+                shootTransformObject.position = BarrelObject.transform.position;
+                shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
+            }
         }
     }
 

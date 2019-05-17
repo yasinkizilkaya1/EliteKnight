@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,9 +43,8 @@ public class GameManager : MonoBehaviour
     public bool IsUpdateChests;
 
     public KeySetting KeySetting;
-    public List<string> keycaps;
 
-    private Toggle mCurrentSelectedToggle;
+    public Toggle mCurrentSelectedToggle;
     private Text mCurrentSelectedText;
 
     public List<Chest> Chests;
@@ -73,6 +72,25 @@ public class GameManager : MonoBehaviour
         if (mIsKeyChange && mCurrentSelectedToggle.isOn && mCurrentSelectedToggle != null)
         {
             KeysChange();
+        }
+        else if (Input.GetKeyDown(KeySetting.Keys[8].CurrentKey))
+        {
+            if (PauseMenuObject.activeInHierarchy == true || mIsKeyChange == false)
+            {
+                PlayScene();
+            }
+        }
+
+        if (Input.GetKeyDown(KeySetting.Keys[7].CurrentKey) && IsPause == false)
+        {
+            GameSetting(GameManager.GameSettings.Stop);
+        }
+        else if (Input.GetKeyDown(KeySetting.Keys[8].CurrentKey) || Input.GetKeyDown(KeySetting.Keys[7].CurrentKey))
+        {
+            if (Inventory.gameObject.activeInHierarchy == true)
+            {
+                GameSetting(GameManager.GameSettings.Continue);
+            }
         }
 
         if (Map.IsCharacterCreate == true && Character.CurrentHP == 0)
@@ -115,8 +133,8 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                mCurrentSelectedText.text = key.ToString();
                 mIsKeyChange = false;
+                mCurrentSelectedText.text = key.ToString();
             }
         }
     }
@@ -125,18 +143,18 @@ public class GameManager : MonoBehaviour
     {
         int Savingkeys = 0;
 
-        for (int x = 0; x < keycaps.Count; x++)
+        for (int x = 0; x < UIManager.ButtonTexts.Count; x++)
         {
-            for (int y = 0; y < keycaps.Count; y++)
+            for (int y = 0; y < UIManager.ButtonTexts.Count; y++)
             {
-                if (keycaps[x] == UIManager.ButtonTexts[y].text)
+                if (UIManager.ButtonTexts[x].text == UIManager.ButtonTexts[y].text)
                 {
                     Savingkeys++;
                 }
             }
         }
 
-        if (Savingkeys == keycaps.Count - 1)
+        if (Savingkeys == UIManager.ButtonTexts.Count)
         {
             for (int i = 0; i < KeySetting.Keys.Count; i++)
             {
@@ -151,11 +169,8 @@ public class GameManager : MonoBehaviour
 
     private void KeysLoad()
     {
-        keycaps = new List<string>();
-
         for (int i = 0; i < KeySetting.Keys.Count; i++)
         {
-            keycaps.Add(KeySetting.Keys[i].CurrentKey.ToString());
             UIManager.ButtonTexts[i].text = KeySetting.Keys[i].CurrentKey.ToString();
         }
     }
@@ -170,6 +185,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void PlayScene()
+    {
+        Time.timeScale = 1;
+        PauseMenuObject.SetActive(false);
+        PanelSettingObject.SetActive(false);
+        PanelPauseObject.SetActive(true);
+        PanelClipObject.SetActive(true);
+        UIManager.GunSlotObject.SetActive(true);
+        IsPause = false;
+    }
+
     #endregion
 
     #region Public Methods
@@ -179,10 +205,12 @@ public class GameManager : MonoBehaviour
         switch (gameSettings)
         {
             case GameSettings.Continue:
+                Inventory.gameObject.SetActive(false);
                 Time.timeScale = 1;
                 IsPause = false;
                 break;
             case GameSettings.Stop:
+                Inventory.gameObject.SetActive(true);
                 Time.timeScale = 0;
                 IsPause = true;
                 break;
@@ -205,13 +233,7 @@ public class GameManager : MonoBehaviour
 
     public void OnSetPlayButtonClicked()
     {
-        Time.timeScale = 1;
-        PauseMenuObject.SetActive(false);
-        PanelSettingObject.SetActive(false);
-        PanelPauseObject.SetActive(true);
-        PanelClipObject.SetActive(true);
-        UIManager.GunSlotObject.SetActive(true);
-        IsPause = false;
+        PlayScene();
     }
 
     public void OnSetLobyButtonClicked()

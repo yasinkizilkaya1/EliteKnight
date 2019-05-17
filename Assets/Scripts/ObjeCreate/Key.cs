@@ -9,7 +9,8 @@ public enum KeyType
     run,
     reload,
     shoot,
-    inventory
+    inventory,
+    exit
 }
 
 [System.Serializable]

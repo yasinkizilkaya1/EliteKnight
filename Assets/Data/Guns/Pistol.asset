@@ -19,7 +19,7 @@ MonoBehaviour:
   Power: 1
   ClipCapacity: 5
   TotalBullet: 995
-  Range: 1
+  Range: 0.9
   ReloadTime: 3
   IsAutoReload: 0
   IsAttak: 1
