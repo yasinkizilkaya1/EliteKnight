@@ -34,7 +34,11 @@ public class TowerEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag(mTAG_TARGET))
         {
             Inside = true;
-            GameManager.Character.Speed = 2;
+
+            if (TowerWeapon.LineRenderer)
+            {
+                GameManager.Character.Speed = 2;
+            }
 
             StartCoroutine(Fire());
         }

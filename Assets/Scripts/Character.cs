@@ -142,7 +142,7 @@ public class Character : MonoBehaviour
         characterData = gameManager.CharacterData;
         name = characterData.Name;
         CurrentHP = characterData.Health;
-        MaxHP = CurrentHP;
+        MaxHP = characterData.MaxHealth ;
         Energy = characterData.Energy;
         CurrentDefence = characterData.Defence;
         Power = characterData.Power;

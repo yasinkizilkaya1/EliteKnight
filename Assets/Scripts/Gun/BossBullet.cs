@@ -16,6 +16,7 @@ public class BossBullet : MonoBehaviour
     #region Fields
 
     public GameManager GameManager;
+    public Room Room;
 
     public List<GameObject> Enemys;
     public SpaceShip SpaceShip;
@@ -120,7 +121,8 @@ public class BossBullet : MonoBehaviour
 
     private void EnemyCreate(GameObject Enemy)
     {
-        GameObject enemy = Instantiate(Enemy, transform.position, transform.rotation);
+        GameObject enemy = Instantiate(Enemy, Room.transform);
+        enemy.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SpaceShip.Enemys.Add(enemy);
         this.gameObject.SetActive(false);
         IsEnemyCreate = false;

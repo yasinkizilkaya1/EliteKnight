@@ -15,6 +15,6 @@ MonoBehaviour:
   Name: 
   Health: 6
   MaxHealth: 6
-  Defence: 2
+  Defence: 8
   AttacPower: 2
   AttackTime: 1

@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 21300012, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
   StackSize: 1
   MaxStackSize: 0
-  Power: 1
+  Power: 2
   ClipCapacity: 10
   TotalBullet: 120
   Range: 1.2

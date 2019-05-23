@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,8 +40,8 @@ public class GameManager : MonoBehaviour
     public bool IsPause;
     public bool IsPlayerDead;
     public bool IsBossSpawn;
-    private bool mIsKeyChange;
     public bool IsUpdateChests;
+    private bool mIsKeyChange;
 
     public KeySetting KeySetting;
 

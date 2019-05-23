@@ -368,6 +368,7 @@ MonoBehaviour:
   BulletObjcet: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
   Body: {fileID: 1519125531596516}
+  SpriteRenderer: {fileID: 212614561823135958}
 --- !u!212 &212096433454336000
 SpriteRenderer:
   m_ObjectHideFlags: 1

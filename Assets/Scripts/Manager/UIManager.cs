@@ -26,8 +26,8 @@ public class UIManager : MonoBehaviour
     public GameObject PanelClip;
     public GameObject PanelRight;
 
-    public Text LoadingText;
     public GameManager GameManager;
+    public Text LoadingText;
     public AmmoBar AmmoBar;
     public Slider Slider;
     public Animator AmmoBarAnimator;
@@ -123,12 +123,12 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         EnergyBarSlider.gameObject.SetActive(true);
-        HealthBarSlider.maxValue = GameManager.CharacterData.MaxHealth;
-        HealthBarSlider.value = GameManager.CharacterData.Health;
-        ArmorBarSlider.maxValue = GameManager.CharacterData.Defence;
-        ArmorBarSlider.value = GameManager.CharacterData.Defence;
-        EnergyBarSlider.maxValue = GameManager.CharacterData.MaxEnergy;
-        EnergyBarSlider.value = GameManager.CharacterData.Energy;
+        HealthBarSlider.value = GameManager.Character.CurrentHP;
+        HealthBarSlider.maxValue = GameManager.Character.MaxHP;
+        ArmorBarSlider.value = GameManager.Character.CurrentDefence;
+        ArmorBarSlider.maxValue = GameManager.Character.MaxDefance;
+        EnergyBarSlider.value = GameManager.Character.Energy;
+        EnergyBarSlider.maxValue = GameManager.Character.Energy;
         StopAllCoroutines();
     }
 

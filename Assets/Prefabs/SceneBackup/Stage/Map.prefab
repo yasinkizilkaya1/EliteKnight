@@ -66,4 +66,4 @@ MonoBehaviour:
   BridgeWallTilemap: {fileID: 0}
   BridgeTile: {fileID: 11400000, guid: af3a8be0b8cfee54ca854c770b6b68e3, type: 2}
   BridgeWallTile: {fileID: 11400000, guid: 57f90b1db8892364189356599d6ad0a6, type: 2}
-  "\u0130sCharacterCreate": 0
+  IsCharacterCreate: 0

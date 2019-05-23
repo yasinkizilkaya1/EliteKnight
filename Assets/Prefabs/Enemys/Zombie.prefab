@@ -633,6 +633,7 @@ MonoBehaviour:
   Animator: {fileID: 95026855835747692}
   RotationSpeed: 200
   ShootcoolDown: 0
+  SpriteRenderer: {fileID: 212568389115189382}
 --- !u!212 &212057278941818708
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -984,7 +985,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 850
   m_Sprite: {fileID: 21300000, guid: 7453a11f843fd1440840eaf7409ccfa1, type: 3}
-  m_Color: {r: 0.6862745, g: 0.09019608, b: 0.07058824, a: 1}
+  m_Color: {r: 1, g: 0.03184713, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

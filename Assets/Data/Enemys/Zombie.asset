@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Zombie
   Health: 1
   MaxHealth: 1
-  Defence: 0
+  Defence: 1
   Speed: 4
   AttackPower: 1
   AttackRange: 0.75

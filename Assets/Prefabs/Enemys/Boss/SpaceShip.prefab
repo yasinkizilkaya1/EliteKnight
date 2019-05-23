@@ -234,6 +234,7 @@ MonoBehaviour:
   - {fileID: 1147374653912962}
   Enemys: []
   AttackIds: 
+  SpriteRenderer: {fileID: 212132190109988176}
   GameManager: {fileID: 0}
   UIManager: {fileID: 0}
   HealthSlider: {fileID: 0}

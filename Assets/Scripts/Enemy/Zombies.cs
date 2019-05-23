@@ -18,7 +18,7 @@ public class Zombies : MonoBehaviour
     public Zombie Zombie;
     public Room Room;
 
-    private int mCurrrentHealth;
+    private int mCurrentHealth;
     private int mCurrentDefance;
 
     public Transform Radar;
@@ -38,6 +38,8 @@ public class Zombies : MonoBehaviour
     private bool mIsHit;
     private bool mIsZombie;
 
+    public SpriteRenderer SpriteRenderer;
+    private Color mColor;
     private RaycastHit2D mRaycastHit2D;
 
     #endregion
@@ -65,7 +67,7 @@ public class Zombies : MonoBehaviour
     {
         Animator.SetBool("isAttack", attack);
 
-        if (mCurrrentHealth == 0)
+        if (mCurrentHealth == 0)
         {
             Destroy(BodyObject);
             GameManager.Character.DeadEnemyCount++;
@@ -112,7 +114,8 @@ public class Zombies : MonoBehaviour
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         ShootcoolDown = 0f;
-        mCurrrentHealth = Zombie.Health;
+        mColor = SpriteRenderer.color;
+        mCurrentHealth = Zombie.Health;
         mCurrentDefance = Zombie.Defence;
         RotationSpeed = Zombie.RotationSpeed;
     }
@@ -178,6 +181,12 @@ public class Zombies : MonoBehaviour
     public void DisHealth(int power)
     {
         int remainingDamage = 0;
+
+        if (mCurrentHealth > 0)
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
+        }
+
         if (mCurrentDefance > 0)
         {
             if (power > mCurrentDefance)
@@ -190,21 +199,21 @@ public class Zombies : MonoBehaviour
                 mCurrentDefance -= power;
             }
         }
-        else if (mCurrentDefance == 0 && mCurrrentHealth > 0)
+        else if (mCurrentHealth > 0)
         {
-            if (power > mCurrrentHealth)
+            if (power > mCurrentHealth)
             {
-                mCurrrentHealth = 0;
+                mCurrentHealth = 0;
             }
             else
             {
-                mCurrrentHealth -= power;
+                mCurrentHealth -= power;
             }
         }
 
         if (remainingDamage != 0)
         {
-            mCurrrentHealth -= remainingDamage;
+            mCurrentHealth -= remainingDamage;
         }
     }
 

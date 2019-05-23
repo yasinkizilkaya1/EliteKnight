@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71592b6912314884e8b3598279622293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 212284441315836038}
   LineRenderer: {fileID: 120624949900864356}
   TowerEnemy: {fileID: 114141100891435970}
   Tower: {fileID: 11400000, guid: 8176572094f45d541b07b061a43ba704, type: 2}

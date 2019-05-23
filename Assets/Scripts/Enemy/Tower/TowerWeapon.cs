@@ -12,6 +12,8 @@ public class TowerWeapon : MonoBehaviour
 
     private GameManager mGameManager;
 
+    public SpriteRenderer SpriteRenderer;
+    private Color mColor;
     public LineRenderer LineRenderer;
     public TowerEnemy TowerEnemy;
     public Tower Tower;
@@ -80,6 +82,7 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
+        mColor = SpriteRenderer.color;
         ShootCoolDown = this.Tower.AttackTime;
         mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = Tower.Health;
@@ -161,6 +164,12 @@ public class TowerWeapon : MonoBehaviour
     public void HealtDisCount(int power)
     {
         int remainingDamage = 0;
+
+        if (CurrentHealth > 0)
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
+        }
+
         if (CurrentDefence > 0)
         {
             if (power > CurrentDefence)
@@ -173,7 +182,7 @@ public class TowerWeapon : MonoBehaviour
                 CurrentDefence -= power;
             }
         }
-        else if (CurrentDefence == 0 && CurrentHealth > 0)
+        else if (CurrentHealth > 0)
         {
             if (power > CurrentHealth)
             {

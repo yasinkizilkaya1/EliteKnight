@@ -110,8 +110,7 @@ public class Room : MonoBehaviour
         TileMapWall = GameObject.FindWithTag(TAG_TILE_MAP_WALL).GetComponent<Tilemap>();
         TileMapGround = GameObject.FindWithTag(TAG_TILE_MAP_GROUND).GetComponent<Tilemap>();
         PlaceCreate();
-        StartCoroutine(ObjeCreate());
-        StartCoroutine(DoorsLockOpen());
+        StartCoroutine(EnemyAndDoorControl());
         EnemyCount = BossCount + ZombieCount + PursueEnemyCount + TowerExplodCount + TowerModeratorCount + TowerStandartCount;
     }
 
@@ -366,26 +365,19 @@ public class Room : MonoBehaviour
 
     #region IEnumerators
 
-    IEnumerator ObjeCreate()
+    IEnumerator EnemyAndDoorControl()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.2f);
+
             if (IsEnemyCreate == true)
             {
                 yield return new WaitForSeconds(0.2f);
                 IsEnemyCreate = false;
                 ObjectsCreate();
-                StopCoroutine(ObjeCreate());
             }
-        }
-    }
 
-    IEnumerator DoorsLockOpen()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.2f);
             if (EnemyCount == 0)
             {
                 foreach (Door door in Doors)
@@ -393,7 +385,12 @@ public class Room : MonoBehaviour
                     door.IsLock = false;
                     door.DoorLock.SetActive(false);
                 }
-                StopCoroutine(DoorsLockOpen());
+            }
+
+            if (EnemyCount == 0 && IsEnemyCreate == true)
+            {
+
+                StopCoroutine(EnemyAndDoorControl());
             }
         }
     }

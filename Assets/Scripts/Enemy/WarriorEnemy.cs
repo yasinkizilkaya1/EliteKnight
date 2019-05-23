@@ -31,6 +31,8 @@ public class WarriorEnemy : MonoBehaviour
     public GameObject Body;
 
     public RaycastHit2D RaycastHit2D;
+    public SpriteRenderer SpriteRenderer;
+    private Color mColor;
 
     private bool mIsAim;
     private bool mIsTargetFind;
@@ -102,6 +104,7 @@ public class WarriorEnemy : MonoBehaviour
     private void Init()
     {
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        mColor = SpriteRenderer.color;
         Physics2D.queriesStartInColliders = false;
         mShootCoolDown = 0f;
         CurrentHealth = EnemyWarrior.Health;
@@ -182,6 +185,11 @@ public class WarriorEnemy : MonoBehaviour
     public void DisHealth(int power)
     {
         int remainingDamage = 0;
+
+        if (CurrentHealth > 0)
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
+        }
 
         if (CurrentDefence > 0)
         {

@@ -63,8 +63,9 @@ MonoBehaviour:
   PanelRight: {fileID: 0}
   LoadingText: {fileID: 0}
   GameManager: {fileID: 0}
-  ammoBar: {fileID: 0}
-  slider: {fileID: 0}
+  AmmoBar: {fileID: 0}
+  Slider: {fileID: 0}
+  AmmoBarAnimator: {fileID: 0}
   Toggles:
   - {fileID: 0}
   - {fileID: 0}
@@ -74,7 +75,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   ButtonTexts:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -31,6 +31,9 @@ public class SpaceShip : MonoBehaviour
     public List<GameObject> Enemys;
     public List<int> AttackIds;
 
+    public SpriteRenderer SpriteRenderer;
+    private Color mColor;
+
     public GameManager GameManager;
     public UIManager UIManager;
     public Slider HealthSlider;
@@ -93,7 +96,7 @@ public class SpaceShip : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
-        if(collider2D.CompareTag("knife"))
+        if (collider2D.CompareTag("knife"))
         {
             DisHealth(1);
         }
@@ -107,6 +110,7 @@ public class SpaceShip : MonoBehaviour
     {
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         UIManager = GameManager.UIManager;
+        mColor = SpriteRenderer.color;
         GameManager.IsBossSpawn = true;
         HealthSlider = UIManager.BossHealthBarSlider;
         CurrentHealth = BossData.Health;
@@ -209,6 +213,7 @@ public class SpaceShip : MonoBehaviour
             Bullet.SetActive(true);
             Bullet.GetComponent<BossBullet>().GameManager = GameManager;
             Bullet.GetComponent<BossBullet>().SpaceShip = this;
+            Bullet.GetComponent<BossBullet>().Room = Room;
         }
     }
 
@@ -233,6 +238,8 @@ public class SpaceShip : MonoBehaviour
     {
         if (CurrentHealth > 0)
         {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
+
             if (power > CurrentHealth)
             {
                 CurrentHealth = 0;

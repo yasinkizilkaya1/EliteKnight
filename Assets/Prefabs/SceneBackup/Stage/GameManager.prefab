@@ -33,7 +33,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1434519386761024}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -61,9 +61,10 @@ MonoBehaviour:
   GunSlot: {fileID: 0}
   Inventory: {fileID: 0}
   Map: {fileID: 0}
-  isPause: 0
-  isPlayerDead: 0
+  IsPause: 0
+  IsPlayerDead: 0
+  IsBossSpawn: 0
   IsUpdateChests: 0
-  KeySettings: {fileID: 11400000, guid: 963d06d5d9408c34680881aa80c01c51, type: 2}
-  keycaps: []
+  KeySetting: {fileID: 11400000, guid: 2908c73256d35f84caa32c7f75bf77bc, type: 2}
+  mCurrentSelectedToggle: {fileID: 0}
   Chests: []
