@@ -23,8 +23,8 @@ public class EnemyBullet : MonoBehaviour
     private GameManager mGameManager;
 
     public GameObject BulletObject;
-    public List<GameObject> Barrels;
     public GameObject StandartTowerBulletObject;
+    public List<GameObject> Barrels;
 
     public int EffectTowerBulletPower;
     public int NormalBulletPower;

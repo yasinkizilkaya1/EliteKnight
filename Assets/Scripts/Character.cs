@@ -142,7 +142,7 @@ public class Character : MonoBehaviour
         characterData = gameManager.CharacterData;
         name = characterData.Name;
         CurrentHP = characterData.Health;
-        MaxHP = characterData.MaxHealth ;
+        MaxHP = characterData.MaxHealth;
         Energy = characterData.Energy;
         CurrentDefence = characterData.Defence;
         Power = characterData.Power;
@@ -285,6 +285,7 @@ public class Character : MonoBehaviour
         {
             if (value > CurrentHP)
             {
+                CurrentHP = 0;
                 Destroy(gameObject);
                 isDead = true;
             }
@@ -292,11 +293,11 @@ public class Character : MonoBehaviour
             {
                 CurrentHP -= value;
             }
+        }
 
-            if (remainingDamage != 0)
-            {
-                CurrentHP -= remainingDamage;
-            }
+        if (remainingDamage != 0)
+        {
+            CurrentHP -= remainingDamage;
         }
     }
 

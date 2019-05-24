@@ -25,7 +25,6 @@ public class Door : MonoBehaviour
 
     public bool IsLock;
     public bool IsRoomLogin;
-    public bool IsLogin;
 
     #endregion
 
@@ -46,15 +45,6 @@ public class Door : MonoBehaviour
         Initialize();
     }
 
-    private void Update()
-    {
-        if (IsLogin)
-        {
-            DoorInside.Collider2D.enabled = true;
-            IsLogin = false;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(mTAG_CHARCTER))
@@ -63,7 +53,6 @@ public class Door : MonoBehaviour
 
             if (DoorState == State.Close && IsLock == false)
             {
-                IsLogin = true;
                 ChangeDoorState(State.Open);
                 Collider2D.enabled = false;
                 DoorInside.Collider2D.enabled = true;

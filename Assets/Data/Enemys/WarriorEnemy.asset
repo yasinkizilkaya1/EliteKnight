@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: WarriorEnemy
-  Health: 1
+  Health: 2
   MaxHealth: 2
   Defence: 1
   Speed: 5

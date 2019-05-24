@@ -41,7 +41,7 @@ public class Knife : MonoBehaviour
             }
             else if (collider.GetComponent<TowerWeapon>())
             {
-                collider.GetComponent<TowerWeapon>().HealtDisCount(Power);
+                collider.GetComponent<TowerWeapon>().DisHealt(Power);
             }
             else if (collider.GetComponentInChildren<WarriorEnemy>())
             {

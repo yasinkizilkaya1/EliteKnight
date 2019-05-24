@@ -31,8 +31,6 @@ public class WarriorEnemy : MonoBehaviour
     public GameObject Body;
 
     public RaycastHit2D RaycastHit2D;
-    public SpriteRenderer SpriteRenderer;
-    private Color mColor;
 
     private bool mIsAim;
     private bool mIsTargetFind;
@@ -75,7 +73,6 @@ public class WarriorEnemy : MonoBehaviour
             if (Room != null)
             {
                 Room.EnemyCount--;
-
             }
         }
 
@@ -104,7 +101,6 @@ public class WarriorEnemy : MonoBehaviour
     private void Init()
     {
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
-        mColor = SpriteRenderer.color;
         Physics2D.queriesStartInColliders = false;
         mShootCoolDown = 0f;
         CurrentHealth = EnemyWarrior.Health;
@@ -186,16 +182,12 @@ public class WarriorEnemy : MonoBehaviour
     {
         int remainingDamage = 0;
 
-        if (CurrentHealth > 0)
-        {
-            FloatingTextController.CreateFloatingText(power.ToString(), transform);
-        }
-
         if (CurrentDefence > 0)
         {
             if (power > CurrentDefence)
             {
                 remainingDamage = power - CurrentDefence;
+                CurrentDefence = 0;
             }
             else
             {
@@ -208,11 +200,30 @@ public class WarriorEnemy : MonoBehaviour
             {
                 CurrentHealth -= power;
             }
+            else
+            {
+                CurrentHealth = 0;
+            }
         }
 
         if (remainingDamage != 0)
         {
             CurrentHealth -= remainingDamage;
+        }
+
+        if (CurrentHealth <= 0)
+        {
+            Destroy(gameObject);
+            GameManager.Character.DeadEnemyCount++;
+
+            if (Room != null)
+            {
+                Room.EnemyCount--;
+            }
+        }
+        else
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }
     }
 

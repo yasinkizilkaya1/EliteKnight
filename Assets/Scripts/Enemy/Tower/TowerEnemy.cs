@@ -6,7 +6,6 @@ public class TowerEnemy : MonoBehaviour
     #region Constant
 
     private const string mTAG_TARGET = "Character";
-    private const string mTAG_GAMEMANAGER = "GameManager";
 
     #endregion
 
@@ -29,9 +28,9 @@ public class TowerEnemy : MonoBehaviour
         Init();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag(mTAG_TARGET))
+        if (collider.CompareTag(mTAG_TARGET))
         {
             Inside = true;
 
@@ -44,9 +43,9 @@ public class TowerEnemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D col)
+    private void OnTriggerExit2D(Collider2D collider)
     {
-        if (col.gameObject.gameObject.CompareTag(mTAG_TARGET))
+        if (collider.CompareTag(mTAG_TARGET))
         {
             Inside = false;
             GameManager.Character.Speed = GameManager.Character.characterData.Speed;
@@ -60,7 +59,7 @@ public class TowerEnemy : MonoBehaviour
 
     private void Init()
     {
-        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = TowerWeapon.GameManager;
     }
 
     #endregion

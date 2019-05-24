@@ -20,7 +20,8 @@ public class Chest : MonoBehaviour
     public List<GameObject> DefenceBars;
 
     public int CurrentHealth;
-    public int Defence;
+    public int CurrentDefence;
+    public int MaxDefence;
 
     #endregion
 
@@ -35,11 +36,11 @@ public class Chest : MonoBehaviour
     {
         if (col.gameObject.CompareTag(TAG_KNIFE))
         {
-            if (Defence > 0)
+            if (CurrentDefence > 0)
             {
-                Defence--;
+                CurrentDefence--;
             }
-            else if (Defence == 0)
+            else if (CurrentDefence == 0)
             {
                 CurrentHealth--;
             }
@@ -55,7 +56,8 @@ public class Chest : MonoBehaviour
         GameManager = GameObject.FindWithTag(TAG_GAMEMANAGER).GetComponent<GameManager>();
         name = ChestEntity.Name;
         CurrentHealth = ChestEntity.Health;
-        Defence = ChestEntity.Defence;
+        CurrentDefence = ChestEntity.Defence;
+        MaxDefence = CurrentDefence;
         GameManager.Chests.Add(this);
         CharacterHavingGunsUnload();
 
@@ -77,11 +79,9 @@ public class Chest : MonoBehaviour
 
     private void ObjectsSetActive(int MaxValue, int value, List<GameObject> gameObjects)
     {
-        int Count = MaxValue - value;
-
-        if (Count != MaxValue)
+        for (int i = MaxValue - 1; i >= value; i--)
         {
-            for (int i = MaxValue - 1; i >= Count; i--)
+            if (gameObjects[i].activeInHierarchy == true)
             {
                 gameObjects[i].SetActive(false);
             }
@@ -95,18 +95,19 @@ public class Chest : MonoBehaviour
     public void DisHealth(int power)
     {
         int remainingDamage = 0;
-        if (Defence > 0)
+
+        if (CurrentDefence > 0)
         {
-            if (power > Defence)
+            if (power > CurrentDefence)
             {
-                remainingDamage = power - Defence;
-                Defence = 0;
+                remainingDamage = power - CurrentDefence;
+                CurrentDefence = 0;
             }
             else
             {
-                ObjectsSetActive(Defence, power, DefenceBars);
-                Defence -= power;
+                CurrentDefence -= power;
             }
+            ObjectsSetActive(MaxDefence, CurrentDefence, DefenceBars);
         }
         else if (CurrentHealth > 0)
         {
@@ -116,20 +117,24 @@ public class Chest : MonoBehaviour
             }
             else
             {
-                ObjectsSetActive(CurrentHealth, power, HealthBars);
                 CurrentHealth -= power;
-
-                if (CurrentHealth == 0 && ChestEntity.ItemDrop)
-                {
-                    Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
-                    GameManager.Chests.Remove(this);
-                    Destroy(gameObject);
-                }
             }
+        }
 
-            if (remainingDamage != 0)
+        if (remainingDamage != 0)
+        {
+            CurrentHealth -= remainingDamage;
+        }
+
+        if (CurrentHealth != ChestEntity.MaxHealth)
+        {
+            ObjectsSetActive(ChestEntity.MaxHealth, CurrentHealth, HealthBars);
+
+            if (CurrentHealth == 0 && ChestEntity.ItemDrop)
             {
-                CurrentHealth -= remainingDamage;
+                Instantiate(ItemObjects[Random.Range(0, ItemObjects.Count - 1)], transform.position, transform.rotation);
+                GameManager.Chests.Remove(this);
+                Destroy(gameObject);
             }
         }
     }

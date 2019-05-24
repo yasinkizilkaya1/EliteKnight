@@ -7,14 +7,13 @@ public class FloatingTextController : MonoBehaviour
     public static FloatingText popupText;
     public static GameObject canvas;
 
-
     private void Start()
     {
         popupText = PopupText;
         canvas = Canvas;
     }
 
-    public static void CreateFloatingText(string text, Transform location)
+    public static void CreateFloatingText(string text,Transform location)
     {
         FloatingText Instance = Instantiate(popupText);
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(new Vector2(location.position.x + Random.Range(-0.5f,0.5f),location.position.y+ Random.Range(-0.5f, 0.5f)));

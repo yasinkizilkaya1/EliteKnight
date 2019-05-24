@@ -50,9 +50,9 @@ public class Bullet : MonoBehaviour
             {
                 collider.GetComponentInParent<Zombies>().DisHealth(Weapon.Power);
             }
-            else if (collider.GetComponent<TowerWeapon>())
+            else if (collider.GetComponentInParent<TowerWeapon>())
             {
-                collider.GetComponent<TowerWeapon>().HealtDisCount(Weapon.Power);  //look at here
+                collider.GetComponentInParent<TowerWeapon>().DisHealt(Weapon.Power);  //look at here
             }
             else if (collider.GetComponentInParent<WarriorEnemy>())
             {

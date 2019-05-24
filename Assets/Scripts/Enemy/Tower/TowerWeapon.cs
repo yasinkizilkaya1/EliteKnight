@@ -10,7 +10,7 @@ public class TowerWeapon : MonoBehaviour
 
     #region Fields
 
-    private GameManager mGameManager;
+    public GameManager GameManager;
 
     public SpriteRenderer SpriteRenderer;
     private Color mColor;
@@ -62,18 +62,6 @@ public class TowerWeapon : MonoBehaviour
         {
             ShootCoolDown -= Time.deltaTime;
         }
-
-        if (CurrentHealth == 0)
-        {
-            TowerEnemy.Inside = false;
-            Destroy(gameObject);
-            mGameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
-            {
-                Room.EnemyCount--;
-            }
-        }
     }
 
     #endregion
@@ -84,18 +72,18 @@ public class TowerWeapon : MonoBehaviour
     {
         mColor = SpriteRenderer.color;
         ShootCoolDown = this.Tower.AttackTime;
-        mGameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
+        GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = Tower.Health;
         CurrentDefence = Tower.Defence;
     }
 
     private void TowerMoving()
     {
-        if (mGameManager.Character.isDead == false && TowerEnemy.Inside && LineRenderer == null)
+        if (GameManager.Character.isDead == false && TowerEnemy.Inside && LineRenderer == null)
         {
             Moving();
         }
-        else if (mGameManager.Character.isDead == false && LineRenderer != null)
+        else if (GameManager.Character.isDead == false && LineRenderer != null)
         {
             Moving();
         }
@@ -103,10 +91,10 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerLinerender()
     {
-        if (mGameManager.Character.isDead == false && IsLinerenderer == true && TowerEnemy.Inside)
+        if (GameManager.Character.isDead == false && IsLinerenderer == true && TowerEnemy.Inside)
         {
             LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-            LineRenderer.SetPosition(1, new Vector3(mGameManager.Character.transform.position.x, mGameManager.Character.transform.position.y, 1));
+            LineRenderer.SetPosition(1, new Vector3(GameManager.Character.transform.position.x, GameManager.Character.transform.position.y, 1));
         }
         else
         {
@@ -121,7 +109,7 @@ public class TowerWeapon : MonoBehaviour
     private void Moving()
     {
         Transform shootTransformObject = TowerObject.transform;
-        shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
+        shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
 
         if (TowerObject.transform.rotation.z != shootTransformObject.rotation.z)
         {
@@ -145,13 +133,13 @@ public class TowerWeapon : MonoBehaviour
 
             if (IsLinerenderer)
             {
-                mGameManager.Character.HealthDisCount(TowerEnemy.SlowPower);
+                GameManager.Character.HealthDisCount(TowerEnemy.SlowPower);
             }
             else
             {
                 var shootTransformObject = Instantiate(ShotPrefabTransform) as Transform;
                 shootTransformObject.position = BarrelObject.transform.position;
-                shootTransformObject.rotation = ScriptHelper.LookAt2D(mGameManager.Character.transform, shootTransformObject.transform);
+                shootTransformObject.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, shootTransformObject.transform);
             }
         }
     }
@@ -161,14 +149,9 @@ public class TowerWeapon : MonoBehaviour
         Room = room;
     }
 
-    public void HealtDisCount(int power)
+    public void DisHealt(int power)
     {
         int remainingDamage = 0;
-
-        if (CurrentHealth > 0)
-        {
-            FloatingTextController.CreateFloatingText(power.ToString(), transform);
-        }
 
         if (CurrentDefence > 0)
         {
@@ -193,10 +176,27 @@ public class TowerWeapon : MonoBehaviour
                 CurrentHealth -= power;
             }
 
-            if (remainingDamage != 0)
+        }
+
+        if (remainingDamage != 0)
+        {
+            CurrentHealth -= remainingDamage;
+        }
+
+        if (CurrentHealth == 0)
+        {
+            TowerEnemy.Inside = false;
+            Destroy(gameObject);
+            GameManager.Character.DeadEnemyCount++;
+
+            if (Room != null)
             {
-                CurrentHealth -= remainingDamage;
+                Room.EnemyCount--;
             }
+        }
+        else
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }
     }
 

@@ -38,8 +38,6 @@ public class Zombies : MonoBehaviour
     private bool mIsHit;
     private bool mIsZombie;
 
-    public SpriteRenderer SpriteRenderer;
-    private Color mColor;
     private RaycastHit2D mRaycastHit2D;
 
     #endregion
@@ -66,17 +64,6 @@ public class Zombies : MonoBehaviour
     private void Update()
     {
         Animator.SetBool("isAttack", attack);
-
-        if (mCurrentHealth == 0)
-        {
-            Destroy(BodyObject);
-            GameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
-            {
-                Room.EnemyCount--;
-            }
-        }
 
         if (GameManager.Character != null)
         {
@@ -114,7 +101,6 @@ public class Zombies : MonoBehaviour
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         Physics2D.queriesStartInColliders = false;
         ShootcoolDown = 0f;
-        mColor = SpriteRenderer.color;
         mCurrentHealth = Zombie.Health;
         mCurrentDefance = Zombie.Defence;
         RotationSpeed = Zombie.RotationSpeed;
@@ -182,11 +168,6 @@ public class Zombies : MonoBehaviour
     {
         int remainingDamage = 0;
 
-        if (mCurrentHealth > 0)
-        {
-            FloatingTextController.CreateFloatingText(power.ToString(), transform);
-        }
-
         if (mCurrentDefance > 0)
         {
             if (power > mCurrentDefance)
@@ -214,6 +195,21 @@ public class Zombies : MonoBehaviour
         if (remainingDamage != 0)
         {
             mCurrentHealth -= remainingDamage;
+        }
+
+        if (mCurrentHealth <= 0)
+        {
+            Destroy(BodyObject);
+            GameManager.Character.DeadEnemyCount++;
+
+            if (Room != null)
+            {
+                Room.EnemyCount--;
+            }
+        }
+        else
+        {
+            FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }
     }
 
