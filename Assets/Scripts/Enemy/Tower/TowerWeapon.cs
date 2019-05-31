@@ -12,8 +12,6 @@ public class TowerWeapon : MonoBehaviour
 
     public GameManager GameManager;
 
-    public SpriteRenderer SpriteRenderer;
-    private Color mColor;
     public LineRenderer LineRenderer;
     public TowerEnemy TowerEnemy;
     public Tower Tower;
@@ -55,8 +53,11 @@ public class TowerWeapon : MonoBehaviour
 
     private void Update()
     {
-        TowerMoving();
-        TowerLinerender();
+        if (GameManager.Character.isDead == false)
+        {
+            TowerMoving();
+            TowerLinerender();
+        }
 
         if (ShootCoolDown > 0)
         {
@@ -70,20 +71,19 @@ public class TowerWeapon : MonoBehaviour
 
     private void Initialize()
     {
-        mColor = SpriteRenderer.color;
-        ShootCoolDown = this.Tower.AttackTime;
         GameManager = GameObject.FindWithTag(mTAG_GAMEMANAGER).GetComponent<GameManager>();
         CurrentHealth = Tower.Health;
         CurrentDefence = Tower.Defence;
+        ShootCoolDown = Tower.AttackTime;
     }
 
     private void TowerMoving()
     {
-        if (GameManager.Character.isDead == false && TowerEnemy.Inside && LineRenderer == null)
+        if (TowerEnemy.Inside && LineRenderer == null)
         {
             Moving();
         }
-        else if (GameManager.Character.isDead == false && LineRenderer != null)
+        else if (LineRenderer != null)
         {
             Moving();
         }
@@ -91,18 +91,15 @@ public class TowerWeapon : MonoBehaviour
 
     private void TowerLinerender()
     {
-        if (GameManager.Character.isDead == false && IsLinerenderer == true && TowerEnemy.Inside)
+        if (IsLinerenderer == true && TowerEnemy.Inside)
         {
             LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
             LineRenderer.SetPosition(1, new Vector3(GameManager.Character.transform.position.x, GameManager.Character.transform.position.y, 1));
         }
-        else
+        else if (IsLinerenderer == true)
         {
-            if (IsLinerenderer == true)
-            {
-                LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-                LineRenderer.SetPosition(1, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
-            }
+            LineRenderer.SetPosition(0, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
+            LineRenderer.SetPosition(1, new Vector3(OriginTransform.position.x, OriginTransform.position.y, 1));
         }
     }
 
@@ -118,6 +115,18 @@ public class TowerWeapon : MonoBehaviour
         else if (TowerObject.transform.rotation.z == shootTransformObject.rotation.z)
         {
             TowerObject.transform.rotation = shootTransformObject.rotation;
+        }
+    }
+
+    private void Dead()
+    {
+        TowerEnemy.Inside = false;
+        Destroy(gameObject);
+        GameManager.Character.DeadEnemyCount++;
+
+        if (Room != null)
+        {
+            Room.EnemyCount--;
         }
     }
 
@@ -165,36 +174,26 @@ public class TowerWeapon : MonoBehaviour
                 CurrentDefence -= power;
             }
         }
-        else if (CurrentHealth > 0)
+        else if (CurrentHealth > 0 && CurrentHealth - power > 0)
         {
-            if (power > CurrentHealth)
-            {
-                CurrentHealth = 0;
-            }
-            else
-            {
-                CurrentHealth -= power;
-            }
-
+            CurrentHealth -= power;
+        }
+        else
+        {
+            Dead();
         }
 
         if (remainingDamage != 0)
         {
             CurrentHealth -= remainingDamage;
-        }
 
-        if (CurrentHealth == 0)
-        {
-            TowerEnemy.Inside = false;
-            Destroy(gameObject);
-            GameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
+            if (CurrentHealth <= 0)
             {
-                Room.EnemyCount--;
+                Dead();
             }
         }
-        else
+
+        if (CurrentHealth > 0)
         {
             FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }

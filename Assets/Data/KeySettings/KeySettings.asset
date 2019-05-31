@@ -39,3 +39,30 @@ MonoBehaviour:
   - KeyType: 8
     CurrentKey: 27
     DefaultKey: 27
+  - KeyType: 9
+    CurrentKey: 49
+    DefaultKey: 49
+  - KeyType: 9
+    CurrentKey: 50
+    DefaultKey: 50
+  - KeyType: 9
+    CurrentKey: 51
+    DefaultKey: 51
+  - KeyType: 9
+    CurrentKey: 52
+    DefaultKey: 52
+  - KeyType: 9
+    CurrentKey: 53
+    DefaultKey: 53
+  - KeyType: 9
+    CurrentKey: 54
+    DefaultKey: 54
+  - KeyType: 9
+    CurrentKey: 55
+    DefaultKey: 55
+  - KeyType: 9
+    CurrentKey: 56
+    DefaultKey: 56
+  - KeyType: 9
+    CurrentKey: 57
+    DefaultKey: 57

@@ -15,7 +15,6 @@ public class TowerEnemy : MonoBehaviour
     public GameManager GameManager;
 
     public bool Inside;
-    public bool IsStandartTower;
 
     public int SlowPower;
 
@@ -39,7 +38,10 @@ public class TowerEnemy : MonoBehaviour
                 GameManager.Character.Speed = 2;
             }
 
-            StartCoroutine(Fire());
+            if (GameManager.Character.isDead == false)
+            {
+                StartCoroutine(Fire());
+            }
         }
     }
 
@@ -70,7 +72,7 @@ public class TowerEnemy : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.Character.isDead == false && TowerWeapon.CanAttack)
+            if (TowerWeapon.CanAttack)
             {
                 TowerWeapon.Attack(true);
                 yield return new WaitForSeconds(1f);

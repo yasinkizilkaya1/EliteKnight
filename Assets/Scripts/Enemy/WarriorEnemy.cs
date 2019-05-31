@@ -65,17 +65,6 @@ public class WarriorEnemy : MonoBehaviour
             mShootCoolDown -= Time.deltaTime;
         }
 
-        if (CurrentHealth == 0)
-        {
-            Destroy(gameObject);
-            GameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
-            {
-                Room.EnemyCount--;
-            }
-        }
-
         if (GameManager.Character != null)
         {
             TargetFind();
@@ -174,6 +163,17 @@ public class WarriorEnemy : MonoBehaviour
         }
     }
 
+    private void Dead()
+    {
+        Destroy(gameObject);
+        GameManager.Character.DeadEnemyCount++;
+
+        if (Room != null)
+        {
+            Room.EnemyCount--;
+        }
+    }
+
     #endregion
 
     #region Public Method
@@ -194,34 +194,26 @@ public class WarriorEnemy : MonoBehaviour
                 CurrentDefence -= power;
             }
         }
-        else if (CurrentHealth > 0)
+        else if (CurrentHealth > 0 && CurrentHealth - power > 0)
         {
-            if (CurrentHealth >= power)
-            {
-                CurrentHealth -= power;
-            }
-            else
-            {
-                CurrentHealth = 0;
-            }
+            CurrentHealth -= power;
+        }
+        else
+        {
+            Dead();
         }
 
         if (remainingDamage != 0)
         {
             CurrentHealth -= remainingDamage;
-        }
 
-        if (CurrentHealth <= 0)
-        {
-            Destroy(gameObject);
-            GameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
+            if (CurrentHealth <= 0)
             {
-                Room.EnemyCount--;
+                Dead();
             }
         }
-        else
+
+        if (CurrentHealth > 0)
         {
             FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
@@ -10,15 +11,66 @@ public class Slot : MonoBehaviour
     public bool IsUse;
     public Image Image;
 
-    public GameManager GameManager;
+    public Inventory Inventory;
 
-    #endregion 
+    public Toggle Toggle;
+    public List<Button> Buttons;
 
-    public void OnSetItemUseButtonClicked()
+    private bool IsClick;
+
+    #endregion
+
+    #region Unity Method
+
+    private void Update()
+    {
+        if (Toggle.isOn == false && IsClick == true)
+        {
+            foreach (Button button in Buttons)
+            {
+                button.gameObject.SetActive(false);
+            }
+            IsClick = false;
+        }
+    }
+
+    #endregion
+
+    #region Events
+
+    public void OnSetSlotButtonClicked()
+    {
+        IsClick = true;
+
+        if (IsUse)
+        {
+            foreach (Button button in Buttons)
+            {
+                button.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Buttons[1].gameObject.SetActive(true);
+        }
+    }
+
+    public void OnSetItemDropButtonClicked()
     {
         if (IsUse)
         {
-            GameManager.Inventory.ItemUse(this);
+            Inventory.ItemDrop(this,Item.ItemObject);
+        }
+        else
+        {
+            Inventory.GameManager.GunSlot.GunDrop(Inventory.GameManager.Character, Item, this);
         }
     }
+
+    public void OnSetItemUseButtonClicked()
+    {
+        Inventory.ItemUse(this);
+    }
+
+    #endregion
 }

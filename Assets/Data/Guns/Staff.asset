@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 3
   Name: Staff
   Icon: {fileID: 21300010, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
+  ItemObject: {fileID: 1995258508452956, guid: c102cdc067b0b424b9f2cc3658be1343, type: 2}
   StackSize: 1
   MaxStackSize: 1
   Power: 2

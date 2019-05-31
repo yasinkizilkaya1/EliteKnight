@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -23,6 +24,23 @@ public class Inventory : MonoBehaviour
         mSlot.IsUse = isUse;
     }
 
+    private void CloseIsOnToggles()
+    {
+        foreach (Slot slot in Slots)
+        {
+            slot.Toggle.isOn = false;
+        }
+    }
+
+    private void SlotStuff(Item item, bool isUse, Slot slot)
+    {
+        slot.Inventory = this;
+        slot.Toggle.group = Content.GetComponent<ToggleGroup>();
+        CloseIsOnToggles();
+        Slots.Add(slot);
+        ItemEqual(slot, item, isUse);
+    }
+
     #endregion
 
     #region Public Methods
@@ -32,9 +50,7 @@ public class Inventory : MonoBehaviour
         if (Slots.Count == 0)
         {
             Slot mSlot = Instantiate(Slot, Content.transform);
-            mSlot.GameManager = GameManager;
-            Slots.Add(mSlot);
-            ItemEqual(mSlot, item, isUse);
+            SlotStuff(item, isUse, mSlot);
             return;
         }
         else
@@ -49,9 +65,7 @@ public class Inventory : MonoBehaviour
                 else
                 {
                     Slot mSlot = Instantiate(Slot, Content.transform);
-                    mSlot.GameManager = GameManager;
-                    Slots.Add(mSlot);
-                    ItemEqual(mSlot, item, isUse);
+                    SlotStuff(item, isUse, mSlot);
                     return;
                 }
             }
@@ -63,6 +77,15 @@ public class Inventory : MonoBehaviour
         slot.Item.Use(GameManager.Character);
         Slots.Remove(slot);
         Destroy(slot.gameObject);
+    }
+
+    public void ItemDrop(Slot slot,GameObject ItemObject)
+    {
+        GameObject Item = Instantiate(ItemObject);
+        Item.transform.parent = GameManager.GunSlot.Blank;
+        Item.transform.position = new Vector3(GameManager.Character.transform.position.x + 2, GameManager.Character.transform.position.y, 1);
+        Destroy(slot.gameObject);
+        Slots.Remove(slot);
     }
 
     #endregion

@@ -41,23 +41,20 @@ public class EnemyBullet : MonoBehaviour
 
     private void Update()
     {
-        if (mGameManager.Character.isDead == false)
+        if (IsEffectTowerBullet && mGameManager.Character.isDead == false)
         {
-            if (IsEffectTowerBullet)
-            {
-                Destroy(gameObject, 3);
-                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
-            }
-            else if (IsBullet && mGameManager.Character.isDead == false)
-            {
-                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
-            }
-            else if (IsEffectTowerBullet == false && mGameManager.Character.isDead == false)
-            {
-                transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
-                StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
-                Destroy(gameObject, 1.5f);
-            }
+            Destroy(gameObject, 3);
+            transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
+        }
+        else if (IsBullet && mGameManager.Character.isDead == false)
+        {
+            transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
+        }
+        else if (IsEffectTowerBullet == false && mGameManager.Character.isDead == false)
+        {
+            transform.Translate(Vector2.right * -mVELOCIDADE * Time.deltaTime);
+            StandartTowerBulletObject.transform.rotation = ScriptHelper.LookAt2D(TargetTransform, transform);
+            Destroy(gameObject, 1.5f);
         }
     }
 
@@ -72,7 +69,6 @@ public class EnemyBullet : MonoBehaviour
                     GameObject bullet = Instantiate(BulletObject, Barrels[i].transform.position, Barrels[i].transform.rotation);
                 }
             }
-
             Destroy(gameObject);
         }
         else if (collider.CompareTag(mTAG_CHARACTER))

@@ -3,8 +3,14 @@ using UnityEngine.UI;
 
 public class FloatingText : MonoBehaviour
 {
+    #region Fields
+
     public Animator Animator;
     public Text DamageText;
+
+    #endregion
+
+    #region Unity Method
 
     private void Start()
     {
@@ -13,8 +19,14 @@ public class FloatingText : MonoBehaviour
         DamageText = Animator.GetComponent<Text>();
     }
 
+    #endregion
+
+    #region Public Method
+
     public void SetText(string text)
     {
         Animator.GetComponent<Text>().text = text;
     }
+
+    #endregion
 }

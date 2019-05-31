@@ -21,7 +21,7 @@ public class GunSlot : MonoBehaviour
     public Item[] Items;
 
     private List<Gun> mGuns;
-    private Transform mBlank;
+    public Transform Blank;
 
     #endregion
 
@@ -100,7 +100,7 @@ public class GunSlot : MonoBehaviour
                             mGameManager.Inventory.Slots.Remove(mGameManager.Inventory.Slots[i]);
                         }
                     }
-                    gun.transform.parent = mBlank;
+                    gun.transform.parent = Blank;
                     gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
                     character.Guns.Remove(character.Gun);
                     character.Gun = character.Guns[character.Guns.Count - 1];
@@ -110,6 +110,34 @@ public class GunSlot : MonoBehaviour
                     return;
                 }
             }
+        }
+    }
+
+    public void GunDrop(Character character, Item item, Slot slot)
+    {
+        if (character.Gun != null && character.Guns.Count > 1)
+        {
+            Gun Gun = null;
+
+            foreach (Gun gun in character.Guns)
+            {
+                if (item == gun.Weapon)
+                {
+                    Gun = gun;
+                    Destroy(slot.gameObject);
+                    mGameManager.Inventory.Slots.Remove(slot);
+                }
+            }
+
+            Gun.transform.parent = Blank;
+            Gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
+            Gun.gameObject.SetActive(true);
+            character.Guns.Remove(Gun);
+            character.Gun = character.Guns[character.Guns.Count - 1];
+            character.IsNewGun = true;
+            character.Gun.gameObject.SetActive(true);
+            ItemImage[0].sprite = character.Gun.Weapon.Icon;
+            return;
         }
     }
 

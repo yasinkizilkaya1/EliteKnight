@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 5
   Name: Armor
   Icon: {fileID: 21300000, guid: 6ce7d29eca7c652419ca32c981920239, type: 3}
+  ItemObject: {fileID: 1483938171499488, guid: 855799a55becdfb4aacbd8f18ddecccf, type: 2}
   StackSize: 1
   MaxStackSize: 1
   Health: 0

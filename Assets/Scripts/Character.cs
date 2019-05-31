@@ -35,7 +35,6 @@ public class Character : MonoBehaviour
 
     public bool IsNewGun;
     public bool isDead;
-    public bool IsTire;
 
     public float shooting;
 
@@ -78,31 +77,42 @@ public class Character : MonoBehaviour
 
                 if (gameManager.GunSlot != null)
                 {
-                    if (Input.GetAxis("Mouse ScrollWheel") > 0f && Guns.Count > 1)
+                    for (int i = 9; i < mKeys.Count; i++)
                     {
-                        if (SelectionWeaponId < Guns.Count - 1)
+                        if (Input.GetKeyDown(mKeys[i].CurrentKey) && i - 9 < Guns.Count)
                         {
-                            SelectionWeaponId++;
+                            gameManager.GunSlot.GunChange(Guns[i - 9], this);
                         }
-                        else
-                        {
-                            SelectionWeaponId = 0;
-                        }
-                        gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
-                    }
-                    else if (Input.GetAxis("Mouse ScrollWheel") < 0f && Guns.Count > 1)
-                    {
-                        if (SelectionWeaponId > 0)
-                        {
-                            SelectionWeaponId--;
-                        }
-                        else
-                        {
-                            SelectionWeaponId = Guns.Count - 1;
-                        }
-                        gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
                     }
                 }
+
+                //if (gameManager.GunSlot != null)
+                //{
+                //    if (Input.GetAxis("Mouse ScrollWheel") > 0f && Guns.Count > 1)
+                //    {
+                //        if (SelectionWeaponId < Guns.Count - 1)
+                //        {
+                //            SelectionWeaponId++;
+                //        }
+                //        else
+                //        {
+                //            SelectionWeaponId = 0;
+                //        }
+                //        gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
+                //    }
+                //    else if (Input.GetAxis("Mouse ScrollWheel") < 0f && Guns.Count > 1)
+                //    {
+                //        if (SelectionWeaponId > 0)
+                //        {
+                //            SelectionWeaponId--;
+                //        }
+                //        else
+                //        {
+                //            SelectionWeaponId = Guns.Count - 1;
+                //        }
+                //        gameManager.GunSlot.GunChange(Guns[SelectionWeaponId], this);
+                //    }
+                //}
             }
         }
     }
@@ -150,6 +160,7 @@ public class Character : MonoBehaviour
         mDefaultSpeed = characterData.Speed;
         mRunSpeed = characterData.RunSpeed;
         MaxDefance = characterData.Defence;
+        InventoryStandartGunAdd();
 
         mMoveForward = new MoveForward();
         mMoveReserve = new MoveReserve();
@@ -176,7 +187,6 @@ public class Character : MonoBehaviour
             else
             {
                 Speed = mDefaultSpeed;
-                IsTire = true;
                 run = 0;
             }
         }
@@ -185,11 +195,7 @@ public class Character : MonoBehaviour
             Speed = mDefaultSpeed;
             run = 0;
 
-            if (characterData.MaxEnergy == Energy)
-            {
-                IsTire = false;
-            }
-            else
+            if (Energy <= characterData.MaxEnergy)
             {
                 Energy += characterData.EnergyIncreaseAmmount;
             }
@@ -281,23 +287,25 @@ public class Character : MonoBehaviour
                 CurrentDefence -= value;
             }
         }
-        else if (CurrentHP > 0)
+        else if (CurrentHP > 0 && CurrentHP - value > 0)
         {
-            if (value > CurrentHP)
-            {
-                CurrentHP = 0;
-                Destroy(gameObject);
-                isDead = true;
-            }
-            else
-            {
-                CurrentHP -= value;
-            }
+            CurrentHP -= value;
+        }
+        else
+        {
+            Destroy(gameObject);
+            isDead = true;
         }
 
         if (remainingDamage != 0)
         {
             CurrentHP -= remainingDamage;
+
+            if (CurrentHP <= 0)
+            {
+                Destroy(gameObject);
+                isDead = true;
+            }
         }
     }
 

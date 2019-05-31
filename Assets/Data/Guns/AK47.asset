@@ -14,6 +14,7 @@ MonoBehaviour:
   Id: 1
   Name: Ak47
   Icon: {fileID: 21300012, guid: 379676913003f4b4fb67ca9e26fbeb97, type: 3}
+  ItemObject: {fileID: 1411510944606112, guid: a86c9b7e8582bf748baa070c09b0c5fc, type: 2}
   StackSize: 1
   MaxStackSize: 0
   Power: 2

@@ -72,16 +72,13 @@ public class Zombies : MonoBehaviour
                 ShootcoolDown -= Time.deltaTime;
             }
 
-            if (GameManager.Character != null)
+            if (mIsAttack && mIsZombie == false && mIsHit == false)
             {
-                if (mIsAttack && mIsZombie == false && mIsHit == false)
-                {
-                    Following();
-                }
-                else
-                {
-                    RaycasLine();
-                }
+                Following();
+            }
+            else
+            {
+                RaycasLine();
             }
         }
     }
@@ -108,7 +105,7 @@ public class Zombies : MonoBehaviour
 
     private void RaycasLine()
     {
-        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, CharacterMask);
+        mRaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, RotationSpeed);
 
         if (mRaycastHit2D.collider != null)
         {
@@ -121,7 +118,6 @@ public class Zombies : MonoBehaviour
             else
             {
                 mIsAttack = true;
-                Following();
             }
         }
         else
@@ -132,17 +128,14 @@ public class Zombies : MonoBehaviour
 
     private void Following()
     {
-        if (GameManager.IsPlayerDead == false)
+        if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) > Zombie.AttackRange)
         {
-            if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) > Zombie.AttackRange)
-            {
-                BodyObject.transform.Translate(Vector2.right * -Zombie.Speed * Time.deltaTime);
-                BodyObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, BodyObject.transform);
-            }
-            else if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) < Zombie.AttackRange + 0.1f)
-            {
-                Attack();
-            }
+            BodyObject.transform.Translate(Vector2.right * -Zombie.Speed * Time.deltaTime);
+            BodyObject.transform.rotation = ScriptHelper.LookAt2D(GameManager.Character.transform, BodyObject.transform);
+        }
+        else if (Vector2.Distance(Radar.position, GameManager.Character.transform.position) < Zombie.AttackRange + 0.1f)
+        {
+            Attack();
         }
     }
 
@@ -152,6 +145,17 @@ public class Zombies : MonoBehaviour
         {
             ShootcoolDown = Zombie.ShootingRate;
             GameManager.Character.HealthDisCount(Zombie.AttackPower);
+        }
+    }
+
+    private void Dead()
+    {
+        Destroy(BodyObject);
+        GameManager.Character.DeadEnemyCount++;
+
+        if (Room != null)
+        {
+            Room.EnemyCount--;
         }
     }
 
@@ -180,34 +184,26 @@ public class Zombies : MonoBehaviour
                 mCurrentDefance -= power;
             }
         }
-        else if (mCurrentHealth > 0)
+        else if (mCurrentHealth > 0 && mCurrentHealth - power > 0)
         {
-            if (power > mCurrentHealth)
-            {
-                mCurrentHealth = 0;
-            }
-            else
-            {
-                mCurrentHealth -= power;
-            }
+            mCurrentHealth -= power;
+        }
+        else
+        {
+            Dead();
         }
 
         if (remainingDamage != 0)
         {
             mCurrentHealth -= remainingDamage;
-        }
 
-        if (mCurrentHealth <= 0)
-        {
-            Destroy(BodyObject);
-            GameManager.Character.DeadEnemyCount++;
-
-            if (Room != null)
+            if (mCurrentHealth <= 0)
             {
-                Room.EnemyCount--;
+                Dead();
             }
         }
-        else
+
+        if (mCurrentHealth > 0)
         {
             FloatingTextController.CreateFloatingText(power.ToString(), transform);
         }

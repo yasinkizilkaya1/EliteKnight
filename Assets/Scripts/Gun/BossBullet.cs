@@ -47,7 +47,7 @@ public class BossBullet : MonoBehaviour
         {
             if (DropTime < 0f)
             {
-                EnemyCreate(Enemys[RandomValueEqual(0, Enemys.Count - 1)]);
+                EnemyCreate(Enemys[Random.Range(0, Enemys.Count - 1)]);
             }
             else
             {
@@ -104,7 +104,7 @@ public class BossBullet : MonoBehaviour
         IsEnemyCreate = Bullet.IsEnemyCreate;
         Power = Bullet.Power;
         Speed = Bullet.Speed;
-        DropTime = RandomValueEqual(6, 10);
+        DropTime = Random.Range(6, 10);
     }
 
     private void Aim(GameObject TurnedObject)
@@ -126,11 +126,6 @@ public class BossBullet : MonoBehaviour
         SpaceShip.Enemys.Add(enemy);
         this.gameObject.SetActive(false);
         IsEnemyCreate = false;
-    }
-
-    private int RandomValueEqual(int minValue, int maxValue)
-    {
-        return Random.Range(minValue, maxValue);
     }
 
     #endregion

@@ -232,24 +232,10 @@ public class SpaceShip : MonoBehaviour
 
     public void DisHealth(int power)
     {
-        if (CurrentHealth > 0)
+        if (CurrentHealth > 0 && CurrentHealth - power > 0)
         {
             FloatingTextController.CreateFloatingText(power.ToString(), transform);
-
-            if (power > CurrentHealth)
-            {
-                CurrentHealth = 0;
-                Dead();
-            }
-            else
-            {
-                CurrentHealth -= power;
-
-                if (CurrentHealth == 0)
-                {
-                    Dead();
-                }
-            }
+            CurrentHealth -= power;
         }
         else
         {
