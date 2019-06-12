@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1519125531596516}
   m_IsPrefabParent: 1
+--- !u!1 &1280896916724844
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4470052288927424}
+  m_Layer: 13
+  m_Name: IsWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1308963332817960
 GameObject:
   m_ObjectHideFlags: 1
@@ -119,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4263837155604836}
   m_Layer: 13
-  m_Name: IsWall
+  m_Name: IsEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,12 +205,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884526909074918}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -94, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -94.00007, y: 0.000011920929, z: 0}
+  m_LocalScale: {x: 1.0000004, y: 1.0000004, z: 1}
   m_Children: []
   m_Father: {fileID: 4264727243169440}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4264727243169440
 Transform:
@@ -212,6 +227,7 @@ Transform:
   - {fileID: 4597273008864054}
   - {fileID: 4381323986781430}
   - {fileID: 4962656486924968}
+  - {fileID: 4470052288927424}
   - {fileID: 4263837155604836}
   m_Father: {fileID: 4046225569628214}
   m_RootOrder: 0
@@ -243,6 +259,19 @@ Transform:
   m_Father: {fileID: 4264727243169440}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!4 &4470052288927424
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1280896916724844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -94, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4264727243169440}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4597273008864054
 Transform:
   m_ObjectHideFlags: 1
@@ -363,12 +392,22 @@ MonoBehaviour:
   CurrentDefence: 0
   GameManager: {fileID: 0}
   Radar: {fileID: 4962656486924968}
+  WallTransformObject: {fileID: 4470052288927424}
+  ZombieTransformObject: {fileID: 4263837155604836}
+  IsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  Iszombie:
+    serializedVersion: 2
+    m_Bits: 8192
   Room: {fileID: 0}
   GunObject: {fileID: 1308963332817960}
   BulletObjcet: {fileID: 1465000266846998, guid: 199e521cd3c4649458853ad9a493e6c1,
     type: 2}
   Body: {fileID: 1519125531596516}
-  SpriteRenderer: {fileID: 212614561823135958}
+  mIsAttack: 0
+  mIsHit: 0
+  mIsZombie: 0
 --- !u!212 &212096433454336000
 SpriteRenderer:
   m_ObjectHideFlags: 1

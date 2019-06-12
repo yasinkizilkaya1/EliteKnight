@@ -30,7 +30,6 @@ public class UIManager : MonoBehaviour
     public Text LoadingText;
     public AmmoBar AmmoBar;
     public Slider Slider;
-    public Animator AmmoBarAnimator;
 
     public List<Toggle> Toggles;
     public List<Text> ButtonTexts;

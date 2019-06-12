@@ -206,16 +206,9 @@ public class Character : MonoBehaviour
     {
         if (Input.GetKeyDown(mKeys[6].CurrentKey))
         {
-            if (Gun == null && knife != null)
-            {
-                knife.IsAttack = true;
-            }
-            else
-            {
-                mFireWeapon.Execute();
-            }
+            mFireWeapon.Execute();
         }
-        else if (Input.GetKeyDown(mKeys[6].CurrentKey) == false && Gun == null)
+        else if (Input.GetKeyDown(mKeys[6].CurrentKey) == false & Gun == null && knife.IsAttack)
         {
             knife.IsAttack = false;
         }

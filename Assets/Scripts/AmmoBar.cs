@@ -18,12 +18,13 @@ public class AmmoBar : MonoBehaviour
 
     public UIManager UIManager;
     public GameManager GameManager;
-    private Character Character;
     public Gun Gun;
+    private Character Character;
 
     public Image BarImage;
     public List<Image> BarImages;
     public List<GameObject> BarImageObjects;
+    public GameObject Content;
     public Animator Animator;
 
     public Text ClipAmountText;
@@ -83,7 +84,7 @@ public class AmmoBar : MonoBehaviour
 
         for (int i = 0; i < mAmmoCount; i++)
         {
-            Image Bar = Instantiate(BarImage, transform);
+            Image Bar = Instantiate(BarImage, Content.transform);
             BarImageObjects.Add(Bar.gameObject);
             BarImages.Add(Bar);
         }

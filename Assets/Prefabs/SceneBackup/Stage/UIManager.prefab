@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1727600547027104}
+  m_RootGameObject: {fileID: 1193986385930440}
   m_IsPrefabParent: 1
---- !u!1 &1727600547027104
+--- !u!1 &1193986385930440
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4927115953888612}
-  - component: {fileID: 114258456038861982}
-  - component: {fileID: 114418251840358480}
+  - component: {fileID: 4885026999783518}
+  - component: {fileID: 114615810913685306}
+  - component: {fileID: 114027210942813244}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: UIManager
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4927115953888612
+--- !u!4 &4885026999783518
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727600547027104}
+  m_GameObject: {fileID: 1193986385930440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,62 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114258456038861982
+--- !u!114 &114027210942813244
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727600547027104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 022b120f113a77940b2e1783ba9cd3eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoClipReloadToggle: {fileID: 0}
-  PlayerItemPanelObject: {fileID: 0}
-  ClipObject: {fileID: 0}
-  LoadingPanelObject: {fileID: 0}
-  LoadingSliderObject: {fileID: 0}
-  AutoReloadObject: {fileID: 0}
-  GunSlotObject: {fileID: 0}
-  PanelClip: {fileID: 0}
-  PanelRight: {fileID: 0}
-  LoadingText: {fileID: 0}
-  GameManager: {fileID: 0}
-  AmmoBar: {fileID: 0}
-  Slider: {fileID: 0}
-  AmmoBarAnimator: {fileID: 0}
-  Toggles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  ButtonTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  HealthBarSlider: {fileID: 0}
-  ArmorBarSlider: {fileID: 0}
-  EnergyBarSlider: {fileID: 0}
-  BossHealthBarSlider: {fileID: 0}
-  Map: {fileID: 0}
---- !u!114 &114418251840358480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727600547027104}
+  m_GameObject: {fileID: 1193986385930440}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 449af177f48248e41a22e9fcd9b963c2, type: 3}
@@ -120,3 +70,70 @@ MonoBehaviour:
       type: 2}
     shouldExpand: 1
   pooledObjects: []
+--- !u!114 &114615810913685306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193986385930440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022b120f113a77940b2e1783ba9cd3eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutoClipReloadToggle: {fileID: 0}
+  PlayerItemPanelObject: {fileID: 0}
+  ClipObject: {fileID: 0}
+  LoadingPanelObject: {fileID: 0}
+  LoadingSliderObject: {fileID: 0}
+  AutoReloadObject: {fileID: 0}
+  GunSlotObject: {fileID: 0}
+  PanelClip: {fileID: 0}
+  PanelRight: {fileID: 0}
+  GameManager: {fileID: 0}
+  LoadingText: {fileID: 0}
+  AmmoBar: {fileID: 0}
+  Slider: {fileID: 0}
+  Toggles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ButtonTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  HealthBarSlider: {fileID: 0}
+  ArmorBarSlider: {fileID: 0}
+  EnergyBarSlider: {fileID: 0}
+  BossHealthBarSlider: {fileID: 0}
+  Map: {fileID: 0}

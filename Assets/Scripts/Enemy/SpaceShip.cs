@@ -18,14 +18,14 @@ public class SpaceShip : MonoBehaviour
 
     public Boss BossData;
 
+    private int mAttackId;
     public int CurrentHealth;
     public int MaxHealth;
     public float AttackTime;
-    private float mMaxAttackTime;
     public float ShootcoolDown;
     public float ShootAngle;
+    private float mMaxAttackTime;
     private float mWaitTime;
-    private int mAttackId;
 
     public List<GameObject> Barrels;
     public List<GameObject> Enemys;

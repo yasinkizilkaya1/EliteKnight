@@ -133,10 +133,14 @@ public class GunSlot : MonoBehaviour
             Gun.transform.position = new Vector3(character.transform.position.x + 2, character.transform.position.y, 1);
             Gun.gameObject.SetActive(true);
             character.Guns.Remove(Gun);
-            character.Gun = character.Guns[character.Guns.Count - 1];
-            character.IsNewGun = true;
-            character.Gun.gameObject.SetActive(true);
-            ItemImage[0].sprite = character.Gun.Weapon.Icon;
+
+            if (Gun == character.Gun)
+            {
+                character.Gun = character.Guns[character.Guns.Count - 1];
+                character.IsNewGun = true;
+                character.Gun.gameObject.SetActive(true);
+                ItemImage[0].sprite = character.Gun.Weapon.Icon;
+            }
             return;
         }
     }

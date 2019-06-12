@@ -5,10 +5,8 @@ public class WarriorEnemy : MonoBehaviour
     #region Contants 
 
     private const string mTAG_GAMEMANAGER = "GameManager";
-    private const string mTAG_ENEMY = "Enemy";
-    private const string mTAG_CHEST = "chest";
-    private const string mTAG_WALL = "wall";
-
+    private const float mWALLRADIUS = 0.2f;
+    
     #endregion
 
     #region Fields
@@ -18,12 +16,16 @@ public class WarriorEnemy : MonoBehaviour
     public int CurrentHealth;
     public int CurrentDefence;
     private int mSpeed;
-    private int mRange;
     private int mDistance;
 
     public GameManager GameManager;
 
     public Transform Radar;
+
+    public Transform WallTransformObject;
+    public Transform ZombieTransformObject;
+    public LayerMask IsWall;
+    public LayerMask Iszombie;
 
     public Room Room;
     public GameObject GunObject;
@@ -32,7 +34,9 @@ public class WarriorEnemy : MonoBehaviour
 
     public RaycastHit2D RaycastHit2D;
 
-    private bool mIsAim;
+    public bool mIsAttack;
+    public bool mIsHit;
+    public bool mIsZombie;
     private bool mIsTargetFind;
 
     private float mShootCoolDown;
@@ -67,20 +71,32 @@ public class WarriorEnemy : MonoBehaviour
 
         if (GameManager.Character != null)
         {
-            TargetFind();
 
-            if (mIsTargetFind)
+            Aim();
+
+            if (mIsAttack)
             {
-                if (mIsAim)
+                Following();
+
+                if (mIsZombie == true || mIsHit == true)
                 {
-                    Attack();
+                    mIsAttack = false;
                 }
-                else
+            }
+            else
+            {
+                if (mIsZombie == false && mIsHit == false)
                 {
-                    Following();
+                    mIsAttack = true;
                 }
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        mIsHit = Physics2D.OverlapCircle(WallTransformObject.position, mWALLRADIUS, IsWall);
+        mIsZombie = Physics2D.OverlapCircle(ZombieTransformObject.position, mWALLRADIUS, Iszombie);
     }
 
     #endregion
@@ -95,8 +111,8 @@ public class WarriorEnemy : MonoBehaviour
         CurrentHealth = EnemyWarrior.Health;
         CurrentDefence = EnemyWarrior.Defence;
         mSpeed = EnemyWarrior.Speed;
-        mRange = EnemyWarrior.Range;
         mDistance = EnemyWarrior.Distance;
+        mIsAttack = true;
     }
 
     private void Aim()
@@ -118,34 +134,9 @@ public class WarriorEnemy : MonoBehaviour
     {
         if (CanAttack)
         {
-            Aim();
             mShootCoolDown = EnemyWarrior.AttackTime;
             Instantiate(BulletObjcet, GunObject.transform.position, GunObject.transform.rotation);
             Following();
-        }
-    }
-
-    private void TargetFind()
-    {
-        RaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
-
-        if (RaycastHit2D.collider != null)
-        {
-            if (RaycastHit2D.collider.CompareTag(mTAG_WALL) || RaycastHit2D.collider.CompareTag(mTAG_ENEMY) || RaycastHit2D.collider.CompareTag(mTAG_CHEST))
-            {
-                mIsTargetFind = false;
-                Radar.Rotate(Vector3.forward * mRange * Time.deltaTime);
-                Debug.DrawLine(Radar.position, RaycastHit2D.point, Color.red);
-            }
-            else
-            {
-                mIsTargetFind = true;
-                Aim();
-            }
-        }
-        else
-        {
-            RaycastHit2D = Physics2D.Raycast(Radar.position, Radar.up, mRange);
         }
     }
 
@@ -153,13 +144,11 @@ public class WarriorEnemy : MonoBehaviour
     {
         if (Vector2.Distance(Body.transform.position, GameManager.Character.transform.position) > mDistance)
         {
-            Aim();
             Body.transform.Translate(Vector2.right * -mSpeed * Time.deltaTime);
-            mIsAim = false;
         }
         else
         {
-            mIsAim = true;
+            Attack();
         }
     }
 

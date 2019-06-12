@@ -51,7 +51,10 @@ public class Slot : MonoBehaviour
         }
         else
         {
-            Buttons[1].gameObject.SetActive(true);
+            if (Inventory.GameManager.Character.Guns.Count > 1)
+            {
+                Buttons[1].gameObject.SetActive(true);
+            }
         }
     }
 
@@ -59,7 +62,7 @@ public class Slot : MonoBehaviour
     {
         if (IsUse)
         {
-            Inventory.ItemDrop(this,Item.ItemObject);
+            Inventory.ItemDrop(this, Item.ItemObject);
         }
         else
         {

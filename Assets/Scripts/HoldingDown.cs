@@ -3,21 +3,22 @@ using UnityEngine.EventSystems;
 
 public class HoldingDown : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    #region Constants
+
     public const float HoldingDownTime = 30;
-    public bool IsHoldingDown;
-    public float HoldingTime;
+
+    #endregion
+
+    #region Fields
+
     public GameManager gameManager;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        IsHoldingDown = true;
-    }
+    public bool IsHoldingDown;
+    public float HoldingTime;
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        IsHoldingDown = false;
-        HoldingTime = HoldingDownTime;
-    }
+    #endregion
+
+    #region Unity Methods
 
     private void Awake()
     {
@@ -36,4 +37,21 @@ public class HoldingDown : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             HoldingTime = HoldingDownTime;
         }
     }
+   
+    #endregion
+
+    #region Public Methods
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        IsHoldingDown = true;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        IsHoldingDown = false;
+        HoldingTime = HoldingDownTime;
+    }
+
+    #endregion
 }
